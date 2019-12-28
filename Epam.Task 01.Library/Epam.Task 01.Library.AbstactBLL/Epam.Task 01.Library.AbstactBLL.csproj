@@ -41,8 +41,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="IAbstractLogic.cs" />
+    <Compile Include="IBookLogic.cs" />
+    <Compile Include="INewspaperLogic.cs" />
+    <Compile Include="IPatentLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.AbstractDAL.csproj">
+      <Project>{af2897bc-b0cf-4120-af17-54ded2874d53}</Project>
+      <Name>Epam.Task01.Library.AbstractDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.CollectionDAL.csproj">
+      <Project>{ad260801-e40c-4c6a-8b6a-b32e36c8904d}</Project>
+      <Name>Epam.Task01.Library.CollectionDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entity.csproj">
+      <Project>{551a846e-3895-4155-9be2-793fe9237402}</Project>
+      <Name>Epam.Task01.Library.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

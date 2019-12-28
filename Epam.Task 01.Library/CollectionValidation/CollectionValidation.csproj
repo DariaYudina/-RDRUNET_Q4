@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9864A4A6-D8C5-48CB-A838-1E613C779776}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Epam.Task01.Library.ConsolePL</RootNamespace>
-    <AssemblyName>Epam.Task01.Library.ConsolePL</AssemblyName>
+    <ProjectGuid>{CBB42553-75FC-4B58-A618-380BA81DC788}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CollectionValidation</RootNamespace>
+    <AssemblyName>CollectionValidation</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,26 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="LibraryValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CollectionBLL\Epam.Task01.Library.CollectionBLL.csproj">
-      <Project>{ba385392-f003-4b01-acb0-d3d2b44bbf67}</Project>
-      <Name>Epam.Task01.Library.CollectionBLL</Name>
+    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.AbstractValidation.csproj">
+      <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
+      <Name>Epam.Task 01.Library.AbstractValidation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.AbstactBLL.csproj">
-      <Project>{6de33863-b649-4215-8159-8b1361cb7d5c}</Project>
-      <Name>Epam.Task 01.Library.AbstactBLL</Name>
+    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entity.csproj">
+      <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
+      <Name>Epam.Task01.Library.Entity</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

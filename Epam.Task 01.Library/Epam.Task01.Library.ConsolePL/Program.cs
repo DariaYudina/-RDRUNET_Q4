@@ -10,6 +10,7 @@ namespace Epam.Task01.Library.ConsolePL
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
