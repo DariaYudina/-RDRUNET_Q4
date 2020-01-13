@@ -15,8 +15,6 @@ namespace CollectionValidation
         public bool IsValid { get; set; }
         public IAuthorValidation CheckAuthorsFirstName(IWithAuthorProperty withAuthor)
         {
-            if (IsValid != false)
-            {
                 bool notvalid = false;
                 string namePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
                 foreach (var item in withAuthor.Authors)
@@ -31,16 +29,9 @@ namespace CollectionValidation
                 }
                 IsValid &= !notvalid;
                 return this;
-            }
-            else
-            {
-                return this;
-            }
         }
         public IAuthorValidation CheckAuthorsLastName(IWithAuthorProperty withAuthor)
         {
-            if (IsValid != false)
-            {
                 bool notvalid = false;
                 string lastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
                 foreach (var item in withAuthor.Authors)
@@ -55,11 +46,6 @@ namespace CollectionValidation
                 }
                 IsValid &= !notvalid;
                 return this;
-            }
-            else
-            {
-                return this;
-            }
         }
     }
 }

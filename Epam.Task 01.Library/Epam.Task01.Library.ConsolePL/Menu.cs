@@ -144,16 +144,19 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddBook() 
         {
             _validationResult = new List<ValidationException>();
-            Book book1 = new Book(new List<Author>() { new Author("HHHhhh","Hahaha")}, "", "", 2019, "", 1, "fdsdsafdsdsdsdsdsdsdsdsdsds", 2, "");
+            Book book1 = new Book(new List<Author>() { new Author("HHHhhh","Hahaha")}, "", "", 2019, "", 1, "fdsdsafdsdsdsdsdsdsdsdsdsds", -2, "");
             bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book1);
-            Console.WriteLine(res);
-
-                foreach (var error in _validationResult)
-                {
-                    Console.WriteLine(error.Property + ": " + error.Message);
-                }
+            Console.WriteLine("Результат валидации: "+res);
+            foreach (var error in _validationResult)
+            {
+                Console.WriteLine(error.Property + ": " + error.Message);
+            }
         }
-        private void AddPatent() {  }
-        private void AddNewspaper() {  }
+        private void AddPatent() 
+        {  
+        }
+        private void AddNewspaper()
+        { 
+        }
     }
 }

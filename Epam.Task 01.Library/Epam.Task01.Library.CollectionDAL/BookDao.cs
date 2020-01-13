@@ -33,7 +33,7 @@ namespace Epam.Task01.Library.CollectionDAL
             var allLibrary = MemoryStorage.GetAllAbstractLibraryItems();
             var bookLibrary = allLibrary.OfType<Book>();
             var withauthor = allLibrary.OfType<IWithAuthorProperty>();
-            if (book.ISBN != "" || book.ISBN!= null)
+            if (book.ISBN != "" && book.ISBN!= null)
             {
                 foreach (var item in bookLibrary)
                 {

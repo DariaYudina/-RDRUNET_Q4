@@ -21,8 +21,6 @@ namespace CollectionValidation
         public bool IsValid { get; set; } = true;
         public ICommonValidation CheckCommentary(AbstractLibraryItem item)
         {
-            if (IsValid != false)
-            {
                 bool notvalid = item.Commentary.Length > 2000;
                 IsValid &= !notvalid;
                 if (notvalid)
@@ -34,16 +32,9 @@ namespace CollectionValidation
                     }
                 }
                 return this;
-            }
-            else
-            {
-                return this;
-            }
         }
         public ICommonValidation CheckNullReferenceObject(AbstractLibraryItem item)
         {
-            if (IsValid != false)
-            {
                 bool notvalid = item == null;
                 IsValid &= !notvalid;
                 if (notvalid)
@@ -55,16 +46,9 @@ namespace CollectionValidation
                     }
                 }
                 return this;
-            }
-            else
-            {
-                return this;
-            }
         }
         public ICommonValidation CheckPagesCount(AbstractLibraryItem item)
         {
-            if (IsValid != false)
-            {
                 bool notvalid = item.PagesCount < 0;
                 IsValid &= !notvalid;
                 if (notvalid)
@@ -76,11 +60,6 @@ namespace CollectionValidation
                     }
                 }
                 return this;
-            }
-            else
-            {
-                return this;
-            }
         }
         public ICommonValidation CheckTitle(AbstractLibraryItem item)
         {
@@ -105,8 +84,6 @@ namespace CollectionValidation
         }
         public bool CheckStringIsNullorEmpty(string str)
         {
-            if (IsValid != false)
-            {
                 bool notvalid = String.IsNullOrWhiteSpace(str);
                 IsValid &= !notvalid;
                 if (notvalid)
@@ -119,11 +96,6 @@ namespace CollectionValidation
                     return true;
                 }
                 return false;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

@@ -65,6 +65,7 @@ namespace Epam.Task01.Library.Common
             _bookValidation = new BookValidation();
             _patentValidation = new PatentValidation();
             _newspaperValidation = new NewspaperValidation();
+            _authorValidation = new AuthorValidation();
 
             _commonLogic = new CommonLogic(_commonDao, _commonValidation);
             _bookLogic = new BookLogic(_bookDao,_commonValidation, _bookValidation, _authorValidation);
