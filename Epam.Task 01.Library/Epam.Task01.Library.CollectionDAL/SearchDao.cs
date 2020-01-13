@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
-    class SearchDao : ISearchDao
+    public class SearchDao : ISearchDao
     {
-        public IEnumerable<T> GetTypeByAuthor<T>()
+        public IEnumerable<T> GetTypeByAuthor<T>() where T : IWithAuthorProperty
         {
             return MemoryStorage.GetAllAbstractLibraryItems().OfType<T>();
         }

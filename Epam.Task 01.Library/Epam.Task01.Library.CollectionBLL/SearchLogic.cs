@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
-    class SearchLogic : ISearchLogic
+    public class SearchLogic : ISearchLogic
     {
         private ISearchDao _searchDao;
         public SearchLogic(ISearchDao searchDao)

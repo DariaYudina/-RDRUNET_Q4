@@ -32,22 +32,11 @@ namespace Epam.Task01.Library.CollectionBLL
             var commonvalidationObject = _commonValidation.CheckNullReferenceObject(book).CheckTitle(book).CheckPagesCount(book);
             var bookvalidationObject = _bookValidation.CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book);
             var authorsvalidationObject = _authorValidation.CheckAuthorsFirstName(book).CheckAuthorsLastName(book);
-
-            //validationResult = commonvalidationObject.ValidationResult;
-            //foreach (var item in bookvalidationObject.ValidationResult)
-            //{
-            //    validationResult.Add(item);
-            //}
-            //foreach (var item in authorsvalidationObject.ValidationResult)
-            //{
-            //    validationResult.Add(item);
-            //}
             if (!CheckBookUniqueness(book))
             {
                 _authorValidation.ValidationResult.Add(new ValidationException("Book is not unique ", "Book"));
                 return false;
             }
-
             if (commonvalidationObject.IsValid && bookvalidationObject.IsValid && authorsvalidationObject.IsValid )
             {
                 _bookDao.AddBook(book);

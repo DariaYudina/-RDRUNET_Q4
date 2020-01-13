@@ -9,6 +9,6 @@ namespace Epam.Task01.Library.AbstractDAL
 {
     public interface ISearchDao
     {
-        IEnumerable<T> GetTypeByAuthor<T>();
+        IEnumerable<T> GetTypeByAuthor<T>()where T : IWithAuthorProperty;
     }
 }

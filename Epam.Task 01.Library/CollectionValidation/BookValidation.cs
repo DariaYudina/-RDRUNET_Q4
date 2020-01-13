@@ -29,7 +29,7 @@ namespace CollectionValidation
         public IBookValidation CheckISBN(Book book)
         {
             string ISBNPattern = @"^(ISBN\s(([0-7])|(8\d|9[0-4])|(9([5-8]\d)|(9[0-3]))|(99[4-8][0-9])|(999[0-9][0-9]))-\d{1,7}-\d{1,7}-([0-9]|X))$";
-            var notvalid = !Regex.IsMatch(book.City, ISBNPattern);
+            var notvalid = !Regex.IsMatch(book.ISBN, ISBNPattern);
             if (!notvalid)
             {
                 notvalid &= CheckISBNLength(book.ISBN);
@@ -75,7 +75,7 @@ namespace CollectionValidation
         }
         private bool CheckISBNLength(string isbn)
         {
-            var wishoutISBN = isbn.Substring(0, 5);
+            var wishoutISBN = isbn.Substring(5, isbn.Length-5);
             var withoutdefice = wishoutISBN.Replace("-", "");
             return withoutdefice.Length != 10;
         }

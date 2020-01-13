@@ -10,8 +10,8 @@ namespace CollectionValidation
 {
     public class NewspaperValidation : INewspaperValidation
     {
-        public List<ValidationException> ValidationResult { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool IsValid { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<ValidationException> ValidationResult { get; set; }
+        public bool IsValid { get; set; } = true;
 
         public INewspaperValidation CheckISSN(Newspaper newspaper)
         {

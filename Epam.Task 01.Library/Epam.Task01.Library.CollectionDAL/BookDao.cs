@@ -26,7 +26,7 @@ namespace Epam.Task01.Library.CollectionDAL
         }
         public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany)
         {
-           return MemoryStorage.GetLibraryItemByType<Book>().Where(book => book.PublishingCompany == publishingCompany).GroupBy(book => book.PublishingCompany);
+           return MemoryStorage.GetLibraryItemByType<Book>().Where(book => book.PublishingCompany.Contains(publishingCompany)).GroupBy(book => book.PublishingCompany);
         }
         public bool CheckBookUniqueness(Book book)
         {

@@ -32,6 +32,9 @@ namespace Epam.Task01.Library.Common
         private static readonly INewspaperDao _newspaperDao;
         private static readonly INewspaperValidation _newspaperValidation;
 
+        private static readonly ISearchLogic _searchLogic;
+        private static readonly ISearchDao _searchDao;
+
         private static readonly IAuthorValidation _authorValidation;
         public static IBookLogic BookLogic => _bookLogic;
         public static IBookDao BookDao => _bookDao;
@@ -54,12 +57,17 @@ namespace Epam.Task01.Library.Common
 
         public static IAuthorValidation AuthorValidation => _authorValidation;
 
+        public static ISearchLogic SearchLogic => _searchLogic;
+
+        public static ISearchDao SearchDao => _searchDao;
+
         static DependencyResolver()
         {
             _commonDao = new CommonDao();
             _bookDao = new BookDao();
             _patentDao = new PatentDao();
             _newspaperDao = new NewspaperDao();
+            _searchDao = new SearchDao();
 
             _commonValidation = new CommonValidation();
             _bookValidation = new BookValidation();
@@ -71,6 +79,7 @@ namespace Epam.Task01.Library.Common
             _bookLogic = new BookLogic(_bookDao,_commonValidation, _bookValidation, _authorValidation);
             _patentLogic = new PatentLogic(_patentDao, _patentValidation);
             _newspaperLogic = new NewspaperLogic(_newspaperDao, _newspaperValidation);
+            _searchLogic = new SearchLogic(_searchDao);
         }
     }
 }

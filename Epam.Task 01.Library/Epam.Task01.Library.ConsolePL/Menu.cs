@@ -65,7 +65,7 @@ namespace Epam.Task01.Library.ConsolePL
                             
                             break;
                         case 9:
-                            
+                            SearchBooksAndPatentsByAutors();
                             break;
                         case 10:
                           
@@ -182,7 +182,7 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddBook() 
         {
             _validationResult = new List<ValidationException>();
-            Book book1 = new Book(new List<Author>() { new Author("HHHhhh","Hahaha")}, "", "", 2019, "", 1, "fdsdsafdsdsdsdsdsdsdsdsdsds", -2, "");
+            Book book1 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 2019, "ISBN 2-266-11156-6", 1, "Hello", 200, "да");
             bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book1);
             Console.WriteLine("Результат валидации: "+res);
             foreach (var error in _validationResult)
@@ -195,6 +195,17 @@ namespace Epam.Task01.Library.ConsolePL
         }
         private void AddNewspaper()
         { 
+        }
+        private void SearchBooksAndPatentsByAutors()
+        {
+            List<Author> authors = new List<Author>() { new Author("Петр", "Петров") };
+            string search = "Петр Петров";
+            var res = DependencyResolver.SearchLogic.GetBooksAndPatentsByAuthor(new Author(search.Split(' ')[0], search.Split(' ')[1]));
+            var abstractcollection = res.OfType<AbstractLibraryItem>();
+            foreach (var item in abstractcollection)
+            {
+                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+            }
         }
     }
 }

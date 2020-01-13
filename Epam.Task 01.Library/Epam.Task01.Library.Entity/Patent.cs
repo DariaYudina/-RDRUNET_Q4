@@ -22,7 +22,7 @@ namespace Epam.Task01.Library.Entity
             RegistrationNumber = registrationNumber;
             ApplicationDate = applicationDate;
             PublicationDate = publicationDate;
-            //todo base.YearOfPublishing = method();
+            //base.YearOfPublishing = method();
         }
     }
 }

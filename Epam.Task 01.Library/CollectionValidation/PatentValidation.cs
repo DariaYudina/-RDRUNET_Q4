@@ -11,7 +11,7 @@ namespace CollectionValidation
     public class PatentValidation : IPatentValidation
     {
         public List<ValidationException> ValidationResult { get; set; }
-        public bool IsValid { get; set; }
+        public bool IsValid { get; set; } = true;
 
         public IPatentValidation CheckApplicationDate(Patent patent)
         {

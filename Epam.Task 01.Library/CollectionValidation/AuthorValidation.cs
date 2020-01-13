@@ -12,7 +12,7 @@ namespace CollectionValidation
     public class AuthorValidation : IAuthorValidation
     {
         public List<ValidationException> ValidationResult { get; set; }
-        public bool IsValid { get; set; }
+        public bool IsValid { get; set; } = true;
         public IAuthorValidation CheckAuthorsFirstName(IWithAuthorProperty withAuthor)
         {
                 bool notvalid = false;
