@@ -26,9 +26,9 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return libraryCatalog.TryGetValue(id, out result);
         }
-        public static bool DeleteLibraryItemById(AbstractLibraryItem item)
+        public static bool DeleteLibraryItemById(int id)
         {
-            return libraryCatalog.Remove(item.LibaryItemId);
+            return libraryCatalog.Remove(id);
         }
         public static IEnumerable<T> GetLibraryItemByType<T>()
         {

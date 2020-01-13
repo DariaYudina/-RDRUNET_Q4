@@ -10,9 +10,9 @@ namespace Epam.Task01.Library.CollectionDAL
 {
     public class CommonDao : ICommonDao
     {
-        public bool DeleteLibraryItemById(AbstractLibraryItem item)
+        public bool DeleteLibraryItemById(int id)
         {
-            return MemoryStorage.DeleteLibraryItemById(item);
+            return MemoryStorage.DeleteLibraryItemById(id);
         }
 
         public IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()

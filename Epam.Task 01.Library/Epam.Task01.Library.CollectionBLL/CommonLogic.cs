@@ -27,15 +27,9 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _commonDao.GetLibraryItemsByTitle(title);
         }
-        public bool DeleteLibraryItemById(List<ValidationException> validationResult,AbstractLibraryItem item)
+        public bool DeleteLibraryItemById(int id)
         {
-            _commonValidator.ValidationResult = validationResult;
-            var validationObject = _commonValidator.CheckNullReferenceObject(item);
-            if (validationObject.IsValid)
-            {
-                return _commonDao.DeleteLibraryItemById(item);
-            }
-            return false;
+            return _commonDao.DeleteLibraryItemById(id);
         }
         public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
         {

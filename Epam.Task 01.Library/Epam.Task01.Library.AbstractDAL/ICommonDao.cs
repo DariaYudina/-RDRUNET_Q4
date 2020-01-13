@@ -11,7 +11,7 @@ namespace Epam.Task01.Library.AbstractDAL
     {
         IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems();
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string name);
-        bool DeleteLibraryItemById(AbstractLibraryItem item);
+        bool DeleteLibraryItemById(int id);
         IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing();
     }
 }

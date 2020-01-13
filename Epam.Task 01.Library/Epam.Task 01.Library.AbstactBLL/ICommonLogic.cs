@@ -12,7 +12,7 @@ namespace Epam.Task_01.Library.AbstactBLL
     {
         IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems();
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title);
-        bool DeleteLibraryItemById(List<ValidationException> validationResult, AbstractLibraryItem item);
+        bool DeleteLibraryItemById(int id);
         IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing();
     }
 }

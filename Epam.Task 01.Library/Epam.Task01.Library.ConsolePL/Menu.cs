@@ -44,10 +44,10 @@ namespace Epam.Task01.Library.ConsolePL
                             AddCatalogItem();
                             break;
                         case 2:
-                            
+                            DeleteCatalogItem();
                             break;
                         case 3:
-                            
+                            GetAllCatalog();
                             break;
                         case 4:
                             
@@ -141,6 +141,44 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
             }
         }
+        public void GetAllCatalog()
+        {
+            var catalog = DependencyResolver.CommonLogic.GetAllAbstractLibraryItems();
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("Catalog:");
+            foreach (var item in catalog)
+            {
+                Console.WriteLine("Catalog id: "+item.LibaryItemId + "Title: " + item.Title);
+            }
+            Console.WriteLine("----------------------------------------------------------------");
+        }
+        public void DeleteCatalogItem()
+        {
+            try
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                GetAllCatalog();
+                Console.WriteLine("Выберите id удаляемного объекта:");             
+                if (int.TryParse(Console.ReadLine(), out int selectedOption))
+                {
+                    bool res = DependencyResolver.CommonLogic.DeleteLibraryItemById(selectedOption);
+                    Console.WriteLine("Результат удаления: " + res);
+                }
+                else
+                {
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("Введите число");
+                    Console.WriteLine("----------------------------------------------------------------");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine(e.Message);
+                Console.WriteLine("----------------------------------------------------------------");
+            }
+        }
+        public 
         private void AddBook() 
         {
             _validationResult = new List<ValidationException>();
