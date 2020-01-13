@@ -8,31 +8,16 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
-    class NewspaperDao : INewspaperDAL<Newspaper>
+    public class NewspaperDao : INewspaperDao
     {
-        public void AddLibraryItem(AbstractLibraryItem item)
+        public void AddNewspaper(Newspaper item)
         {
-            throw new NotImplementedException();
+            MemoryStorage.AddLibraryItem(item);
         }
 
-        public void DeleteLibraryItemById(AbstractLibraryItem item)
+        public IEnumerable<Newspaper> GetNewspaperItems()
         {
-            throw new NotImplementedException();
-        }
-
-        public AbstractLibraryItem GetItemById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Dictionary<int, AbstractLibraryItem> GetLibraryItems()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Dictionary<int, AbstractLibraryItem> GetLibraryItemsByName(string name)
-        {
-            throw new NotImplementedException();
+            return MemoryStorage.GetLibraryItemByType<Newspaper>(); 
         }
     }
 }

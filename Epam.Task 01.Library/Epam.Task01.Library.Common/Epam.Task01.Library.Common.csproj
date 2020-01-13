@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{551A846E-3895-4155-9BE2-793FE9237402}</ProjectGuid>
+    <ProjectGuid>{EAABACBE-1B13-457C-B906-DE032155A2CD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Epam.Task01.Library.Entity</RootNamespace>
-    <AssemblyName>Epam.Task01.Library.Entity</AssemblyName>
+    <RootNamespace>Epam.Task01.Library.Common</RootNamespace>
+    <AssemblyName>Epam.Task01.Library.Common</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,18 +41,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractLibraryItem.cs" />
-    <Compile Include="Book.cs" />
-    <Compile Include="Newspaper.cs" />
-    <Compile Include="Patent.cs" />
+    <Compile Include="DependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.AbstractValidation.csproj">
+      <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
+      <Name>Epam.Task 01.Library.AbstractValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CollectionValidation\LibraryEntityValidation.csproj">
+      <Project>{CBB42553-75FC-4B58-A618-380BA81DC788}</Project>
+      <Name>LibraryEntityValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.AbstactBLL.csproj">
+      <Project>{6DE33863-B649-4215-8159-8B1361CB7D5C}</Project>
+      <Name>Epam.Task 01.Library.AbstactBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.AbstractDAL.csproj">
+      <Project>{AF2897BC-B0CF-4120-AF17-54DED2874D53}</Project>
+      <Name>Epam.Task01.Library.AbstractDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.CollectionBLL\Epam.Task01.Library.CollectionBLL.csproj">
+      <Project>{3006573F-D1AF-4FE6-8A27-700C128EA042}</Project>
+      <Name>Epam.Task01.Library.CollectionBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.CollectionDAL.csproj">
+      <Project>{AD260801-E40C-4C6A-8B6A-B32E36C8904D}</Project>
+      <Name>Epam.Task01.Library.CollectionDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
+      <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
+      <Name>Epam.Task01.Library.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

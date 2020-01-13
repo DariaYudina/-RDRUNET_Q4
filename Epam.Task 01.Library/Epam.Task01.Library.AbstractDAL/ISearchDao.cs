@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Epam.Task_01.Library.AbstactBLL
+namespace Epam.Task01.Library.AbstractDAL
 {
-    public abstract class AbstractLogic<T> where T : AbstractLibraryItem
+    public interface ISearchDao
     {
-
+        IEnumerable<T> GetTypeByAuthor<T>();
     }
 }

@@ -41,13 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAbstractValidation.cs" />
+    <Compile Include="IAuthorValidation.cs" />
+    <Compile Include="IBookValidation.cs" />
+    <Compile Include="ICommonValidation.cs" />
+    <Compile Include="INewspaperValidation.cs" />
+    <Compile Include="IPatentValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entity.csproj">
+    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
       <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
-      <Name>Epam.Task01.Library.Entity</Name>
+      <Name>Epam.Task01.Library.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

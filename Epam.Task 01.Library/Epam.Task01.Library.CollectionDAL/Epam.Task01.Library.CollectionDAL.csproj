@@ -41,25 +41,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractDao.cs" />
     <Compile Include="BookDao.cs" />
     <Compile Include="CommonDao.cs" />
+    <Compile Include="MemoryStorage.cs" />
     <Compile Include="NewspaperDao.cs" />
     <Compile Include="PatentDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchDao.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.AbstractValidation.csproj">
+      <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
+      <Name>Epam.Task 01.Library.AbstractValidation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.AbstractDAL.csproj">
       <Project>{AF2897BC-B0CF-4120-AF17-54DED2874D53}</Project>
       <Name>Epam.Task01.Library.AbstractDAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entity.csproj">
+    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
       <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
-      <Name>Epam.Task01.Library.Entity</Name>
+      <Name>Epam.Task01.Library.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

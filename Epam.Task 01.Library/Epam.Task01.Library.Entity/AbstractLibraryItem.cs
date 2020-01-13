@@ -12,7 +12,7 @@ namespace Epam.Task01.Library.Entity
         public string Title { get; set; }
         public int PagesCount { get; set; }
         public string Commentary { get; set; }
-        public AbstractLibraryItem() { }
+        public int YearOfPublishing { get; set; }
         public AbstractLibraryItem(int libaryItemId, string title, int pagesCount, string commentary) 
         {
             LibaryItemId = libaryItemId;

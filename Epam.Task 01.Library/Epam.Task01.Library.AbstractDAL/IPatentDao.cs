@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.AbstractDAL
 {
-    public interface IPatentDAL
+    public interface IPatentDao
     {
+        void AddLibraryItem(Patent item);
+        IEnumerable<Patent> GetPatentItems();
     }
 }

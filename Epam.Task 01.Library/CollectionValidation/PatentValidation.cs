@@ -1,0 +1,104 @@
+﻿using AbstractValidation;
+using Epam.Task01.Library.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CollectionValidation
+{
+    public class PatentValidation : IPatentValidation
+    {
+        public List<ValidationException> ValidationResult { get; set; }
+        public bool IsValid { get; set; }
+
+        public IPatentValidation CheckApplicationDate(Patent patent)
+        {
+            if (IsValid != false)
+            {
+                bool notvalid = patent.PagesCount < 0;
+                IsValid &= !notvalid;
+                if (notvalid)
+                {
+                    if (ValidationResult != null)
+                    {
+                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationResult.Add(e);
+                    }
+                }
+                return this;
+            }
+            else
+            {
+                return this;
+            }
+        }
+
+        public IPatentValidation CheckCountry(Patent patent)
+        {
+            if (IsValid != false)
+            {
+                bool notvalid = patent.PagesCount < 0;
+                IsValid &= !notvalid;
+                if (notvalid)
+                {
+                    if (ValidationResult != null)
+                    {
+                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationResult.Add(e);
+                    }
+                }
+                return this;
+            }
+            else
+            {
+                return this;
+            }
+        }
+
+        public IPatentValidation CheckPublicationDate(Patent patent)
+        {
+            if (IsValid != false)
+            {
+                bool notvalid = patent.PagesCount < 0;
+                IsValid &= !notvalid;
+                if (notvalid)
+                {
+                    if (ValidationResult != null)
+                    {
+                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationResult.Add(e);
+                    }
+                }
+                return this;
+            }
+            else
+            {
+                return this;
+            }
+        }
+
+        public IPatentValidation CheckRegistrationNumber(Patent patent)
+        {
+            if (IsValid != false)
+            {
+                bool notvalid = patent.PagesCount < 0;
+                IsValid &= !notvalid;
+                if (notvalid)
+                {
+                    if (ValidationResult != null)
+                    {
+                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationResult.Add(e);
+                    }
+                }
+                return this;
+            }
+            else
+            {
+                return this;
+            }
+        }
+    }
+}

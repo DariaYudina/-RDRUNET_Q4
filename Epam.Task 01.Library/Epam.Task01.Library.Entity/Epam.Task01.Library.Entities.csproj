@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BA385392-F003-4B01-ACB0-D3D2B44BBF67}</ProjectGuid>
+    <ProjectGuid>{551A846E-3895-4155-9BE2-793FE9237402}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CollectionBLL</RootNamespace>
-    <AssemblyName>CollectionBLL</AssemblyName>
+    <RootNamespace>Epam.Task01.Library.Entity</RootNamespace>
+    <AssemblyName>Epam.Task01.Library.Entity</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,37 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractLogic.cs" />
-    <Compile Include="BookLogic.cs" />
-    <Compile Include="NewspaperLogic.cs" />
-    <Compile Include="PatentLogic.cs" />
+    <Compile Include="AbstractLibraryItem.cs" />
+    <Compile Include="Author.cs" />
+    <Compile Include="Book.cs" />
+    <Compile Include="IWithAuthorProperty.cs" />
+    <Compile Include="Newspaper.cs" />
+    <Compile Include="Patent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.AbstractValidation.csproj">
-      <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
-      <Name>Epam.Task 01.Library.AbstractValidation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.AbstactBLL.csproj">
-      <Project>{6DE33863-B649-4215-8159-8B1361CB7D5C}</Project>
-      <Name>Epam.Task 01.Library.AbstactBLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.AbstractDAL.csproj">
-      <Project>{af2897bc-b0cf-4120-af17-54ded2874d53}</Project>
-      <Name>Epam.Task01.Library.AbstractDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.CollectionDAL.csproj">
-      <Project>{ad260801-e40c-4c6a-8b6a-b32e36c8904d}</Project>
-      <Name>Epam.Task01.Library.CollectionDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entity.csproj">
-      <Project>{551a846e-3895-4155-9be2-793fe9237402}</Project>
-      <Name>Epam.Task01.Library.Entity</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
-    <None Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

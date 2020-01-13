@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.AbstractDAL
 {
-    public interface INewspaperDAL<T> 
+    public interface INewspaperDao
     {
+        void AddNewspaper(Newspaper item);
+        IEnumerable<Newspaper> GetNewspaperItems();
     }
 }

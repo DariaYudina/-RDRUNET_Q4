@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
-    public class PatentDao : IPatentDao
+    class SearchDao : ISearchDao
     {
-        public void AddLibraryItem(Patent item)
+        public IEnumerable<T> GetTypeByAuthor<T>()
         {
-            MemoryStorage.AddLibraryItem(item);
-        }
-        public IEnumerable<Patent> GetPatentItems()
-        {
-            return MemoryStorage.GetLibraryItemByType<Patent>();
+            return MemoryStorage.GetAllAbstractLibraryItems().OfType<T>();
         }
     }
 }
