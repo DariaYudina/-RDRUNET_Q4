@@ -178,7 +178,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
             }
         }
-        public 
+        
         private void AddBook() 
         {
             _validationResult = new List<ValidationException>();
