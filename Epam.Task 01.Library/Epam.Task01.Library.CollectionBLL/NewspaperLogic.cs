@@ -4,16 +4,13 @@ using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
     public class NewspaperLogic : INewspaperLogic
     {
-        private INewspaperDao _newspaperDao;
-        private INewspaperValidation _newspaperValidation;
+        private readonly INewspaperDao _newspaperDao;
+        private readonly INewspaperValidation _newspaperValidation;
         public NewspaperLogic(INewspaperDao newspaperDao, INewspaperValidation validator)
         {
             _newspaperDao = newspaperDao;
@@ -26,7 +23,7 @@ namespace Epam.Task01.Library.CollectionBLL
         }
         public IEnumerable<Newspaper> GetNewspaperItems()
         {
-           return _newspaperDao.GetNewspaperItems();
+            return _newspaperDao.GetNewspaperItems();
         }
     }
 }

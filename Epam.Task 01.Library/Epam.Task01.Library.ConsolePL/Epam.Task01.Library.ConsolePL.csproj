@@ -52,13 +52,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.AbstractValidation.csproj">
+    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.IValidation.csproj">
       <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
-      <Name>Epam.Task 01.Library.AbstractValidation</Name>
+      <Name>Epam.Task 01.Library.IValidation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.AbstactBLL.csproj">
+    <ProjectReference Include="..\Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.IBLL.csproj">
       <Project>{6de33863-b649-4215-8159-8b1361cb7d5c}</Project>
-      <Name>Epam.Task 01.Library.AbstactBLL</Name>
+      <Name>Epam.Task 01.Library.IBLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.Common\Epam.Task01.Library.Common.csproj">
       <Project>{EAABACBE-1B13-457C-B906-DE032155A2CD}</Project>

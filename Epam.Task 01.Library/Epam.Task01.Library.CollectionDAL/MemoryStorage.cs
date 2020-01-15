@@ -1,25 +1,24 @@
 ﻿using Epam.Task01.Library.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
-    public class MemoryStorage 
+    public class MemoryStorage
     {
         private static readonly Dictionary<int, AbstractLibraryItem> libraryCatalog;
         static MemoryStorage()
         {
             libraryCatalog = new Dictionary<int, AbstractLibraryItem>();
         }
-        public static void AddLibraryItem(AbstractLibraryItem item) 
-        { 
-            libraryCatalog.Add(item.LibaryItemId, item); 
+        public static void AddLibraryItem(AbstractLibraryItem item)
+        {
+            var lastid = MemoryStorage.libraryCatalog.Any() ? libraryCatalog.Keys.Max()+1 : 1;
+            item.LibaryItemId = lastid;
+            libraryCatalog.Add(item.LibaryItemId, item);
         }
-        public static IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems() 
-        { 
+        public static IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()
+        {
             return libraryCatalog.Values;
         }
         public static bool GetLibraryItemById(int id, out AbstractLibraryItem result)

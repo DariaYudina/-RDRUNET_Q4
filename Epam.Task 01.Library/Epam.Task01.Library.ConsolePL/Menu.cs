@@ -4,15 +4,14 @@ using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.ConsolePL
 {
     public class Menu
     {
         private static List<ValidationException> _validationResult;
-        public void open()
+
+        public void Open()
         {
             bool repeat = true;
             do
@@ -50,31 +49,31 @@ namespace Epam.Task01.Library.ConsolePL
                             GetAllCatalog();
                             break;
                         case 4:
-                            
+
                             break;
                         case 5:
-                            
+
                             break;
                         case 6:
-                            
+
                             break;
                         case 7:
-                            
+
                             break;
                         case 8:
-                            
+
                             break;
                         case 9:
                             SearchBooksAndPatentsByAutors();
                             break;
                         case 10:
-                          
+
                             break;
                         case 11:
-                            
+
                             break;
                         case 12:
-                            
+
                             break;
                         default:
                             Console.WriteLine("----------------------------------------------------------------");
@@ -89,10 +88,10 @@ namespace Epam.Task01.Library.ConsolePL
                     Console.WriteLine("Введите число");
                     Console.WriteLine("----------------------------------------------------------------");
                 }
-            } 
+            }
             while (repeat);
         }
-        public void AddCatalogItem()                          
+        public void AddCatalogItem()
         {
             try
             {
@@ -143,12 +142,12 @@ namespace Epam.Task01.Library.ConsolePL
         }
         public void GetAllCatalog()
         {
-            var catalog = DependencyResolver.CommonLogic.GetAllAbstractLibraryItems();
+            IEnumerable<AbstractLibraryItem> catalog = DependencyResolver.CommonLogic.GetAllAbstractLibraryItems();
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("Catalog:");
-            foreach (var item in catalog)
+            foreach (AbstractLibraryItem item in catalog)
             {
-                Console.WriteLine("Catalog id: "+item.LibaryItemId + "Title: " + item.Title);
+                Console.WriteLine("Catalog id: " + item.LibaryItemId + "| Title: " + item.Title);
             }
             Console.WriteLine("----------------------------------------------------------------");
         }
@@ -158,7 +157,7 @@ namespace Epam.Task01.Library.ConsolePL
             {
                 Console.WriteLine("----------------------------------------------------------------");
                 GetAllCatalog();
-                Console.WriteLine("Выберите id удаляемного объекта:");             
+                Console.WriteLine("Выберите id удаляемного объекта:");
                 if (int.TryParse(Console.ReadLine(), out int selectedOption))
                 {
                     bool res = DependencyResolver.CommonLogic.DeleteLibraryItemById(selectedOption);
@@ -178,33 +177,48 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
             }
         }
-        
-        private void AddBook() 
+
+        private void AddBook()
         {
             _validationResult = new List<ValidationException>();
-            Book book1 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 2019, "ISBN 2-266-11156-6", 1, "Hello", 200, "да");
+            Book book1 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 2019, "ISBN 2-266-11156-6","Hello", 200, "да");
             bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book1);
-            Console.WriteLine("Результат валидации: "+res);
-            foreach (var error in _validationResult)
+            Console.WriteLine("Результат валидации: " + res);
+            foreach (ValidationException error in _validationResult)
+            {
+                Console.WriteLine(error.Property + ": " + error.Message);
+            }
+            var _validationResult2 = new List<ValidationException>();
+            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Ростов", "Эксмо", 2000, "ISBN 2-256-11756-6","Hi", 500, "да");
+            bool res2 = DependencyResolver.BookLogic.AddBook(_validationResult2, book2);
+            Console.WriteLine("Результат валидации: " + res);
+            foreach (ValidationException error in _validationResult2)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
         }
-        private void AddPatent() 
-        {  
+        private void AddPatent()
+        {
+            _validationResult = new List<ValidationException>();
+            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } , "Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(2016, 7, 21), "Крутой патент", 128, "" );
+            bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
+            foreach (ValidationException error in _validationResult)
+            {
+                Console.WriteLine(error.Property + ": " + error.Message);
+            }
         }
         private void AddNewspaper()
-        { 
+        {
         }
         private void SearchBooksAndPatentsByAutors()
         {
             List<Author> authors = new List<Author>() { new Author("Петр", "Петров") };
             string search = "Петр Петров";
-            var res = DependencyResolver.SearchLogic.GetBooksAndPatentsByAuthor(new Author(search.Split(' ')[0], search.Split(' ')[1]));
-            var abstractcollection = res.OfType<AbstractLibraryItem>();
-            foreach (var item in abstractcollection)
+            IEnumerable<IWithAuthorProperty> res = DependencyResolver.SearchLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
+            IEnumerable<AbstractLibraryItem> abstractcollection = res.OfType<AbstractLibraryItem>();
+            foreach (AbstractLibraryItem item in abstractcollection)
             {
-                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+                Console.WriteLine( item.LibaryItemId + " " + item.Title);
             }
         }
     }

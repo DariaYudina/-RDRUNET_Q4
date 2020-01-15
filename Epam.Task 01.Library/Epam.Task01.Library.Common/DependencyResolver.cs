@@ -4,12 +4,6 @@ using Epam.Task_01.Library.AbstactBLL;
 using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.CollectionBLL;
 using Epam.Task01.Library.CollectionDAL;
-using Epam.Task01.Library.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.Common
 {
@@ -76,7 +70,7 @@ namespace Epam.Task01.Library.Common
             _authorValidation = new AuthorValidation();
 
             _commonLogic = new CommonLogic(_commonDao, _commonValidation);
-            _bookLogic = new BookLogic(_bookDao,_commonValidation, _bookValidation, _authorValidation);
+            _bookLogic = new BookLogic(_bookDao, _commonValidation, _bookValidation, _authorValidation);
             _patentLogic = new PatentLogic(_patentDao, _patentValidation);
             _newspaperLogic = new NewspaperLogic(_newspaperDao, _newspaperValidation);
             _searchLogic = new SearchLogic(_searchDao);

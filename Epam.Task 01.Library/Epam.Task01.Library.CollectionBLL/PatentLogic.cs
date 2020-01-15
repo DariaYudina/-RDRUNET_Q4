@@ -4,16 +4,13 @@ using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
-    public class PatentLogic : IPatentLogic 
+    public class PatentLogic : IPatentLogic
     {
-        private IPatentDao _patentDao;
-        private IPatentValidation _patentValidation;
+        private readonly IPatentDao _patentDao;
+        private readonly IPatentValidation _patentValidation;
         public PatentLogic(IPatentDao patentDao, IPatentValidation validator)
         {
             _patentDao = patentDao;
@@ -25,7 +22,7 @@ namespace Epam.Task01.Library.CollectionBLL
         }
         public IEnumerable<Patent> GetPatentItems()
         {
-           return _patentDao.GetPatentItems();
+            return _patentDao.GetPatentItems();
         }
     }
 }

@@ -1,15 +1,11 @@
 ﻿using AbstractValidation;
-using CollectionValidation;
 using Epam.Task01.Library.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task_01.Library.AbstactBLL
 {
-    public interface IBookLogic 
+    public interface IBookLogic
     {
         IEnumerable<Book> GetBookItems();
         bool AddBook(List<ValidationException> validationResult, Book book);

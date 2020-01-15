@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task 01.Library.AbstactBLL", "Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.AbstactBLL.csproj", "{6DE33863-B649-4215-8159-8B1361CB7D5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task 01.Library.IBLL", "Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.IBLL.csproj", "{6DE33863-B649-4215-8159-8B1361CB7D5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.AbstractDAL", "Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.AbstractDAL.csproj", "{AF2897BC-B0CF-4120-AF17-54DED2874D53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.IDAL", "Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.IDAL.csproj", "{AF2897BC-B0CF-4120-AF17-54DED2874D53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.CollectionDAL", "Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.CollectionDAL.csproj", "{AD260801-E40C-4C6A-8B6A-B32E36C8904D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.DAL", "Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.DAL.csproj", "{AD260801-E40C-4C6A-8B6A-B32E36C8904D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.Entities", "Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj", "{551A846E-3895-4155-9BE2-793FE9237402}"
 EndProject
@@ -16,15 +16,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FDE64DE1-EC89-4C79-9C12-7A4FE2EC9CE7}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		Settings.stylecop = Settings.stylecop
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task 01.Library.AbstractValidation", "AbstractValidation\Epam.Task 01.Library.AbstractValidation.csproj", "{B2C6B383-AD28-427F-926F-2A57D9D176E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task 01.Library.IValidation", "AbstractValidation\Epam.Task 01.Library.IValidation.csproj", "{B2C6B383-AD28-427F-926F-2A57D9D176E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryEntityValidation", "CollectionValidation\LibraryEntityValidation.csproj", "{CBB42553-75FC-4B58-A618-380BA81DC788}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.Validation", "CollectionValidation\Epam.Task01.Library.Validation.csproj", "{CBB42553-75FC-4B58-A618-380BA81DC788}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.Common", "Epam.Task01.Library.Common\Epam.Task01.Library.Common.csproj", "{EAABACBE-1B13-457C-B906-DE032155A2CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.CollectionBLL", "Epam.Task01.Library.CollectionBLL\Epam.Task01.Library.CollectionBLL.csproj", "{3006573F-D1AF-4FE6-8A27-700C128EA042}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.BLL", "Epam.Task01.Library.CollectionBLL\Epam.Task01.Library.BLL.csproj", "{3006573F-D1AF-4FE6-8A27-700C128EA042}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
