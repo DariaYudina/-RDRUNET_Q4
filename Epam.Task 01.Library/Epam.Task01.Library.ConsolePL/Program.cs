@@ -1,6 +1,10 @@
-﻿namespace Epam.Task01.Library.ConsolePL
+﻿using Epam.Task01.Library.CollectionDAL;
+using Epam.Task01.Library.Entity;
+using System;
+
+namespace Epam.Task01.Library.ConsolePL
 {
-    internal class Program
+    public class Program
     {
         private static void Main(string[] args)
         {

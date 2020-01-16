@@ -49,10 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.IValidation.csproj">
-      <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
-      <Name>Epam.Task 01.Library.IValidation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
       <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
       <Name>Epam.Task01.Library.Entities</Name>

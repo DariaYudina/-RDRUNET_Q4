@@ -49,7 +49,7 @@ namespace Epam.Task01.Library.ConsolePL
                             GetAllCatalog();
                             break;
                         case 4:
-
+                            SearchByTItle();
                             break;
                         case 5:
 
@@ -181,7 +181,7 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddBook()
         {
             _validationResult = new List<ValidationException>();
-            Book book1 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 2019, "ISBN 2-266-11156-6","Hello", 200, "да");
+            Book book1 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 2019, "ISBN 2-266-11156-6", "Title", 200, "да");
             bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book1);
             Console.WriteLine("Результат валидации: " + res);
             foreach (ValidationException error in _validationResult)
@@ -200,7 +200,7 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddPatent()
         {
             _validationResult = new List<ValidationException>();
-            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } , "Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(2016, 7, 21), "Крутой патент", 128, "" );
+            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } , "Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(2016, 7, 21), "Крутой патент", 128, "",2018 );
             bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
             foreach (ValidationException error in _validationResult)
             {
@@ -212,13 +212,22 @@ namespace Epam.Task01.Library.ConsolePL
         }
         private void SearchBooksAndPatentsByAutors()
         {
-            List<Author> authors = new List<Author>() { new Author("Петр", "Петров") };
-            string search = "Петр Петров";
-            IEnumerable<IWithAuthorProperty> res = DependencyResolver.SearchLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
-            IEnumerable<AbstractLibraryItem> abstractcollection = res.OfType<AbstractLibraryItem>();
-            foreach (AbstractLibraryItem item in abstractcollection)
+            //List<Author> authors = new List<Author>() { new Author("Петр", "Петров") };
+            //string search = "Петр Петров";
+            //IEnumerable<AbstractValidation> res = DependencyResolver.SearchLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
+            //IEnumerable<AbstractLibraryItem> abstractcollection = res.OfType<AbstractLibraryItem>();
+            //foreach (AbstractLibraryItem item in abstractcollection)
+            //{
+            //    Console.WriteLine( item.LibaryItemId + " " + item.Title);
+            //}
+        }
+        public void SearchByTItle()
+        {
+            string search = "Title";
+            var res = DependencyResolver.CommonLogic.GetLibraryItemsByTitle(search);
+            foreach (var item in res)
             {
-                Console.WriteLine( item.LibaryItemId + " " + item.Title);
+                Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
         }
     }

@@ -32,5 +32,39 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _commonDao.GetLibraryItemsByYearOfPublishing();
         }
+
+        public IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author)
+        {
+            var res =  _commonDao.GetAllAbstractLibraryItems().Where(i => i is Patent || i is Book);
+            List<AbstractLibraryItem> res2 = new List<AbstractLibraryItem>();
+            foreach (var item in res)
+            {
+                if(item is Book)
+                {
+                    if (((Book)item).Authors.Contains(author))
+                    {
+                        res2.Add(item);
+                    }
+
+                }
+                else
+                {
+                    if (((Patent)item).Authors.Contains(author))
+                    {
+                        res2.Add(item);
+                    }
+                }
+            }
+            return res2;
+        }
+        public IEnumerable<Book> GetBooksByAuthor(Author author)
+        {
+            return _commonDao.GetTypeByAuthor<Book>().Where(item => item.Authors.Contains(author));
+        }
+        public IEnumerable<Patent> GetPatentsByAuthor(Author author)
+        {
+
+            return _commonDao.GetTypeByAuthor<Patent>().Where(item => item.Authors.Contains(author));
+        }
     }
 }

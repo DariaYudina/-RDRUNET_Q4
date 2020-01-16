@@ -56,5 +56,6 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _bookDao.CheckBookUniqueness(book);
         }
+
     }
 }

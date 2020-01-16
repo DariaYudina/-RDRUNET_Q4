@@ -46,18 +46,15 @@
     <Compile Include="ICommonLogic.cs" />
     <Compile Include="INewspaperLogic.cs" />
     <Compile Include="IPatentLogic.cs" />
-    <Compile Include="ISearchLogic.cs" />
+    <Compile Include="IValidators\IAuthorValidation.cs" />
+    <Compile Include="IValidators\IBookValidation.cs" />
+    <Compile Include="IValidators\ICommonValidation.cs" />
+    <Compile Include="IValidators\INewspaperValidation.cs" />
+    <Compile Include="IValidators\IPatentValidation.cs" />
+    <Compile Include="IValidators\ValidationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.IValidation.csproj">
-      <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
-      <Name>Epam.Task 01.Library.IValidation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CollectionValidation\Epam.Task01.Library.Validation.csproj">
-      <Project>{CBB42553-75FC-4B58-A618-380BA81DC788}</Project>
-      <Name>Epam.Task01.Library.Validation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.IDAL.csproj">
       <Project>{af2897bc-b0cf-4120-af17-54ded2874d53}</Project>
       <Name>Epam.Task01.Library.IDAL</Name>

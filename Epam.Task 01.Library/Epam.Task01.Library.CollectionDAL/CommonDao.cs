@@ -19,9 +19,23 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i.Title == name);
         }
+
         public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
         {
-            return MemoryStorage.GetAllAbstractLibraryItems().GroupBy(item => item.YearOfPublishing);
+            return MemoryStorage.GetAllAbstractLibraryItems().GroupBy(item => item.Title);
         }
+
+        public IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().OfType<T>();
+        }
+
+        public IEnumerable<T> GetTypesByAuthor<T, G>()
+            where T : AbstractLibraryItem
+            where G : AbstractLibraryItem
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i is T || i is G);
+        }
+
     }
 }

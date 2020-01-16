@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace Epam.Task01.Library.Entity
 {
-    public class Patent : AbstractLibraryItem, IWithAuthorProperty
+    public class Patent : AbstractLibraryItem
     {
         public List<Author> Authors { get; set; }
         public string Country { get; set; }
         public int RegistrationNumber { get; set; }
         public DateTime ApplicationDate { get; set; }
         public DateTime PublicationDate { get; set; }
+        public int YearOfPublishing { get; set; }
         public Patent(List<Author> authors, string country, int registrationNumber, DateTime applicationDate, DateTime publicationDate,
-                    string title, int pageCount, string commentary)
+                    string title, int pageCount, string commentary, int yearOfPublishing)
                     : base(title, pageCount, commentary)
         {
             Authors = authors;
@@ -19,7 +20,7 @@ namespace Epam.Task01.Library.Entity
             RegistrationNumber = registrationNumber;
             ApplicationDate = applicationDate;
             PublicationDate = publicationDate;
-            base.YearOfPublishing = PublicationDate.Year;
+            YearOfPublishing = yearOfPublishing;
         }
     }
 }

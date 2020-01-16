@@ -45,14 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbstractValidation\Epam.Task 01.Library.IValidation.csproj">
-      <Project>{B2C6B383-AD28-427F-926F-2A57D9D176E1}</Project>
-      <Name>Epam.Task 01.Library.IValidation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CollectionValidation\Epam.Task01.Library.Validation.csproj">
-      <Project>{CBB42553-75FC-4B58-A618-380BA81DC788}</Project>
-      <Name>Epam.Task01.Library.Validation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.IBLL.csproj">
       <Project>{6DE33863-B649-4215-8159-8B1361CB7D5C}</Project>
       <Name>Epam.Task 01.Library.IBLL</Name>

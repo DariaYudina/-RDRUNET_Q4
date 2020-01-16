@@ -10,5 +10,8 @@ namespace Epam.Task_01.Library.AbstactBLL
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title);
         bool DeleteLibraryItemById(int id);
         IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing();
+        IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author);
+        IEnumerable<Book> GetBooksByAuthor(Author author);
+        IEnumerable<Patent> GetPatentsByAuthor(Author author);
     }
 }
