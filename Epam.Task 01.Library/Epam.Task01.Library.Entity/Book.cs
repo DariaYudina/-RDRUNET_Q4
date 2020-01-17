@@ -9,6 +9,7 @@ namespace Epam.Task01.Library.Entity
         public string PublishingCompany { get; set; }
         public string isbn { get; set; }
         public int YearOfPublishing { get; set; }
+        public Book() { }
         public Book(List<Author> authors, string city, string publishingCompany, int yearOfPublishing, string isbn,
                     string title, int pageCount, string commentary)
                     : base(title, pageCount, commentary)

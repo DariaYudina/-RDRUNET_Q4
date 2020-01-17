@@ -10,6 +10,7 @@ namespace Epam.Task01.Library.Entity
         public DateTime DateOfPublishing { get; set; }
         public string issn { get; set; }
         public int YearOfPublishing { get; set; }
+        public Newspaper() { }
         public Newspaper(string city, string publishingCompany, int yearOfPublishing, int countOfPublishing, DateTime dateOfPublishing, string issn,
                         string title, int pageCount, string commentary)
                         : base(title, pageCount, commentary)
