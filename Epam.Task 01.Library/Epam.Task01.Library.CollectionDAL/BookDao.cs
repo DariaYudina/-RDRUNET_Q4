@@ -15,7 +15,6 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.GetLibraryItemByType<Book>();
         }
-
         public Book GetBookById(int id)
         {
             return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.LibaryItemId == id);
@@ -26,41 +25,51 @@ namespace Epam.Task01.Library.CollectionDAL
         }
         public bool CheckBookUniqueness(Book book)
         {
-            //IEnumerable<AbstractLibraryItem> allLibrary = MemoryStorage.GetAllAbstractLibraryItems();
-            //IEnumerable<Book> bookLibrary = allLibrary.OfType<Book>();
-            //IEnumerable<AbstractLibraryItem> withauthor = allLibrary.OfType<AbstractLibraryItem>();
-            //if (book.isbn != "" && book.isbn != null)
-            //{
-            //    foreach (Book item in bookLibrary)
-            //    {
-            //        if (item.isbn == book.isbn)
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (AbstractLibraryItem item in allLibrary)
-            //    {
-            //        if (item.Title == book.Title || item.YearOfPublishing == book.YearOfPublishing)
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //    foreach (IWithAuthorProperty authors in withauthor)
-            //    {
-            //        bool res = true;
-            //        for (int i = 0; i < withauthor.Count(); i++)
-            //        {
-            //            if (authors.Authors[i].FirstName == book.Authors[i].FirstName && authors.Authors[i].LastName == book.Authors[i].LastName)
-            //            {
-            //                res |= false;
-            //            }
-            //        }
-            //        return res;
-            //    }
-            //}
+            IEnumerable<Book> books = MemoryStorage.GetAllAbstractLibraryItems().OfType<Book>();
+            IEnumerable<Patent> patents = MemoryStorage.GetAllAbstractLibraryItems().OfType<Patent>();
+            var booksAndPatents = MemoryStorage.GetAllAbstractLibraryItems().Where(i => i is Book || i is Patent);
+            if (book.isbn != "" && book.isbn != null)
+            {
+                foreach (Book item in books)
+                {
+                    if (item.isbn == book.isbn)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                foreach (AbstractLibraryItem item in MemoryStorage.GetAllAbstractLibraryItems())
+                {
+                    if (item.Title == book.Title || item.YearOfPublishing == book.YearOfPublishing)
+                    {
+                        return false;
+                    }
+                }
+                bool res = true;
+                foreach (var item in books)
+                {
+                    for (int i = 0; i < item.Authors.Count(); i++)
+                    {
+                        if (item.Authors[i].FirstName == book.Authors[i].FirstName && item.Authors[i].LastName == book.Authors[i].LastName)
+                        {
+                            res |= false;
+                        }
+                    }
+                }
+                foreach (var item in patents)
+                {
+                    for (int i = 0; i < item.Authors.Count(); i++)
+                    {
+                        if (item.Authors[i].FirstName == book.Authors[i].FirstName && item.Authors[i].LastName == book.Authors[i].LastName)
+                        {
+                            res |= false;
+                        }
+                    }
+                }
+                return res;
+            }
             return true;
         }
     }

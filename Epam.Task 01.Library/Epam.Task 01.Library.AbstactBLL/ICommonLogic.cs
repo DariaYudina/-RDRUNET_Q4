@@ -8,6 +8,7 @@ namespace Epam.Task_01.Library.AbstactBLL
     {
         IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems();
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title);
+        IEnumerable<AbstractLibraryItem> SortByYear();
         bool DeleteLibraryItemById(int id);
         IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing();
         IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author);

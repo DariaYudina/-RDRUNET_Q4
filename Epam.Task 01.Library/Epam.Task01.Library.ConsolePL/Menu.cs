@@ -9,27 +9,27 @@ namespace Epam.Task01.Library.ConsolePL
 {
     public class Menu
     {
-        private static List<ValidationException> _validationResult;
-
+        private static List<ValidationObject> _validationResult;
+        private static IEnumerable<AbstractLibraryItem> _library;
         public void Open()
         {
             bool repeat = true;
             do
             {
-                Console.WriteLine("Меню:" + Environment.NewLine +
-                              "0. Выход" + Environment.NewLine +
-                              "1. Добавленить запись в каталог " + Environment.NewLine +
-                              "2. Удалить запись" + Environment.NewLine +
-                              "3. Посмотреть каталог" + Environment.NewLine +
-                              "4. Найти запись по названию" + Environment.NewLine +
-                              "5. Сортировать по году выпуска в прямом порядке" + Environment.NewLine +
-                              "6. Сортировать по году выпуска в обратном порядке" + Environment.NewLine +
-                              "7. Найти книги автора (включая соавторство)" + Environment.NewLine +
-                              "8. Найти все патенты данного изобретателя (включая соавторство)" + Environment.NewLine +
-                              "9. Найти все книги и патенты данного автора (включая соавторство)" + Environment.NewLine +
-                              "10.Вывод книг, название и издательство которых начинается с заданного набора символов, с группировкой по издательству" + Environment.NewLine +
-                              "11.Группировка записей по годам издания" + Environment.NewLine +
-                              "Введите выбранный пункт меню:"
+                Console.WriteLine("Menu:" + Environment.NewLine +
+                              "0. Exit" + Environment.NewLine +
+                              "1. Add item to catalog " + Environment.NewLine +
+                              "2. Delete item from catalog" + Environment.NewLine +
+                              "3. Load catalog" + Environment.NewLine +
+                              "4. Search item by title" + Environment.NewLine +
+                              "5. Order by year" + Environment.NewLine +
+                              "6. Order by year descending" + Environment.NewLine +
+                              "7. Get books by author" + Environment.NewLine +
+                              "8. Get patents by author" + Environment.NewLine +
+                              "9. Get books and patents by author" + Environment.NewLine +
+                              "10.Get by title with group by publishing company" + Environment.NewLine +
+                              "11.Group by year of publishing" + Environment.NewLine +
+                              "Enter the selected menu item:"
                              );
 
                 if (int.TryParse(Console.ReadLine(), out int selectedOption))
@@ -52,16 +52,16 @@ namespace Epam.Task01.Library.ConsolePL
                             SearchByTItle();
                             break;
                         case 5:
-
+                            SortByYear();
                             break;
                         case 6:
 
                             break;
                         case 7:
-
+                            SearchBooksByAutors();
                             break;
                         case 8:
-
+                            SearchPatentsByAutors();
                             break;
                         case 9:
                             SearchBooksAndPatentsByAutors();
@@ -77,7 +77,7 @@ namespace Epam.Task01.Library.ConsolePL
                             break;
                         default:
                             Console.WriteLine("----------------------------------------------------------------");
-                            Console.WriteLine("Введите существующий пункт меню");
+                            Console.WriteLine("Enter an existing menu item");
                             Console.WriteLine("----------------------------------------------------------------");
                             break;
                     }
@@ -85,7 +85,7 @@ namespace Epam.Task01.Library.ConsolePL
                 else
                 {
                     Console.WriteLine("----------------------------------------------------------------");
-                    Console.WriteLine("Введите число");
+                    Console.WriteLine("Enter a number");
                     Console.WriteLine("----------------------------------------------------------------");
                 }
             }
@@ -96,13 +96,13 @@ namespace Epam.Task01.Library.ConsolePL
             try
             {
                 Console.WriteLine("----------------------------------------------------------------");
-                Console.WriteLine("Выберите тип добавляемого объекта:");
-                Console.WriteLine("Меню:" + Environment.NewLine +
-                                "0. Выход" + Environment.NewLine +
-                                "1. Книга " + Environment.NewLine +
-                                "2. Патент" + Environment.NewLine +
-                                "3. Газета" + Environment.NewLine +
-                                "Введите выбранный пункт меню:"
+                Console.WriteLine("Select the type of item:");
+                Console.WriteLine("Menu:" + Environment.NewLine +
+                                "0. Exit" + Environment.NewLine +
+                                "1. Book " + Environment.NewLine +
+                                "2. Patent" + Environment.NewLine +
+                                "3. Newspaper" + Environment.NewLine +
+                                "Enter the selected menu item:"
                                 );
                 if (int.TryParse(Console.ReadLine(), out int selectedOption))
                 {
@@ -121,7 +121,7 @@ namespace Epam.Task01.Library.ConsolePL
                             break;
                         default:
                             Console.WriteLine("----------------------------------------------------------------");
-                            Console.WriteLine("Введите существующий пункт меню");
+                            Console.WriteLine("Enter an existing menu item");
                             Console.WriteLine("----------------------------------------------------------------");
                             break;
                     }
@@ -142,10 +142,13 @@ namespace Epam.Task01.Library.ConsolePL
         }
         public void GetAllCatalog()
         {
-            IEnumerable<AbstractLibraryItem> catalog = DependencyResolver.CommonLogic.GetAllAbstractLibraryItems();
+            if(_library == null)
+            {
+                _library = DependencyResolver.CommonLogic.GetAllAbstractLibraryItems();
+            }
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("Catalog:");
-            foreach (AbstractLibraryItem item in catalog)
+            foreach (AbstractLibraryItem item in _library)
             {
                 Console.WriteLine("Catalog id: " + item.LibaryItemId + "| Title: " + item.Title);
             }
@@ -157,16 +160,16 @@ namespace Epam.Task01.Library.ConsolePL
             {
                 Console.WriteLine("----------------------------------------------------------------");
                 GetAllCatalog();
-                Console.WriteLine("Выберите id удаляемного объекта:");
+                Console.WriteLine("Select id of the deleted object:");
                 if (int.TryParse(Console.ReadLine(), out int selectedOption))
                 {
                     bool res = DependencyResolver.CommonLogic.DeleteLibraryItemById(selectedOption);
-                    Console.WriteLine("Результат удаления: " + res);
+                    Console.WriteLine("Result: " + res);
                 }
                 else
                 {
                     Console.WriteLine("----------------------------------------------------------------");
-                    Console.WriteLine("Введите число");
+                    Console.WriteLine("Enter a number");
                     Console.WriteLine("----------------------------------------------------------------");
                 }
             }
@@ -177,32 +180,25 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
             }
         }
-
         private void AddBook()
         {
-            _validationResult = new List<ValidationException>();
-            Book book1 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 2019, "ISBN 2-266-11156-6", "Title", 200, "да");
-            bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book1);
-            Console.WriteLine("Результат валидации: " + res);
-            foreach (ValidationException error in _validationResult)
-            {
-                Console.WriteLine(error.Property + ": " + error.Message);
-            }
-            var _validationResult2 = new List<ValidationException>();
-            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Ростов", "Эксмо", 2000, "ISBN 2-256-11756-6","Hi", 500, "да");
-            bool res2 = DependencyResolver.BookLogic.AddBook(_validationResult2, book2);
-            Console.WriteLine("Результат валидации: " + res);
-            foreach (ValidationException error in _validationResult2)
+            _validationResult = new List<ValidationObject>();
+            Book book = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1996, "ISBN 2-266-11156-6", "Title", 200, "да");
+            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1800, "ISBN 2-266-11156-1", "Title", 200, "да");
+            bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book);
+            DependencyResolver.BookLogic.AddBook(_validationResult, book2);
+            Console.WriteLine("Result of validation: " + res);
+            foreach (ValidationObject error in _validationResult)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
         }
         private void AddPatent()
         {
-            _validationResult = new List<ValidationException>();
-            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } , "Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(2016, 7, 21), "Крутой патент", 128, "",2018 );
+            _validationResult = new List<ValidationObject>();
+            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } , "Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(2016, 7, 21), "Крутой патент", 128, "");
             bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
-            foreach (ValidationException error in _validationResult)
+            foreach (ValidationObject error in _validationResult)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
@@ -210,25 +206,45 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddNewspaper()
         {
         }
+        private void SearchBooksByAutors()
+        {
+            var res = DependencyResolver.CommonLogic.GetBooksByAuthor(new Author("Петр", "Петров"));
+            foreach (AbstractLibraryItem item in res)
+            {
+                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+            }
+        }
+        private void SearchPatentsByAutors()
+        {
+            var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author("Петр", "Петров"));
+            foreach (AbstractLibraryItem item in res)
+            {
+                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+            }
+        }
         private void SearchBooksAndPatentsByAutors()
         {
-            //List<Author> authors = new List<Author>() { new Author("Петр", "Петров") };
-            //string search = "Петр Петров";
-            //IEnumerable<AbstractValidation> res = DependencyResolver.SearchLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
-            //IEnumerable<AbstractLibraryItem> abstractcollection = res.OfType<AbstractLibraryItem>();
-            //foreach (AbstractLibraryItem item in abstractcollection)
-            //{
-            //    Console.WriteLine( item.LibaryItemId + " " + item.Title);
-            //}
+            var res = DependencyResolver.CommonLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
+            foreach (AbstractLibraryItem item in res)
+            {
+                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+            }
+        }
+        public void SortByYear()
+        {
+            _library = DependencyResolver.CommonLogic.SortByYear();
+            Console.WriteLine("Catalog sorted");
         }
         public void SearchByTItle()
         {
             string search = "Title";
             var res = DependencyResolver.CommonLogic.GetLibraryItemsByTitle(search);
+            Console.WriteLine("----------------------------------------------------------------");
             foreach (var item in res)
             {
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
+            Console.WriteLine("----------------------------------------------------------------");
         }
     }
 }

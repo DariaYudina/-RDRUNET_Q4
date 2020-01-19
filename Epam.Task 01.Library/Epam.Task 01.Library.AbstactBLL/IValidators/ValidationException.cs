@@ -2,11 +2,11 @@
 
 namespace AbstractValidation
 {
-    public class ValidationException 
+    public class ValidationObject
     {
         public string Property { get; set; }
         public string Message { get; set; }
-        public ValidationException(string message, string prop) 
+        public ValidationObject(string message, string prop) 
         {
             Property = prop;
             Message = message;

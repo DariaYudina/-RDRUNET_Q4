@@ -6,6 +6,7 @@
         public string Title { get; set; }
         public int PagesCount { get; set; }
         public string Commentary { get; set; }
+        public int YearOfPublishing { get; set; }
         public AbstractLibraryItem() { }
         public AbstractLibraryItem(string title, int pagesCount, string commentary)
         {

@@ -8,9 +8,10 @@ namespace Epam.Task01.Library.AbstractDAL
     {
         IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems();
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string name);
+        IEnumerable<AbstractLibraryItem> SortByYear();
         bool DeleteLibraryItemById(int id);
         IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing();
         IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem;
-        IEnumerable<T> GetTypesByAuthor<T, G>() where T : AbstractLibraryItem where G : AbstractLibraryItem;
+        IEnumerable<AbstractLibraryItem> GetTwoTypesByAuthor<T, G>() where T : AbstractLibraryItem where G : AbstractLibraryItem;
     }
 }

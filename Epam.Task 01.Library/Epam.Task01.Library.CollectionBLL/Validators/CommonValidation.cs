@@ -11,31 +11,25 @@ namespace CollectionValidation
 {
     public class CommonValidation : ICommonValidation
     {
-        public List<ValidationException> ValidationResult { get; set; }
+        public List<ValidationObject> ValidationResult { get; set; }
         public bool IsValid { get; set; } = true;
+        public CommonValidation()
+        {
+            ValidationResult = new List<ValidationObject>();
+        }
         public ICommonValidation CheckCommentary(AbstractLibraryItem item)
         {
+            if(item == null)
+            {
+                return this;
+            }
             bool notvalid = item.Commentary.Length > 2000;
             IsValid &= !notvalid;
             if (notvalid)
             {
                 if (ValidationResult != null)
                 {
-                    ValidationException e = new ValidationException("Commentary", "Commentary must be less than 2000 characters");
-                    ValidationResult.Add(e);
-                }
-            }
-            return this;
-        }
-        public ICommonValidation CheckNullReferenceObject(AbstractLibraryItem item)
-        {
-            bool notvalid = item == null;
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationException e = new ValidationException("Object reference not set to an instance of an object", "Book");
+                    ValidationObject e = new ValidationObject("Commentary", "Commentary must be less than 2000 characters");
                     ValidationResult.Add(e);
                 }
             }
@@ -49,7 +43,7 @@ namespace CollectionValidation
             {
                 if (ValidationResult != null)
                 {
-                    ValidationException e = new ValidationException("PagesCount must be more then 0", "PagesCount");
+                    ValidationObject e = new ValidationObject("PagesCount must be more then 0", "PagesCount");
                     ValidationResult.Add(e);
                 }
             }
@@ -57,24 +51,17 @@ namespace CollectionValidation
         }
         public ICommonValidation CheckTitle(AbstractLibraryItem item)
         {
-            if (IsValid != false)
+            bool notvalid = item.Title.Length > 300 | CheckStringIsNullorEmpty(item.Title);
+            IsValid &= !notvalid;
+            if (notvalid)
             {
-                bool notvalid = item.Title.Length > 300 | CheckStringIsNullorEmpty(item.Title);
-                IsValid &= !notvalid;
-                if (notvalid)
+                if (ValidationResult != null)
                 {
-                    if (ValidationResult != null)
-                    {
-                        ValidationException e = new ValidationException("Title must be less than 300 characters", "Title");
-                        ValidationResult.Add(e);
-                    }
+                    ValidationObject e = new ValidationObject("Title must be less than 300 characters", "Title");
+                    ValidationResult.Add(e);
                 }
-                return this;
             }
-            else
-            {
-                return this;
-            }
+            return this;
         }
         public bool CheckStringIsNullorEmpty(string str)
         {
@@ -84,7 +71,7 @@ namespace CollectionValidation
             {
                 if (ValidationResult != null)
                 {
-                    ValidationException e = new ValidationException("Is nill or white space string", "str");
+                    ValidationObject e = new ValidationObject("Is nill or white space string", "str");
                     ValidationResult.Add(e);
                 }
                 return true;

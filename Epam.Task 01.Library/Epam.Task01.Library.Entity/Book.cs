@@ -8,7 +8,6 @@ namespace Epam.Task01.Library.Entity
         public string City { get; set; }
         public string PublishingCompany { get; set; }
         public string isbn { get; set; }
-        public int YearOfPublishing { get; set; }
         public Book() { }
         public Book(List<Author> authors, string city, string publishingCompany, int yearOfPublishing, string isbn,
                     string title, int pageCount, string commentary)
@@ -17,7 +16,7 @@ namespace Epam.Task01.Library.Entity
             Authors = authors;
             City = city;
             PublishingCompany = publishingCompany;
-            YearOfPublishing = yearOfPublishing;
+            base.YearOfPublishing = yearOfPublishing;
             this.isbn = isbn;
         }
     }

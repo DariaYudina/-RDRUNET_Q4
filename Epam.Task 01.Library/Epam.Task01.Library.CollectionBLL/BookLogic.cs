@@ -10,30 +10,27 @@ namespace Epam.Task01.Library.CollectionBLL
     public class BookLogic : IBookLogic
     {
         private readonly IBookDao _bookDao;
-        private readonly ICommonValidation _commonValidation;
         private readonly IBookValidation _bookValidation;
-        private readonly IAuthorValidation _authorValidation;
-        public BookLogic(IBookDao bookDao, ICommonValidation commonValidation, IBookValidation bookValidation, IAuthorValidation authorValidation)
+        public BookLogic(IBookDao bookDao, IBookValidation bookValidation)
         {
             _bookDao = bookDao;
-            _commonValidation = commonValidation;
             _bookValidation = bookValidation;
-            _authorValidation = authorValidation;
         }
-        public bool AddBook(List<ValidationException> validationResult, Book book)
+        public bool AddBook(List<ValidationObject> validationResult, Book book)
         {
-            _commonValidation.ValidationResult = validationResult;
-            _bookValidation.ValidationResult = _commonValidation.ValidationResult;
-            _authorValidation.ValidationResult = _bookValidation.ValidationResult;
-            ICommonValidation commonvalidationObject = _commonValidation.CheckNullReferenceObject(book).CheckTitle(book).CheckPagesCount(book);
-            IBookValidation bookvalidationObject = _bookValidation.CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book);
-            IAuthorValidation authorsvalidationObject = _authorValidation.CheckAuthorsFirstName(book).CheckAuthorsLastName(book);
-            if (!CheckBookUniqueness(book))
+            _bookValidation.ValidationResult = validationResult;
+            if(book == null)
             {
-                _authorValidation.ValidationResult.Add(new ValidationException("Book is not unique ", "Book"));
+                _bookValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
                 return false;
             }
-            if (commonvalidationObject.IsValid && bookvalidationObject.IsValid && authorsvalidationObject.IsValid)
+            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book).CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book).CheckAuthorsFirstName(book).CheckAuthorsLastName(book);
+            if (!CheckBookUniqueness(book))
+            {
+                _bookValidation.ValidationResult.Add(new ValidationObject("Book is not unique ", "Book"));
+                return false;
+            }
+            if ( bookvalidationObject.IsValid)
             {
                 _bookDao.AddBook(book);
                 return true;
@@ -56,6 +53,5 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _bookDao.CheckBookUniqueness(book);
         }
-
     }
 }

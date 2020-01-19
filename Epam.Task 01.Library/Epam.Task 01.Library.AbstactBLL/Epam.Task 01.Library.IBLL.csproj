@@ -46,7 +46,6 @@
     <Compile Include="ICommonLogic.cs" />
     <Compile Include="INewspaperLogic.cs" />
     <Compile Include="IPatentLogic.cs" />
-    <Compile Include="IValidators\IAuthorValidation.cs" />
     <Compile Include="IValidators\IBookValidation.cs" />
     <Compile Include="IValidators\ICommonValidation.cs" />
     <Compile Include="IValidators\INewspaperValidation.cs" />

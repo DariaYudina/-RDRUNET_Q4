@@ -5,7 +5,7 @@ namespace AbstractValidation
 {
     public interface INewspaperValidation
     {
-        List<ValidationException> ValidationResult { get; set; }
+        List<ValidationObject> ValidationResult { get; set; }
         bool IsValid { get; set; }
         INewspaperValidation CheckNewspaperCity(Newspaper newspaper);
         INewspaperValidation CheckPublishingCompany(Newspaper newspaper);

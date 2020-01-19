@@ -10,10 +10,9 @@ namespace Epam.Task01.Library.Entity
         public int RegistrationNumber { get; set; }
         public DateTime ApplicationDate { get; set; }
         public DateTime PublicationDate { get; set; }
-        public int YearOfPublishing { get; set; }
         public Patent() { }
         public Patent(List<Author> authors, string country, int registrationNumber, DateTime applicationDate, DateTime publicationDate,
-                    string title, int pageCount, string commentary, int yearOfPublishing)
+                    string title, int pageCount, string commentary )
                     : base(title, pageCount, commentary)
         {
             Authors = authors;
@@ -21,7 +20,7 @@ namespace Epam.Task01.Library.Entity
             RegistrationNumber = registrationNumber;
             ApplicationDate = applicationDate;
             PublicationDate = publicationDate;
-            YearOfPublishing = yearOfPublishing;
+            base.YearOfPublishing = publicationDate.Year;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CollectionValidation
 {
     public class PatentValidation : IPatentValidation
     {
-        public List<ValidationException> ValidationResult { get; set; }
+        public List<ValidationObject> ValidationResult { get; set; }
         public bool IsValid { get; set; } = true;
 
         public IPatentValidation CheckApplicationDate(Patent patent)
@@ -21,7 +21,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationException e = new ValidationException("ApplicationDate must be more than 1474 and less than current year", "ApplicationDate");
+                        ValidationObject e = new ValidationObject("ApplicationDate must be more than 1474 and less than current year", "ApplicationDate");
                         ValidationResult.Add(e);
                     }
                 }
@@ -33,6 +33,42 @@ namespace CollectionValidation
             }
         }
 
+        public IPatentValidation CheckAuthorsFirstName(Patent patent)
+        {
+            bool notvalid = false;
+            string namePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+            foreach (Author item in patent.Authors)
+            {
+                if (!Regex.IsMatch(item.FirstName, namePattern))
+                {
+                    notvalid = true;
+                    ValidationObject e = new ValidationObject("Author first name is not valid", "Firstname ");
+                    ValidationResult.Add(e);
+                    break;
+                }
+            }
+            IsValid &= !notvalid;
+            return this;
+        }
+
+        public IPatentValidation CheckAuthorsLastName(Patent patent)
+        {
+            bool notvalid = false;
+            string lastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+            foreach (Author item in patent.Authors)
+            {
+                if (!Regex.IsMatch(item.FirstName, lastnamePattern))
+                {
+                    notvalid = true;
+                    ValidationObject e = new ValidationObject("Author last name is not valid", "Lastname ");
+                    ValidationResult.Add(e);
+                    break;
+                }
+            }
+            IsValid &= !notvalid;
+            return this;
+        }
+
         public IPatentValidation CheckCountry(Patent patent)
         {
             string countryPattern = @"^(([A - Z][a - z] +) | ([А - Я][а - я] +) | ([A - Z] +|[А - Я] +))$";
@@ -42,7 +78,7 @@ namespace CollectionValidation
             {
                 if (ValidationResult != null)
                 {
-                    ValidationException e = new ValidationException("Country is not valid", "Country");
+                    ValidationObject e = new ValidationObject("Country is not valid", "Country");
                     ValidationResult.Add(e);
                 }
             }
@@ -59,7 +95,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationException e = new ValidationException("PublicationDate must be more than 1474, less than current year and more than Application date", "PublicationDate");
+                        ValidationObject e = new ValidationObject("PublicationDate must be more than 1474, less than current year and more than Application date", "PublicationDate");
                         ValidationResult.Add(e);
                     }
                 }
@@ -70,7 +106,6 @@ namespace CollectionValidation
                 return this;
             }
         }
-
         public IPatentValidation CheckRegistrationNumber(Patent patent)
         {
             if (IsValid != false)
@@ -81,7 +116,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
                         ValidationResult.Add(e);
                     }
                 }

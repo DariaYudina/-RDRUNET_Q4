@@ -22,8 +22,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
         {
-            //return MemoryStorage.GetAllAbstractLibraryItems().GroupBy(item => item.Title);
-            throw new System.NotImplementedException();
+            return MemoryStorage.GetAllAbstractLibraryItems().GroupBy(i => i.YearOfPublishing);
         }
 
         public IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem
@@ -31,13 +30,16 @@ namespace Epam.Task01.Library.CollectionDAL
             return MemoryStorage.GetAllAbstractLibraryItems().OfType<T>();
         }
 
-        public IEnumerable<T> GetTypesByAuthor<T, G>()
+        public IEnumerable<AbstractLibraryItem> GetTwoTypesByAuthor<T, G>()
             where T : AbstractLibraryItem
             where G : AbstractLibraryItem
         {
-            //return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i is T || i is G);
-            throw new System.NotImplementedException();
+            return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i is T || i is G);
         }
 
+        public IEnumerable<AbstractLibraryItem> SortByYear()
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().OrderBy(u => u.YearOfPublishing);
+        }
     }
 }

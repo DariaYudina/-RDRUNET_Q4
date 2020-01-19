@@ -17,7 +17,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _newspaperValidation = validator;
         }
 
-        public bool AddNewspaper(List<ValidationException> validationResult, Newspaper newspaper)
+        public bool AddNewspaper(List<ValidationObject> validationResult, Newspaper newspaper)
         {
             throw new NotImplementedException();
         }

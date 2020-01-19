@@ -6,7 +6,7 @@ namespace CollectionValidation
 {
     public class NewspaperValidation : INewspaperValidation
     {
-        public List<ValidationException> ValidationResult { get; set; }
+        public List<ValidationObject> ValidationResult { get; set; }
         public bool IsValid { get; set; } = true;
 
         public INewspaperValidation CheckISSN(Newspaper newspaper)
@@ -19,7 +19,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
                         ValidationResult.Add(e);
                     }
                 }
@@ -41,7 +41,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
                         ValidationResult.Add(e);
                     }
                 }
@@ -62,7 +62,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
                         ValidationResult.Add(e);
                     }
                 }
@@ -84,7 +84,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationException e = new ValidationException("Is nill or white space string", "str");
+                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
                         ValidationResult.Add(e);
                     }
                 }

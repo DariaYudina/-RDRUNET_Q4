@@ -5,11 +5,13 @@ namespace AbstractValidation
 {
     public interface IPatentValidation
     {
-        List<ValidationException> ValidationResult { get; set; }
+        List<ValidationObject> ValidationResult { get; set; }
         bool IsValid { get; set; }
         IPatentValidation CheckCountry(Patent patent);
         IPatentValidation CheckRegistrationNumber(Patent patent);
         IPatentValidation CheckApplicationDate(Patent patent);
         IPatentValidation CheckPublicationDate(Patent patent);
+        IPatentValidation CheckAuthorsFirstName(Patent patent);
+        IPatentValidation CheckAuthorsLastName(Patent patent);
     }
 }
