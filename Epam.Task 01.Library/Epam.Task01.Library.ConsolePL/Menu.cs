@@ -20,7 +20,7 @@ namespace Epam.Task01.Library.ConsolePL
                               "0. Exit" + Environment.NewLine +
                               "1. Add item to catalog " + Environment.NewLine +
                               "2. Delete item from catalog" + Environment.NewLine +
-                              "3. Load catalog" + Environment.NewLine +
+                              "3. Get all catalog" + Environment.NewLine +
                               "4. Search item by title" + Environment.NewLine +
                               "5. Order by year" + Environment.NewLine +
                               "6. Order by year descending" + Environment.NewLine +
@@ -28,7 +28,7 @@ namespace Epam.Task01.Library.ConsolePL
                               "8. Get patents by author" + Environment.NewLine +
                               "9. Get books and patents by author" + Environment.NewLine +
                               "10.Get by title with group by publishing company" + Environment.NewLine +
-                              "11.Group by year of publishing" + Environment.NewLine +
+                              "11.Group by year of publishing and load" + Environment.NewLine +
                               "Enter the selected menu item:"
                              );
 
@@ -55,7 +55,7 @@ namespace Epam.Task01.Library.ConsolePL
                             SortByYear();
                             break;
                         case 6:
-
+                            SortByYearDesc();
                             break;
                         case 7:
                             SearchBooksByAutors();
@@ -67,13 +67,10 @@ namespace Epam.Task01.Library.ConsolePL
                             SearchBooksAndPatentsByAutors();
                             break;
                         case 10:
-
+                            GetBooksGroupByPublishingCompanyWithTitle();
                             break;
                         case 11:
-
-                            break;
-                        case 12:
-
+                            GetGroupLibraryItemByYearOfPublishing();
                             break;
                         default:
                             Console.WriteLine("----------------------------------------------------------------");
@@ -91,6 +88,38 @@ namespace Epam.Task01.Library.ConsolePL
             }
             while (repeat);
         }
+
+        public void GetBooksGroupByPublishingCompanyWithTitle()
+        {
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("Catalog:");
+            string title = "Title";
+            foreach (var item in GroupBooksByPublishingCompany(title))
+            {
+                Console.WriteLine($"Year: {item.Key}");
+                foreach (var i in item)
+                {
+                    Console.WriteLine($"\t{i.Title}");
+                }
+            }
+            Console.WriteLine("----------------------------------------------------------------");
+        }
+
+        public void GetGroupLibraryItemByYearOfPublishing()
+        {
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("Catalog:");
+            foreach (var item in GroupItemsByYearOfPublishing())
+            {
+                Console.WriteLine($"Year: {item.Key}");
+                foreach (var i in item)
+                {
+                    Console.WriteLine($"\t{i.Title}");
+                }
+            }
+            Console.WriteLine("----------------------------------------------------------------");
+        }
+
         public void AddCatalogItem()
         {
             try
@@ -140,6 +169,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
             }
         }
+
         public void GetAllCatalog()
         {
             if(_library == null)
@@ -152,8 +182,10 @@ namespace Epam.Task01.Library.ConsolePL
             {
                 Console.WriteLine("Catalog id: " + item.LibaryItemId + "| Title: " + item.Title);
             }
+
             Console.WriteLine("----------------------------------------------------------------");
         }
+
         public void DeleteCatalogItem()
         {
             try
@@ -180,11 +212,12 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
             }
         }
+
         private void AddBook()
         {
             _validationResult = new List<ValidationObject>();
             Book book = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1996, "ISBN 2-266-11156-6", "Title", 200, "да");
-            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1800, "ISBN 2-266-11156-1", "Title", 200, "да");
+            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1996, "ISBN 2-266-11156-1", "Title", 200, "да");
             bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book);
             DependencyResolver.BookLogic.AddBook(_validationResult, book2);
             Console.WriteLine("Result of validation: " + res);
@@ -193,6 +226,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
         }
+
         private void AddPatent()
         {
             _validationResult = new List<ValidationObject>();
@@ -203,6 +237,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
         }
+
         private void AddNewspaper()
         {
         }
@@ -214,6 +249,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
         }
+
         private void SearchPatentsByAutors()
         {
             var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author("Петр", "Петров"));
@@ -222,6 +258,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
         }
+
         private void SearchBooksAndPatentsByAutors()
         {
             var res = DependencyResolver.CommonLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
@@ -230,11 +267,19 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
         }
+
         public void SortByYear()
         {
             _library = DependencyResolver.CommonLogic.SortByYear();
             Console.WriteLine("Catalog sorted");
         }
+
+        public void SortByYearDesc()
+        {
+            _library = DependencyResolver.CommonLogic.SortByYearDesc();
+            Console.WriteLine("Catalog sorted");
+        }
+
         public void SearchByTItle()
         {
             string search = "Title";
@@ -245,6 +290,16 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
             Console.WriteLine("----------------------------------------------------------------");
+        }
+
+        private IEnumerable<IGrouping<int, AbstractLibraryItem>> GroupItemsByYearOfPublishing()
+        {
+            return DependencyResolver.CommonLogic.GetLibraryItemsByYearOfPublishing();
+        }
+
+        private IEnumerable<IGrouping<string, Book>> GroupBooksByPublishingCompany(string title)
+        {
+            return DependencyResolver.BookLogic.GetBooksByPublishingCompany(title);
         }
     }
 }

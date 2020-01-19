@@ -52,5 +52,10 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _commonDao.SortByYear();
         }
+
+        public IEnumerable<AbstractLibraryItem> SortByYearDesc()
+        {
+            return _commonDao.SortByYearDesc();
+        }
     }
 }

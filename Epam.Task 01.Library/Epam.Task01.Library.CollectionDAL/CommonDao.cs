@@ -41,5 +41,10 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.GetAllAbstractLibraryItems().OrderBy(u => u.YearOfPublishing);
         }
+
+        public IEnumerable<AbstractLibraryItem> SortByYearDesc()
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().OrderByDescending(u => u.YearOfPublishing);
+        }
     }
 }
