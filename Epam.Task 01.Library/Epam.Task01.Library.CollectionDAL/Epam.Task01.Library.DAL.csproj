@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BookDao.cs" />
     <Compile Include="CommonDao.cs" />
+    <Compile Include="IssueDao.cs" />
     <Compile Include="MemoryStorage.cs" />
     <Compile Include="NewspaperDao.cs" />
     <Compile Include="PatentDao.cs" />

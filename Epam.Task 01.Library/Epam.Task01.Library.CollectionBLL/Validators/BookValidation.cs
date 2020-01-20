@@ -117,6 +117,7 @@ namespace CollectionValidation
             IsValid &= !notvalid;
             return this;
         }
+
         public IBookValidation CheckByCommonValidation(Book book)
         {
             CommonValidation.CheckTitle(book).CheckPagesCount(book);
@@ -124,9 +125,11 @@ namespace CollectionValidation
             {
                 this.ValidationResult.Add(item);
             }
-            this.IsValid &= CommonValidation.IsValid;
+
+            IsValid &= CommonValidation.IsValid;
             return this;
         }
+
         private bool CheckISBNLength(string isbn)
         {
             string wishoutISBN = isbn.Substring(5, isbn.Length - 5);

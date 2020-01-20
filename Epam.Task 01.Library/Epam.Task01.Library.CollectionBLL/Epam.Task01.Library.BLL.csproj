@@ -45,11 +45,13 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="CommonLogic.cs" />
+    <Compile Include="IssueLogic.cs" />
     <Compile Include="NewspaperLogic.cs" />
     <Compile Include="PatentLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\BookValidation.cs" />
     <Compile Include="Validators\CommonValidation.cs" />
+    <Compile Include="Validators\IssueValidation.cs" />
     <Compile Include="Validators\NewspaperValidation.cs" />
     <Compile Include="Validators\PatentValidation.cs" />
   </ItemGroup>

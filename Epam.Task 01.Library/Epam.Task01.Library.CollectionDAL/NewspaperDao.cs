@@ -11,6 +11,11 @@ namespace Epam.Task01.Library.CollectionDAL
             MemoryStorage.AddLibraryItem(item);
         }
 
+        public bool CheckNewspaperUniqueness(Newspaper newspaper)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Newspaper> GetNewspaperItems()
         {
             return MemoryStorage.GetLibraryItemByType<Newspaper>();

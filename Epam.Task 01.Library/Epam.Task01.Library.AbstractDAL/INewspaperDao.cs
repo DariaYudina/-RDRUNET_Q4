@@ -7,5 +7,6 @@ namespace Epam.Task01.Library.AbstractDAL
     {
         void AddNewspaper(Newspaper item);
         IEnumerable<Newspaper> GetNewspaperItems();
+        bool CheckNewspaperUniqueness(Newspaper newspaper);
     }
 }

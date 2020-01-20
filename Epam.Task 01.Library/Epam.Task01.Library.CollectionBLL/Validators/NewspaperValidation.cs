@@ -9,7 +9,12 @@ namespace CollectionValidation
         public List<ValidationObject> ValidationResult { get; set; }
 
         public bool IsValid { get; set; } = true;
-
+        private ICommonValidation CommonValidation { get; set; }
+        public NewspaperValidation(ICommonValidation commonValidation)
+        {
+            ValidationResult = new List<ValidationObject>();
+            CommonValidation = commonValidation;
+        }
         public INewspaperValidation CheckISSN(Newspaper newspaper)
         {
             if (IsValid != false)
@@ -100,6 +105,18 @@ namespace CollectionValidation
             {
                 return this;
             }
+        }
+
+        public INewspaperValidation CheckByCommonValidation(Newspaper newspaper)
+        {
+            CommonValidation.CheckTitle(newspaper).CheckPagesCount(newspaper);
+            foreach (var item in CommonValidation.ValidationResult)
+            {
+                this.ValidationResult.Add(item);
+            }
+
+            IsValid &= CommonValidation.IsValid;
+            return this;
         }
     }
 }

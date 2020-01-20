@@ -44,10 +44,12 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBookLogic.cs" />
     <Compile Include="ICommonLogic.cs" />
+    <Compile Include="IIssueLogic.cs" />
     <Compile Include="INewspaperLogic.cs" />
     <Compile Include="IPatentLogic.cs" />
     <Compile Include="IValidators\IBookValidation.cs" />
     <Compile Include="IValidators\ICommonValidation.cs" />
+    <Compile Include="IValidators\IIssueValidation.cs" />
     <Compile Include="IValidators\INewspaperValidation.cs" />
     <Compile Include="IValidators\IPatentValidation.cs" />
     <Compile Include="IValidators\ValidationException.cs" />
