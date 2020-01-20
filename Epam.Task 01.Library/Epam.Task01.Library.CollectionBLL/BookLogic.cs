@@ -37,18 +37,22 @@ namespace Epam.Task01.Library.CollectionBLL
             }
             return false;
         }
+
         public Book GetBookById(int id)
         {
             return _bookDao.GetBookById(id);
         }
+
         public IEnumerable<Book> GetBookItems()
         {
             return _bookDao.GetBookItems();
         }
+
         public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany)
         {
             return _bookDao.GetBooksByPublishingCompany(publishingCompany);
         }
+
         public bool CheckBookUniqueness(Book book)
         {
             return _bookDao.CheckBookUniqueness(book);

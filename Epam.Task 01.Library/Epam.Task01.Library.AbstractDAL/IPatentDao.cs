@@ -5,7 +5,10 @@ namespace Epam.Task01.Library.AbstractDAL
 {
     public interface IPatentDao
     {
-        void AddLibraryItem(Patent item);
+        void AddPatent(Patent item);
+
         IEnumerable<Patent> GetPatentItems();
+
+        bool CheckPatentUniqueness(Patent patent);
     }
 }

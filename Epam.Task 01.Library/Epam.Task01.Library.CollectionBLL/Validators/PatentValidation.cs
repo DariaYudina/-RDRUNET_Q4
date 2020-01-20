@@ -9,7 +9,16 @@ namespace CollectionValidation
     public class PatentValidation : IPatentValidation
     {
         public List<ValidationObject> ValidationResult { get; set; }
+
         public bool IsValid { get; set; } = true;
+
+        private ICommonValidation CommonValidation { get; set; }
+
+        public PatentValidation(ICommonValidation commonValidation)
+        {
+            ValidationResult = new List<ValidationObject>();
+            CommonValidation = commonValidation;
+        }
 
         public IPatentValidation CheckApplicationDate(Patent patent)
         {
@@ -25,6 +34,7 @@ namespace CollectionValidation
                         ValidationResult.Add(e);
                     }
                 }
+
                 return this;
             }
             else
@@ -47,6 +57,7 @@ namespace CollectionValidation
                     break;
                 }
             }
+
             IsValid &= !notvalid;
             return this;
         }
@@ -65,13 +76,26 @@ namespace CollectionValidation
                     break;
                 }
             }
+
             IsValid &= !notvalid;
+            return this;
+        }
+
+        public IPatentValidation CheckByCommonValidation(Patent patent)
+        {
+            CommonValidation.CheckTitle(patent).CheckPagesCount(patent);
+            foreach (var item in CommonValidation.ValidationResult)
+            {
+                this.ValidationResult.Add(item);
+            }
+
+            IsValid &= CommonValidation.IsValid;
             return this;
         }
 
         public IPatentValidation CheckCountry(Patent patent)
         {
-            string countryPattern = @"^(([A - Z][a - z] +) | ([А - Я][а - я] +) | ([A - Z] +|[А - Я] +))$";
+            string countryPattern = @"^(([A-Z][a-z]+)|([А-Я][а-я]+)|([A-Z]+|[А-Я]+))$";
             bool notvalid = !Regex.IsMatch(patent.Country, countryPattern);
             IsValid &= !notvalid;
             if (notvalid)
@@ -82,6 +106,7 @@ namespace CollectionValidation
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
 
@@ -106,6 +131,7 @@ namespace CollectionValidation
                 return this;
             }
         }
+
         public IPatentValidation CheckRegistrationNumber(Patent patent)
         {
             if (IsValid != false)
@@ -120,6 +146,7 @@ namespace CollectionValidation
                         ValidationResult.Add(e);
                     }
                 }
+
                 return this;
             }
             else

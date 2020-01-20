@@ -18,7 +18,7 @@ namespace CollectionValidation
         }
         public IBookValidation CheckBookCity(Book book)
         {
-            string bookCityPattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+            string bookCityPattern = @"^((([A-Z][a-z]+)((-[a-z]+)?)((-([A-Z][a-z]+))?))|(([А-Я][а-я]+)((-[а-я]+)?)((-([А-Я][а-я]+))?)))$";
             bool notvalid = !Regex.IsMatch(book.City, bookCityPattern);
             IsValid &= !notvalid;
             if (notvalid)

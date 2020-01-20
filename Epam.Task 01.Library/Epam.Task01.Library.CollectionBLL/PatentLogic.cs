@@ -16,19 +16,40 @@ namespace Epam.Task01.Library.CollectionBLL
             _patentDao = patentDao;
             _patentValidation = validator;
         }
+
         public bool AddPatent(List<ValidationObject> validationResult, Patent patent)
         {
-            //_commonValidation.ValidationResult = validationResult;
-            //_patentValidation.ValidationResult = _commonValidation.ValidationResult;
-            //_authorValidation.ValidationResult = _patentValidation.ValidationResult;
-            //ICommonValidation commonvalidationObject = _commonValidation.CheckNullReferenceObject(patent).CheckTitle(patent).CheckPagesCount(patent);
-            //IPatentValidation patentvalidationObject;
-            //IAuthorValidation authorsvalidationObject = _authorValidation.CheckAuthorsFirstName(patent).CheckAuthorsLastName(patent);
+            _patentValidation.ValidationResult = validationResult;
+            if (patent == null)
+            {
+                _patentValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
+                return false;
+            }
+
+            IPatentValidation patentvalidationObject = _patentValidation.CheckByCommonValidation(patent).CheckCountry(patent).CheckRegistrationNumber(patent).CheckPublicationDate(patent).CheckAuthorsFirstName(patent).CheckAuthorsLastName(patent);
+            if (!CheckPatentUniqueness(patent))
+            {
+                _patentValidation.ValidationResult.Add(new ValidationObject("Patent is not unique ", "Patent"));
+                return false;
+            }
+
+            if (patentvalidationObject.IsValid)
+            {
+                _patentDao.AddPatent(patent);
+                return true;
+            }
+
             return false;
         }
+
         public IEnumerable<Patent> GetPatentItems()
         {
             return _patentDao.GetPatentItems();
+        }
+
+        public bool CheckPatentUniqueness(Patent patent)
+        {
+            return _patentDao.CheckPatentUniqueness(patent);
         }
     }
 }

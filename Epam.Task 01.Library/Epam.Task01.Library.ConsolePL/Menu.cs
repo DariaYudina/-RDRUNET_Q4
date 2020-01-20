@@ -216,12 +216,18 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddBook()
         {
             _validationResult = new List<ValidationObject>();
-            Book book = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1996, "ISBN 2-266-11156-6", "Title", 200, "да");
-            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1996, "ISBN 2-266-11156-1", "Title", 200, "да");
+            var _validationResult2 = new List<ValidationObject>();
+            Book book = new Book(new List<Author>() { new Author("Петр", "Пет") }, "Ростов-на-Дону", "Москва", 1996, null, "Title2", 200, "да");
+            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1996, null, "Title", 200, "да");
             bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book);
-            DependencyResolver.BookLogic.AddBook(_validationResult, book2);
+            var res2 = DependencyResolver.BookLogic.AddBook(_validationResult2, book2);
             Console.WriteLine("Result of validation: " + res);
+            Console.WriteLine("Result of validation2 : " + res2);
             foreach (ValidationObject error in _validationResult)
+            {
+                Console.WriteLine(error.Property + ": " + error.Message);
+            }
+            foreach (ValidationObject error in _validationResult2)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
@@ -230,7 +236,7 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddPatent()
         {
             _validationResult = new List<ValidationObject>();
-            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } , "Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(2016, 7, 21), "Крутой патент", 128, "");
+            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } ,"Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(1996, 7, 21), "Крутой патент", 128, "");
             bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
             foreach (ValidationObject error in _validationResult)
             {
@@ -240,7 +246,9 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void AddNewspaper()
         {
+
         }
+
         private void SearchBooksByAutors()
         {
             var res = DependencyResolver.CommonLogic.GetBooksByAuthor(new Author("Петр", "Петров"));
@@ -253,31 +261,39 @@ namespace Epam.Task01.Library.ConsolePL
         private void SearchPatentsByAutors()
         {
             var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author("Петр", "Петров"));
+            Console.WriteLine("----------------------------------------------------------------");
             foreach (AbstractLibraryItem item in res)
             {
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
+            Console.WriteLine("----------------------------------------------------------------");
         }
 
         private void SearchBooksAndPatentsByAutors()
         {
             var res = DependencyResolver.CommonLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
+            Console.WriteLine("----------------------------------------------------------------");
             foreach (AbstractLibraryItem item in res)
             {
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
             }
+            Console.WriteLine("----------------------------------------------------------------");
         }
 
         public void SortByYear()
         {
+            Console.WriteLine("----------------------------------------------------------------");
             _library = DependencyResolver.CommonLogic.SortByYear();
             Console.WriteLine("Catalog sorted");
+            Console.WriteLine("----------------------------------------------------------------");
         }
 
         public void SortByYearDesc()
         {
             _library = DependencyResolver.CommonLogic.SortByYearDesc();
+            Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("Catalog sorted");
+            Console.WriteLine("----------------------------------------------------------------");
         }
 
         public void SearchByTItle()

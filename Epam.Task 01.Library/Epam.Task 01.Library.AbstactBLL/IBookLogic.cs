@@ -8,6 +8,7 @@ namespace Epam.Task_01.Library.AbstactBLL
     public interface IBookLogic
     {
         IEnumerable<Book> GetBookItems();
+
         bool AddBook(List<ValidationObject> validationResult, Book book);
         Book GetBookById(int id);
         IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany);

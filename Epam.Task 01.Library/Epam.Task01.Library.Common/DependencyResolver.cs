@@ -52,7 +52,7 @@ namespace Epam.Task01.Library.Common
 
             _commonValidation = new CommonValidation();
             _bookValidation = new BookValidation(_commonValidation);
-            _patentValidation = new PatentValidation();
+            _patentValidation = new PatentValidation(_commonValidation);
             _newspaperValidation = new NewspaperValidation();
 
             _commonLogic = new CommonLogic(_commonDao, _commonValidation);

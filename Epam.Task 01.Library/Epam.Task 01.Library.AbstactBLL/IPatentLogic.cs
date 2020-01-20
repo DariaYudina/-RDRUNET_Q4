@@ -7,6 +7,9 @@ namespace Epam.Task_01.Library.AbstactBLL
     public interface IPatentLogic
     {
         bool AddPatent(List<ValidationObject> validationResult, Patent patent);
+
         IEnumerable<Patent> GetPatentItems();
+
+        bool CheckPatentUniqueness(Patent patent);
     }
 }

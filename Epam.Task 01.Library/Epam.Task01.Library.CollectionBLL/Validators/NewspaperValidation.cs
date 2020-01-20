@@ -7,6 +7,7 @@ namespace CollectionValidation
     public class NewspaperValidation : INewspaperValidation
     {
         public List<ValidationObject> ValidationResult { get; set; }
+
         public bool IsValid { get; set; } = true;
 
         public INewspaperValidation CheckISSN(Newspaper newspaper)
@@ -23,6 +24,7 @@ namespace CollectionValidation
                         ValidationResult.Add(e);
                     }
                 }
+
                 return this;
             }
             else
@@ -45,6 +47,7 @@ namespace CollectionValidation
                         ValidationResult.Add(e);
                     }
                 }
+
                 return this;
             }
             else
@@ -52,6 +55,7 @@ namespace CollectionValidation
                 return this;
             }
         }
+
         public INewspaperValidation CheckPublishingCompany(Newspaper newspaper)
         {
             if (IsValid != false)
@@ -66,6 +70,7 @@ namespace CollectionValidation
                         ValidationResult.Add(e);
                     }
                 }
+
                 return this;
             }
             else
@@ -88,6 +93,7 @@ namespace CollectionValidation
                         ValidationResult.Add(e);
                     }
                 }
+
                 return this;
             }
             else
