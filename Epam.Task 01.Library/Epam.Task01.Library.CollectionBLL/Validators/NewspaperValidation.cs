@@ -36,7 +36,7 @@ namespace CollectionValidation
 
         public INewspaperValidation CheckByIssueValidation(Newspaper newspaper)
         {
-            IssueValidation.CheckByCommonValidation(newspaper).CheckISSN(newspaper).CheckNewspaperCity(newspaper).CheckPublishingCompany(newspaper).CheckYearOfPublishing(newspaper);
+            IssueValidation.CheckTitle(newspaper.Issue).CheckISSN(newspaper.Issue).CheckNewspaperCity(newspaper.Issue).CheckPublishingCompany(newspaper.Issue);
             foreach (var item in IssueValidation.ValidationResult)
             {
                 this.ValidationResult.Add(item);
@@ -69,7 +69,22 @@ namespace CollectionValidation
             {
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("DateOfPublishing must be more than 1400, less than now date and year of DateOfPublishing must be equal Year", "DateOfPublishing");
+                    ValidationObject e = new ValidationObject("DateOfPublishing must be more than 1400 year, less than now date and year of DateOfPublishing must be equal Year", "DateOfPublishing");
+                    ValidationResult.Add(e);
+                }
+            }
+
+            return this;
+        }
+        public INewspaperValidation CheckYearOfPublishing(Newspaper newspaper)
+        {
+            bool notvalid = newspaper.YearOfPublishing < 1400 && newspaper.YearOfPublishing > DateTime.Now.Year;
+            IsValid &= !notvalid;
+            if (notvalid)
+            {
+                if (ValidationResult != null)
+                {
+                    ValidationObject e = new ValidationObject("YearOfPublishing must be more than 1400 year and no more then year of now ", "YearOfPublishing");
                     ValidationResult.Add(e);
                 }
             }

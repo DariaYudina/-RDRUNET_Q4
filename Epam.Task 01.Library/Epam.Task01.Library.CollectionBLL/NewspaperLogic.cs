@@ -31,7 +31,7 @@ namespace Epam.Task01.Library.CollectionBLL
                 _newspaperValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Issue"));
                 return false;
             }
-            INewspaperValidation newspapervalidationObject = _newspaperValidation.CheckByCommonValidation(newspaper).CheckCountOfPublishing(newspaper).CheckDateOfPublishing(newspaper);
+            INewspaperValidation newspapervalidationObject = _newspaperValidation.CheckByCommonValidation(newspaper).CheckByIssueValidation(newspaper).CheckCountOfPublishing(newspaper).CheckYearOfPublishing(newspaper).CheckDateOfPublishing(newspaper);
             if (!CheckNewspaperUniqueness(newspaper))
             {
                 _newspaperValidation.ValidationResult.Add(new ValidationObject("Newspaper is not unique ", "Newspaper"));

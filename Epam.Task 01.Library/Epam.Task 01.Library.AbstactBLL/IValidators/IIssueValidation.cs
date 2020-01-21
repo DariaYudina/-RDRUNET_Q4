@@ -14,7 +14,7 @@ namespace Epam.Task_01.Library.AbstactBLL.IValidators
         bool IsValid { get; set; }
         IIssueValidation CheckNewspaperCity(Issue issue);
         IIssueValidation CheckPublishingCompany(Issue issue);
-        IIssueValidation CheckYearOfPublishing(Issue issue);
         IIssueValidation CheckISSN(Issue issue);
+        IIssueValidation CheckTitle(Issue issue);
     }
 }

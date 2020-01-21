@@ -54,51 +54,50 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
             return this;
         }
+
         public IIssueValidation CheckPublishingCompany(Issue issue)
         {
-            bool notvalid = issue.;
+            bool notvalid = issue.PublishingCompany.Length > 300;
             IsValid &= !notvalid;
             if (notvalid)
             {
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("Is null or white space string", "str");
+                    ValidationObject e = new ValidationObject("PublishingCompany must be less than 300 characters", "PublishingCompany");
                     ValidationResult.Add(e);
                 }
             }
-
-            return this;
-        }
-        public IIssueValidation CheckYearOfPublishing(Issue issue)
-        {
-            bool notvalid = ;
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("Is null or white space string", "str");
-                    ValidationResult.Add(e);
-                }
-            }
-
             return this;
         }
 
         public IIssueValidation CheckTitle(Issue issue)
         {
-            bool notvalid = ;
+            bool notvalid = issue.Title.Length > 300 | CheckStringIsNullorEmpty(issue.Title);
             IsValid &= !notvalid;
             if (notvalid)
             {
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("Is null or white space string", "str");
+                    ValidationObject e = new ValidationObject("Title must be less than 300 characters", "Title");
                     ValidationResult.Add(e);
                 }
             }
-
             return this;
+        }
+        private bool CheckStringIsNullorEmpty(string str)
+        {
+            bool notvalid = string.IsNullOrWhiteSpace(str);
+            IsValid &= !notvalid;
+            if (notvalid)
+            {
+                if (ValidationResult != null)
+                {
+                    ValidationObject e = new ValidationObject("Is nill or white space string", "str");
+                    ValidationResult.Add(e);
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

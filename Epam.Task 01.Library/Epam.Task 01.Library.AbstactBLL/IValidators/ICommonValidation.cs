@@ -10,6 +10,5 @@ namespace AbstractValidation
         ICommonValidation CheckTitle(AbstractLibraryItem item);
         ICommonValidation CheckPagesCount(AbstractLibraryItem item);
         ICommonValidation CheckCommentary(AbstractLibraryItem item);
-        bool CheckStringIsNullorEmpty(string str);
     }
 }

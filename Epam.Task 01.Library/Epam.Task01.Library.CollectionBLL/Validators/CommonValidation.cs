@@ -12,11 +12,14 @@ namespace CollectionValidation
     public class CommonValidation : ICommonValidation
     {
         public List<ValidationObject> ValidationResult { get; set; }
+
         public bool IsValid { get; set; } = true;
+
         public CommonValidation()
         {
             ValidationResult = new List<ValidationObject>();
         }
+
         public ICommonValidation CheckCommentary(AbstractLibraryItem item)
         {
             if(item == null)
@@ -35,6 +38,7 @@ namespace CollectionValidation
             }
             return this;
         }
+
         public ICommonValidation CheckPagesCount(AbstractLibraryItem item)
         {
             bool notvalid = item.PagesCount < 0;
@@ -65,7 +69,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public bool CheckStringIsNullorEmpty(string str)
+        private bool CheckStringIsNullorEmpty(string str)
         {
             bool notvalid = string.IsNullOrWhiteSpace(str);
             IsValid &= !notvalid;

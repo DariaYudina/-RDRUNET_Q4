@@ -11,5 +11,6 @@ namespace AbstractValidation
         INewspaperValidation CheckByIssueValidation(Newspaper newspaper);
         INewspaperValidation CheckCountOfPublishing(Newspaper newspaper);
         INewspaperValidation CheckDateOfPublishing(Newspaper newspaper);
+        INewspaperValidation CheckYearOfPublishing(Newspaper newspaper);
     }
 }
