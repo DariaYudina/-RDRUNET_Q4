@@ -34,10 +34,15 @@ namespace Epam.Task01.Library.Common
         private static readonly IIssueValidation _issueValidation;
 
         public static IBookLogic BookLogic => _bookLogic;
+
         public static IBookDao BookDao => _bookDao;
+
         public static IBookValidation BookValidation => _bookValidation;
+
         public static ICommonLogic CommonLogic => _commonLogic;
+
         public static ICommonDao CommonDao => _commonDao;
+
         public static ICommonValidation CommonValidation => _commonValidation;
 
         public static IPatentLogic PatentLogic => _patentLogic;
@@ -69,7 +74,7 @@ namespace Epam.Task01.Library.Common
             _commonValidation = new CommonValidation();
             _bookValidation = new BookValidation(_commonValidation);
             _patentValidation = new PatentValidation(_commonValidation);
-            _issueValidation = new IssueValidation(_commonValidation);
+            _issueValidation = new IssueValidation();
             _newspaperValidation = new NewspaperValidation(_commonValidation, _issueValidation);
 
             _commonLogic = new CommonLogic(_commonDao, _commonValidation);

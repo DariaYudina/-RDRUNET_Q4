@@ -24,7 +24,7 @@ namespace CollectionValidation
 
         public INewspaperValidation CheckByCommonValidation(Newspaper newspaper)
         {
-            CommonValidation.CheckTitle(newspaper).CheckPagesCount(newspaper);
+            CommonValidation.CheckPagesCount(newspaper);
             foreach (var item in CommonValidation.ValidationResult)
             {
                 this.ValidationResult.Add(item);
@@ -36,7 +36,14 @@ namespace CollectionValidation
 
         public INewspaperValidation CheckByIssueValidation(Newspaper newspaper)
         {
-            throw new System.NotImplementedException();
+            IssueValidation.CheckByCommonValidation(newspaper).CheckISSN(newspaper).CheckNewspaperCity(newspaper).CheckPublishingCompany(newspaper).CheckYearOfPublishing(newspaper);
+            foreach (var item in IssueValidation.ValidationResult)
+            {
+                this.ValidationResult.Add(item);
+            }
+
+            IsValid &= IssueValidation.IsValid;
+            return this;
         }
 
         public INewspaperValidation CheckCountOfPublishing(Newspaper newspaper)

@@ -12,10 +12,9 @@ namespace Epam.Task_01.Library.AbstactBLL.IValidators
     {
         List<ValidationObject> ValidationResult { get; set; }
         bool IsValid { get; set; }
-        IIssueValidation CheckNewspaperCity(Newspaper newspaper);
-        IIssueValidation CheckPublishingCompany(Newspaper newspaper);
-        IIssueValidation CheckYearOfPublishing(Newspaper newspaper);
-        IIssueValidation CheckISSN(Newspaper newspaper);
-        IIssueValidation CheckByCommonValidation(Newspaper newspaper);
+        IIssueValidation CheckNewspaperCity(Issue issue);
+        IIssueValidation CheckPublishingCompany(Issue issue);
+        IIssueValidation CheckYearOfPublishing(Issue issue);
+        IIssueValidation CheckISSN(Issue issue);
     }
 }
