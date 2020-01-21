@@ -11,7 +11,9 @@ namespace Epam.Task01.Library.ConsolePL
     public class Menu
     {
         private static List<ValidationObject> _validationResult;
+
         private static IEnumerable<AbstractLibraryItem> _library;
+
         public void Open()
         {
             bool repeat = true;
@@ -92,9 +94,10 @@ namespace Epam.Task01.Library.ConsolePL
 
         public void GetBooksGroupByPublishingCompanyWithTitle()
         {
+            Console.WriteLine("Enter title:");
+            string title = Console.ReadLine();
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("Catalog:");
-            string title = "Title";
             foreach (var item in GroupBooksByPublishingCompany(title))
             {
                 Console.WriteLine($"Year: {item.Key}");
@@ -118,6 +121,7 @@ namespace Epam.Task01.Library.ConsolePL
                     Console.WriteLine($"\t{i.Title}");
                 }
             }
+
             Console.WriteLine("----------------------------------------------------------------");
         }
 
