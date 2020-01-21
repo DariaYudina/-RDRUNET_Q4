@@ -7,10 +7,9 @@ namespace AbstractValidation
     {
         List<ValidationObject> ValidationResult { get; set; }
         bool IsValid { get; set; }
-        INewspaperValidation CheckNewspaperCity(Newspaper newspaper);
-        INewspaperValidation CheckPublishingCompany(Newspaper newspaper);
-        INewspaperValidation CheckYearOfPublishing(Newspaper newspaper);
-        INewspaperValidation CheckISSN(Newspaper newspaper);
         INewspaperValidation CheckByCommonValidation(Newspaper newspaper);
+        INewspaperValidation CheckByIssueValidation(Newspaper newspaper);
+        INewspaperValidation CheckCountOfPublishing(Newspaper newspaper);
+        INewspaperValidation CheckDateOfPublishing(Newspaper newspaper);
     }
 }

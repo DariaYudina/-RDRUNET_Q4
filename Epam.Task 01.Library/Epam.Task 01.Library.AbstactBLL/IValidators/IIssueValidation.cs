@@ -1,4 +1,5 @@
 ﻿using AbstractValidation;
+using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,11 @@ namespace Epam.Task_01.Library.AbstactBLL.IValidators
     public interface IIssueValidation
     {
         List<ValidationObject> ValidationResult { get; set; }
-
         bool IsValid { get; set; }
+        IIssueValidation CheckNewspaperCity(Newspaper newspaper);
+        IIssueValidation CheckPublishingCompany(Newspaper newspaper);
+        IIssueValidation CheckYearOfPublishing(Newspaper newspaper);
+        IIssueValidation CheckISSN(Newspaper newspaper);
+        IIssueValidation CheckByCommonValidation(Newspaper newspaper);
     }
 }

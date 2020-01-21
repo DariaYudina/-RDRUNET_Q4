@@ -1,5 +1,7 @@
 ﻿using AbstractValidation;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
+using System;
 using System.Collections.Generic;
 
 namespace CollectionValidation
@@ -11,103 +13,13 @@ namespace CollectionValidation
         public bool IsValid { get; set; } = true;
 
         private ICommonValidation CommonValidation { get; set; }
+        private IIssueValidation IssueValidation { get; set; }
 
-        public NewspaperValidation(ICommonValidation commonValidation)
+        public NewspaperValidation(ICommonValidation commonValidation, IIssueValidation issueValidation)
         {
             ValidationResult = new List<ValidationObject>();
             CommonValidation = commonValidation;
-        }
-
-        public INewspaperValidation CheckISSN(Newspaper newspaper)
-        {
-            if (IsValid != false)
-            {
-                bool notvalid = newspaper.PagesCount < 0;
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
-                        ValidationResult.Add(e);
-                    }
-                }
-
-                return this;
-            }
-            else
-            {
-                return this;
-            }
-        }
-
-        public INewspaperValidation CheckNewspaperCity(Newspaper newspaper)
-        {
-            if (IsValid != false)
-            {
-                bool notvalid = newspaper.PagesCount < 0;
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
-                        ValidationResult.Add(e);
-                    }
-                }
-
-                return this;
-            }
-            else
-            {
-                return this;
-            }
-        }
-
-        public INewspaperValidation CheckPublishingCompany(Newspaper newspaper)
-        {
-            if (IsValid != false)
-            {
-                bool notvalid = newspaper.PagesCount < 0;
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Is null or white space string", "str");
-                        ValidationResult.Add(e);
-                    }
-                }
-
-                return this;
-            }
-            else
-            {
-                return this;
-            }
-        }
-
-        public INewspaperValidation CheckYearOfPublishing(Newspaper newspaper)
-        {
-            if (IsValid != false)
-            {
-                bool notvalid = newspaper.PagesCount < 0;
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Is null or white space string", "str");
-                        ValidationResult.Add(e);
-                    }
-                }
-
-                return this;
-            }
-            else
-            {
-                return this;
-            }
+            IssueValidation = issueValidation;
         }
 
         public INewspaperValidation CheckByCommonValidation(Newspaper newspaper)
@@ -119,6 +31,42 @@ namespace CollectionValidation
             }
 
             IsValid &= CommonValidation.IsValid;
+            return this;
+        }
+
+        public INewspaperValidation CheckByIssueValidation(Newspaper newspaper)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public INewspaperValidation CheckCountOfPublishing(Newspaper newspaper)
+        {
+            bool notvalid = newspaper.CountOfPublishing <= 0;
+            IsValid &= !notvalid;
+            if (notvalid)
+            {
+                if (ValidationResult != null)
+                {
+                    ValidationObject e = new ValidationObject("CountOfPublishing must be more than 0", "CountOfPublishing");
+                    ValidationResult.Add(e);
+                }
+            }
+            return this;
+        }
+
+        public INewspaperValidation CheckDateOfPublishing(Newspaper newspaper)
+        {
+            bool notvalid = newspaper.DateOfPublishing.Year < 1400 || newspaper.DateOfPublishing > DateTime.Now || newspaper.DateOfPublishing.Year != newspaper.YearOfPublishing;
+            IsValid &= !notvalid;
+            if (notvalid)
+            {
+                if (ValidationResult != null)
+                {
+                    ValidationObject e = new ValidationObject("DateOfPublishing must be more than 1400, less than now date and year of DateOfPublishing must be equal Year", "DateOfPublishing");
+                    ValidationResult.Add(e);
+                }
+            }
+
             return this;
         }
     }

@@ -24,7 +24,7 @@ namespace CollectionValidation
         {
             if (IsValid != false)
             {
-                bool notvalid = patent.ApplicationDate.Year > 1474 && patent.ApplicationDate < DateTime.Now ;
+                bool notvalid = patent.ApplicationDate.Year < 1474 && patent.ApplicationDate > DateTime.Now ;
                 IsValid &= !notvalid;
                 if (notvalid)
                 {
@@ -114,7 +114,7 @@ namespace CollectionValidation
         {
             if (IsValid != false)
             {
-                bool notvalid = patent.PublicationDate.Year > 1474 && patent.PublicationDate < DateTime.Now && patent.PublicationDate > patent.ApplicationDate;
+                bool notvalid = patent.PublicationDate.Year < 1474 && patent.PublicationDate > DateTime.Now && patent.PublicationDate < patent.ApplicationDate;
                 IsValid &= !notvalid;
                 if (notvalid)
                 {
