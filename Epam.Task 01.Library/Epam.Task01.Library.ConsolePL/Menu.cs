@@ -246,7 +246,14 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void AddNewspaper()
         {
-
+            _validationResult = new List<ValidationObject>();
+            Newspaper newspaper = new Newspaper( new Issue("ee", "ee", "ee" , "ee"), 1234, 1 , new DateTime(2015, 7, 20), 12, "ee" );
+            bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
+            Console.WriteLine(res);
+            foreach (ValidationObject error in _validationResult)
+            {
+                Console.WriteLine(error.Property + ": " + error.Message);
+            }
         }
 
         private void SearchBooksByAutors()

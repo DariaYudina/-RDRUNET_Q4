@@ -11,6 +11,7 @@ namespace Epam.Task01.Library.CollectionBLL
     {
         private readonly INewspaperDao _newspaperDao;
         private readonly INewspaperValidation _newspaperValidation;
+
         public NewspaperLogic(INewspaperDao newspaperDao, INewspaperValidation validator)
         {
             _newspaperDao = newspaperDao;
@@ -49,7 +50,7 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public bool CheckNewspaperUniqueness(Newspaper newspaper)
         {
-            return _newspaperDao.CheckBookUniqueness(newspaper);
+            return _newspaperDao.CheckNewspaperUniqueness(newspaper);
         }
     }
 }

@@ -9,13 +9,17 @@ namespace CollectionValidation
     public class BookValidation : IBookValidation
     {
         public bool IsValid { get; set; } = true;
+
         public List<ValidationObject> ValidationResult { get; set; }
+
         private ICommonValidation CommonValidation { get; set; }
+
         public BookValidation(ICommonValidation commonValidation)
         {
             ValidationResult = new List<ValidationObject>();
             CommonValidation = commonValidation;
         }
+
         public IBookValidation CheckBookCity(Book book)
         {
             string bookCityPattern = @"^((([A-Z][a-z]+)((-[a-z]+)?)((-([A-Z][a-z]+))?))|(([А-Я][а-я]+)((-[а-я]+)?)((-([А-Я][а-я]+))?)))$";
@@ -29,8 +33,10 @@ namespace CollectionValidation
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
+
         public IBookValidation CheckISBN(Book book)
         {
             if (book.isbn == null)
@@ -52,8 +58,10 @@ namespace CollectionValidation
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
+
         public IBookValidation CheckPublishingCompany(Book book)
         {
             bool notvalid = book.PublishingCompany.Length > 300;
@@ -68,6 +76,7 @@ namespace CollectionValidation
             }
             return this;
         }
+
         public IBookValidation CheckYearOfPublishing(Book book)
         {
             bool notvalid = book.YearOfPublishing < 1400 && book.YearOfPublishing > DateTime.Now.Year;
@@ -97,9 +106,11 @@ namespace CollectionValidation
                     break;
                 }
             }
+
             IsValid &= !notvalid;
             return this;
         }
+
         public IBookValidation CheckAuthorsLastName(Book book)
         {
             bool notvalid = false;
@@ -114,6 +125,7 @@ namespace CollectionValidation
                     break;
                 }
             }
+
             IsValid &= !notvalid;
             return this;
         }

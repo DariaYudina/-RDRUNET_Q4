@@ -9,12 +9,15 @@ namespace CollectionValidation
         public List<ValidationObject> ValidationResult { get; set; }
 
         public bool IsValid { get; set; } = true;
+
         private ICommonValidation CommonValidation { get; set; }
+
         public NewspaperValidation(ICommonValidation commonValidation)
         {
             ValidationResult = new List<ValidationObject>();
             CommonValidation = commonValidation;
         }
+
         public INewspaperValidation CheckISSN(Newspaper newspaper)
         {
             if (IsValid != false)
@@ -71,7 +74,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
+                        ValidationObject e = new ValidationObject("Is null or white space string", "str");
                         ValidationResult.Add(e);
                     }
                 }
@@ -94,7 +97,7 @@ namespace CollectionValidation
                 {
                     if (ValidationResult != null)
                     {
-                        ValidationObject e = new ValidationObject("Is nill or white space string", "str");
+                        ValidationObject e = new ValidationObject("Is null or white space string", "str");
                         ValidationResult.Add(e);
                     }
                 }

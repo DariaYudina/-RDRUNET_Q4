@@ -49,6 +49,7 @@ namespace CollectionValidation
             }
             return this;
         }
+
         public ICommonValidation CheckTitle(AbstractLibraryItem item)
         {
             bool notvalid = item.Title.Length > 300 | CheckStringIsNullorEmpty(item.Title);
@@ -63,6 +64,7 @@ namespace CollectionValidation
             }
             return this;
         }
+
         public bool CheckStringIsNullorEmpty(string str)
         {
             bool notvalid = string.IsNullOrWhiteSpace(str);

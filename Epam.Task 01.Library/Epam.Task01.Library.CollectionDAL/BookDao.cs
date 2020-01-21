@@ -33,7 +33,7 @@ namespace Epam.Task01.Library.CollectionDAL
             var books = allitems.OfType<Book>();
             var patents = allitems.OfType<Patent>();
             var booksAndPatents = allitems.Where(i => i is Book || i is Patent);
-            if (book.isbn != string.Empty && book.isbn != null)
+            if (book.isbn != "" && book.isbn != null)
             {
                 foreach (Book item in books)
                 {

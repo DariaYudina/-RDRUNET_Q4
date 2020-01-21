@@ -8,6 +8,15 @@ namespace Epam.Task01.Library.Entity
 {
     public class Issue
     {
+
+        public Issue(string title, string city, string publishingCompany, string issn)
+        {
+            Title = title;
+            City = city;
+            PublishingCompany = publishingCompany;
+            Issn = issn;
+        }
+
         public int IssueId { get; set; }
 
         public string Title { get; set; }
@@ -16,6 +25,6 @@ namespace Epam.Task01.Library.Entity
 
         public string PublishingCompany { get; set; }
 
-        public string issn { get; set; }
+        public string Issn { get; set; }
     }
 }

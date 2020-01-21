@@ -11,11 +11,13 @@ namespace Epam.Task01.Library.CollectionBLL
     {
         private readonly IBookDao _bookDao;
         private readonly IBookValidation _bookValidation;
+
         public BookLogic(IBookDao bookDao, IBookValidation bookValidation)
         {
             _bookDao = bookDao;
             _bookValidation = bookValidation;
         }
+
         public bool AddBook(List<ValidationObject> validationResult, Book book)
         {
             _bookValidation.ValidationResult = validationResult;

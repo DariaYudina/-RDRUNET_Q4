@@ -19,6 +19,7 @@ namespace Epam.Task01.Library.Entity
             base.YearOfPublishing = yearOfPublishing;
             CountOfPublishing = countOfPublishing;
             DateOfPublishing = dateOfPublishing;
+            Issue = issue;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AbstractValidation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,8 @@ namespace Epam.Task_01.Library.AbstactBLL.IValidators
 {
     public interface IIssueValidation
     {
+        List<ValidationObject> ValidationResult { get; set; }
+
+        bool IsValid { get; set; }
     }
 }

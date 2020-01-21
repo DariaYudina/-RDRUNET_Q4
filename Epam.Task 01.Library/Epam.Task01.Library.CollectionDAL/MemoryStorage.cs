@@ -53,6 +53,7 @@ namespace Epam.Task01.Library.CollectionDAL
             issue.IssueId = lastid;
             _issues.Add(issue.IssueId, issue);
         }
+
         public static IEnumerable<Issue> GetAllIssues()
         {
             return _issues.Values;
