@@ -25,7 +25,11 @@ namespace Epam.Task01.Library.CollectionBLL
                 _patentValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
                 return false;
             }
-
+            if (patent.Authors == null || patent.Authors.Count == 0)
+            {
+                _patentValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));
+                return false;
+            }
             IPatentValidation patentvalidationObject = _patentValidation.CheckByCommonValidation(patent).CheckCountry(patent).CheckRegistrationNumber(patent).CheckPublicationDate(patent).CheckAuthorsFirstName(patent).CheckAuthorsLastName(patent);
             if (!CheckPatentUniqueness(patent))
             {

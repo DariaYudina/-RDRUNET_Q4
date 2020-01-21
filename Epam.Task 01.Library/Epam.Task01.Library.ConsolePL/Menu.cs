@@ -215,19 +215,87 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void AddBook()
         {
+            bool repeat = true;
             _validationResult = new List<ValidationObject>();
-            var _validationResult2 = new List<ValidationObject>();
-            Book book = new Book(new List<Author>() { new Author("Петр", "Пет") }, "Ростов-на-Дону", "Москва", 1996, null, "Title2", 200, "да");
-            Book book2 = new Book(new List<Author>() { new Author("Петр", "Петров") }, "Саратов", "Москва", 1996, null, "Title", 200, "да");
-            bool res = DependencyResolver.BookLogic.AddBook(_validationResult, book);
-            var res2 = DependencyResolver.BookLogic.AddBook(_validationResult2, book2);
-            Console.WriteLine("Result of validation: " + res);
-            Console.WriteLine("Result of validation2 : " + res2);
-            foreach (ValidationObject error in _validationResult)
+            var authors = new List<Author>();
+            Console.WriteLine("Adding a author: ");
+            Console.WriteLine("Enter author name: ");
+            string authorName = Console.ReadLine();
+            Console.WriteLine("Enter author lastname: ");
+            string authorLastname = Console.ReadLine();
+            var author = new Author(authorName, authorLastname);
+            authors.Add(author);
+            do
             {
-                Console.WriteLine(error.Property + ": " + error.Message);
+                Console.WriteLine("Add more author?:" + Environment.NewLine +
+                                "0. No" + Environment.NewLine +
+                                "1. Yes " + Environment.NewLine +
+                                "Enter the selected menu item:"
+                                );
+                if (int.TryParse(Console.ReadLine(), out int selectedOption))
+                {
+                    switch (selectedOption)
+                    {
+                        case 0:
+                            repeat = false;
+                            break;
+                        case 1:
+                            Console.WriteLine("Enter author name: ");
+                            authorName = Console.ReadLine();
+                            Console.WriteLine("Enter author lastname: ");
+                            authorLastname = Console.ReadLine();
+                            author = new Author(authorName, authorLastname);
+                            authors.Add(author);
+                            break;
+                        default:
+                            Console.WriteLine("----------------------------------------------------------------");
+                            Console.WriteLine("Enter an existing menu item");
+                            Console.WriteLine("----------------------------------------------------------------");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("Enter a number");
+                    Console.WriteLine("----------------------------------------------------------------");
+                }
+            } while (repeat);
+
+            Console.WriteLine("Enter book title: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("Введите место издания(город) книги: ");
+            string city = Console.ReadLine();
+            Console.WriteLine("Введите издательство книги: ");
+            string publishingCompany = Console.ReadLine();
+            int year;
+            Console.WriteLine("Введите год издания книги: ");
+            if (!int.TryParse(Console.ReadLine(), out year))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("Year must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
             }
-            foreach (ValidationObject error in _validationResult2)
+            Console.WriteLine("Введите ISBN издания книги: ");
+            string isbn = Console.ReadLine();
+            int pagecount;
+            Console.WriteLine("Введите количество страниц книги: ");
+            if (!int.TryParse(Console.ReadLine(), out pagecount))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("Pagecount must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+            Console.WriteLine("Введите примечание книги: ");
+            string commentary = Console.ReadLine();
+
+            Book book = new Book(authors, city, publishingCompany, year, isbn, title, pagecount, commentary);
+            bool validationRes = DependencyResolver.BookLogic.AddBook(_validationResult, book);
+
+            Console.WriteLine("Result of validation: " + validationRes);
+            foreach (ValidationObject error in _validationResult)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
@@ -235,8 +303,60 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void AddPatent()
         {
+            bool repeat = true;
             _validationResult = new List<ValidationObject>();
-            Patent patent = new Patent(new List<Author>() { new Author("Петр", "Петров") } ,"Россия", 12819 , new DateTime(2015, 7, 20), new DateTime(1996, 7, 21), "Крутой патент", 128, "");
+            var authors = new List<Author>();
+            Console.WriteLine("Adding a author: ");
+            Console.WriteLine("Enter author name: ");
+            string authorName = Console.ReadLine();
+            Console.WriteLine("Enter author lastname: ");
+            string authorLastname = Console.ReadLine();
+            var author = new Author(authorName, authorLastname);
+            authors.Add(author);
+            do
+            {
+                Console.WriteLine("Add more author?:" + Environment.NewLine +
+                                "0. No" + Environment.NewLine +
+                                "1. Yes " + Environment.NewLine +
+                                "Enter the selected menu item:"
+                                );
+                if (int.TryParse(Console.ReadLine(), out int selectedOption))
+                {
+                    switch (selectedOption)
+                    {
+                        case 0:
+                            repeat = false;
+                            break;
+                        case 1:
+                            Console.WriteLine("Enter author name: ");
+                            authorName = Console.ReadLine();
+                            Console.WriteLine("Enter author lastname: ");
+                            authorLastname = Console.ReadLine();
+                            author = new Author(authorName, authorLastname);
+                            authors.Add(author);
+                            break;
+                        default:
+                            Console.WriteLine("----------------------------------------------------------------");
+                            Console.WriteLine("Enter an existing menu item");
+                            Console.WriteLine("----------------------------------------------------------------");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("Enter a number");
+                    Console.WriteLine("----------------------------------------------------------------");
+                }
+            } while (repeat);
+            string title = Console.ReadLine();
+            string counry = Console.ReadLine();
+            int registrationNumber = Console.ReadLine();
+            DateTime applicationDate = Console.ReadLine();
+            DateTime publicationDate = Console.ReadLine();
+            int pagecount = Console.ReadLine();
+            string commentary = Console.ReadLine();
+            Patent patent = new Patent(authors, counry, registrationNumber, applicationDate, publicationDate, title, pagecount, commentary);
             bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
             foreach (ValidationObject error in _validationResult)
             {
