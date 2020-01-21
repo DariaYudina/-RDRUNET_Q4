@@ -406,7 +406,59 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddNewspaper()
         {
             _validationResult = new List<ValidationObject>();
-            Newspaper newspaper = new Newspaper( new Issue("ee", "Саратов", "ee" , "ISSN 1234-1234"), 1401, 1 , new DateTime(1401, 7, 20), 12, "ee" );
+            var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);
+            Console.WriteLine("Enter patent title: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("Enter patent city: ");
+            string city = Console.ReadLine();
+            Console.WriteLine("Enter patent publishingcompany: ");
+            string publishingcompany = Console.ReadLine();
+            Console.WriteLine("Enter patent issn:");
+            string issn = Console.ReadLine();
+            int yearOfPublishing;
+            Console.WriteLine("Enter patent yearOfPublishing:");
+            if (!int.TryParse(Console.ReadLine(), out yearOfPublishing))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("yearOfPublishing must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+
+            int countOfPublishing;
+            Console.WriteLine("Enter patent countOfPublishing:");
+            if (!int.TryParse(Console.ReadLine(), out countOfPublishing))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("countOfPublishing must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+
+            DateTime dateOfPublishing;
+            Console.WriteLine("Enter patent dateOfPublishing:");
+            Console.WriteLine($"{Environment.NewLine} Please specify a date. Format: " + datexample);
+            if (!DateTime.TryParse(Console.ReadLine(), out dateOfPublishing))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("dateOfPublishing must be a date");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+
+            int pagecount;
+            Console.WriteLine("Enter patent pagecount:");
+            if (!int.TryParse(Console.ReadLine(), out pagecount))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("pagecount must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+
+            Console.WriteLine("Enter patent commentary:");
+            string commentary = Console.ReadLine();
+            Newspaper newspaper = new Newspaper(new Issue(title, city, publishingcompany, issn), yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
             bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
             Console.WriteLine(res);
             foreach (ValidationObject error in _validationResult)
@@ -417,7 +469,10 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void SearchBooksByAutors()
         {
-            var res = DependencyResolver.CommonLogic.GetBooksByAuthor(new Author("Петр", "Петров"));
+            Console.WriteLine("Enter author name and lastname");
+            string search = Console.ReadLine();
+            string[] author = search.Split(' ');
+            var res = DependencyResolver.CommonLogic.GetBooksByAuthor(new Author(author[0], author[1]));
             foreach (AbstractLibraryItem item in res)
             {
                 Console.WriteLine(item.LibaryItemId + " " + item.Title);
@@ -426,7 +481,10 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void SearchPatentsByAutors()
         {
-            var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author("Петр", "Петров"));
+            Console.WriteLine("Enter author name and lastname");
+            string search = Console.ReadLine();
+            string[] author = search.Split(' ');
+            var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author(author[0], author[1]));
             Console.WriteLine("----------------------------------------------------------------");
             foreach (AbstractLibraryItem item in res)
             {
@@ -437,7 +495,10 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void SearchBooksAndPatentsByAutors()
         {
-            var res = DependencyResolver.CommonLogic.GetBooksAndPatentsByAuthor(new Author("Петр", "Петров"));
+            Console.WriteLine("Enter author name and lastname");
+            string search = Console.ReadLine();
+            string[] author = search.Split(' ');
+            var res = DependencyResolver.CommonLogic.GetBooksAndPatentsByAuthor(new Author(author[0], author[1]));
             Console.WriteLine("----------------------------------------------------------------");
             foreach (AbstractLibraryItem item in res)
             {
@@ -464,7 +525,8 @@ namespace Epam.Task01.Library.ConsolePL
 
         public void SearchByTItle()
         {
-            string search = "Title";
+            Console.WriteLine("Enter title:");
+            string search = Console.ReadLine();
             var res = DependencyResolver.CommonLogic.GetLibraryItemsByTitle(search);
             Console.WriteLine("----------------------------------------------------------------");
             foreach (var item in res)
