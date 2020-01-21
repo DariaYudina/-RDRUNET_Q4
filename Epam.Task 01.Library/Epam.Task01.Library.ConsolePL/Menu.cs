@@ -3,6 +3,7 @@ using Epam.Task01.Library.Common;
 using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Epam.Task01.Library.ConsolePL
@@ -351,10 +352,48 @@ namespace Epam.Task01.Library.ConsolePL
             } while (repeat);
             string title = Console.ReadLine();
             string counry = Console.ReadLine();
-            int registrationNumber = Console.ReadLine();
-            DateTime applicationDate = Console.ReadLine();
-            DateTime publicationDate = Console.ReadLine();
-            int pagecount = Console.ReadLine();
+            int registrationNumber;
+            Console.WriteLine("Enter patent registration number:");
+            if (!int.TryParse(Console.ReadLine(), out registrationNumber))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("registrationNumber must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+            DateTime applicationDate;
+            Console.WriteLine("Enter patent application date:");
+            var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);
+            Console.WriteLine($"{Environment.NewLine} Please specify a date. Format: " + datexample);
+            if (!DateTime.TryParse(Console.ReadLine(), out applicationDate))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("applicationDate must be a date");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+
+            DateTime publicationDate;
+            Console.WriteLine("Enter patent publication date:");
+            Console.WriteLine($"{Environment.NewLine} Please specify a date. Format: " + datexample);
+            if (!DateTime.TryParse(Console.ReadLine(), out publicationDate))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("publicationDate must be a date");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+
+            int pagecount;
+            Console.WriteLine("Enter patent pagecount:");
+            if (!int.TryParse(Console.ReadLine(), out pagecount))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("pagecount must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+
             string commentary = Console.ReadLine();
             Patent patent = new Patent(authors, counry, registrationNumber, applicationDate, publicationDate, title, pagecount, commentary);
             bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
