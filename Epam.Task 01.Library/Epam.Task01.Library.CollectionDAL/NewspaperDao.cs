@@ -14,9 +14,6 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public bool CheckNewspaperUniqueness(Newspaper newspaper)
         {
-            //Если указан ISSN, уже имеющийся в каталоге, названия должны совпадать.
-            //Уникальность определяется сочетанием атрибутов «Название», «Издательство» и «Дата выпуска».
-
             var allitems = MemoryStorage.GetAllAbstractLibraryItems();
             var newspapers = allitems.OfType<Newspaper>();
 
@@ -24,7 +21,7 @@ namespace Epam.Task01.Library.CollectionDAL
             {
                 foreach (Newspaper item in newspapers)
                 {
-                    if (item.Issue.Issn == newspaper.Issue.Issn && item.Title != newspaper.Title)
+                    if (item.Issue.Issn == newspaper.Issue.Issn && item.Title == newspaper.Title)
                     {
                         return false;
                     }

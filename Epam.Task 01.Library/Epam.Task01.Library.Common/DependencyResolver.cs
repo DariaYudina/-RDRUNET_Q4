@@ -12,76 +12,43 @@ namespace Epam.Task01.Library.Common
     public static class DependencyResolver
     {
 
-        private static readonly ICommonLogic _commonLogic;
-        private static readonly ICommonDao _commonDao;
-        private static readonly ICommonValidation _commonValidation;
+        public static IBookLogic BookLogic => new BookLogic(BookDao, BookValidation);
 
-        private static readonly IBookLogic _bookLogic;
-        private static readonly IBookDao _bookDao;
-        private static readonly IBookValidation _bookValidation;
+        public static IBookDao BookDao { get; }
 
-        private static readonly IPatentLogic _patentLogic;
-        private static readonly IPatentDao _patentDao;
-        private static readonly IPatentValidation _patentValidation;
+        public static IBookValidation BookValidation => new BookValidation(CommonValidation);
 
-        private static readonly INewspaperLogic _newspaperLogic;
-        private static readonly INewspaperDao _newspaperDao;
-        private static readonly INewspaperValidation _newspaperValidation;
+        public static ICommonLogic CommonLogic => new CommonLogic(CommonDao, CommonValidation);
 
+        public static ICommonDao CommonDao { get; }
 
-        private static readonly IIssueLogic _issueLogic; 
-        private static readonly IIssueDao _issueDao;
-        private static readonly IIssueValidation _issueValidation;
+        public static ICommonValidation CommonValidation => new CommonValidation();
 
-        public static IBookLogic BookLogic => _bookLogic;
+        public static IPatentLogic PatentLogic => new PatentLogic(PatentDao, PatentValidation);
 
-        public static IBookDao BookDao => _bookDao;
+        public static IPatentDao PatentDao { get; }
 
-        public static IBookValidation BookValidation => _bookValidation;
+        public static IPatentValidation PatentValidation => new PatentValidation(CommonValidation);
 
-        public static ICommonLogic CommonLogic => _commonLogic;
+        public static INewspaperLogic NewspaperLogic => new NewspaperLogic(NewspaperDao, NewspaperValidation);
 
-        public static ICommonDao CommonDao => _commonDao;
+        public static INewspaperDao NewspaperDao { get; }
 
-        public static ICommonValidation CommonValidation => _commonValidation;
+        public static INewspaperValidation NewspaperValidation => new NewspaperValidation(CommonValidation, IssueValidation);
 
-        public static IPatentLogic PatentLogic => _patentLogic;
+        public static IIssueLogic IssueLogic => new IssueLogic(IssueDao, IssueValidation);
 
-        public static IPatentDao PatentDao => _patentDao;
+        public static IIssueDao IssueDao { get; }
 
-        public static IPatentValidation PatentValidation => _patentValidation;
-
-        public static INewspaperLogic NewspaperLogic => _newspaperLogic;
-
-        public static INewspaperDao NewspaperDao => _newspaperDao;
-
-        public static INewspaperValidation NewspaperValidation => _newspaperValidation;
-
-        public static IIssueLogic IssueLogic => _issueLogic;
-
-        public static IIssueDao IssueDao => _issueDao;
-
-        public static IIssueValidation IssueValidation => _issueValidation;
+        public static IIssueValidation IssueValidation => new IssueValidation();
 
         static DependencyResolver()
         {
-            _commonDao = new CommonDao();
-            _bookDao = new BookDao();
-            _patentDao = new PatentDao();
-            _newspaperDao = new NewspaperDao();
-            _issueDao = new IssueDao();
-
-            _commonValidation = new CommonValidation();
-            _bookValidation = new BookValidation(_commonValidation);
-            _patentValidation = new PatentValidation(_commonValidation);
-            _issueValidation = new IssueValidation();
-            _newspaperValidation = new NewspaperValidation(_commonValidation, _issueValidation);
-
-            _commonLogic = new CommonLogic(_commonDao, _commonValidation);
-            _bookLogic = new BookLogic(_bookDao,_bookValidation);
-            _patentLogic = new PatentLogic(_patentDao, _patentValidation);
-            _newspaperLogic = new NewspaperLogic(_newspaperDao, _newspaperValidation);
-            _issueLogic = new IssueLogic(_issueDao, _issueValidation);
+            CommonDao = new CommonDao();
+            BookDao = new BookDao();
+            PatentDao = new PatentDao();
+            NewspaperDao = new NewspaperDao();
+            IssueDao = new IssueDao();
         }
     }
 }

@@ -24,12 +24,24 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public bool AddIssue(List<ValidationObject> validationResult, Issue issue)
         {
-            throw new NotImplementedException();
+            _issueValidation.ValidationResult = validationResult;
+            if (issue == null)
+            {
+                _issueValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
+                return false;
+            }
+            IIssueValidation issueValidationObject = _issueValidation.CheckISSN(issue).CheckNewspaperCity(issue).CheckPublishingCompany(issue).CheckTitle(issue);
+            if (issueValidationObject.IsValid)
+            {
+                _issueDao.AddIssue(issue);
+                return true;
+            }
+            return false;
         }
 
         public IEnumerable<Issue> GetIssueItems()
         {
-            throw new NotImplementedException();
+            return _issueDao.GetIssueItems();
         }
     }
 }

@@ -23,6 +23,10 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public IIssueValidation CheckISSN(Issue issue)
         {
+            if(issue.Issn == null)
+            {
+                return this;
+            }
             string IssnPattern = @"^(ISSN\s\d{4}-\d{4})$";
             bool notvalid = !Regex.IsMatch(issue.Issn, IssnPattern);
             IsValid &= !notvalid;
@@ -40,8 +44,8 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public IIssueValidation CheckNewspaperCity(Issue issue)
         {
-            string NewspaperCityPattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)(\s(([A-Z]|[a-z])[a-z]+)|\s(([А-Я]|[а-я])[а-я]+))*(-([A-Z][a-z]+)|-([А-Я][а-я]+))?)$";
-            bool notvalid = !Regex.IsMatch(issue.Issn, NewspaperCityPattern);
+            string NewspaperCityPattern = @"^((([A-Z][a-z]+)(\s(([A-Z]|[a-z])[a-z]+))*(-([A-Z][a-z]+))?)|(([А-Я][а-я]+)(\s(([А-Я]|[а-я])[а-я]+))*(-([А-Я][а-я]+))?))$";
+            bool notvalid = !Regex.IsMatch(issue.City, NewspaperCityPattern);
             IsValid &= !notvalid;
             if (notvalid)
             {

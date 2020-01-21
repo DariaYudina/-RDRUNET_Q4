@@ -8,7 +8,6 @@ namespace Epam.Task01.Library.Entity
 {
     public class Issue
     {
-
         public Issue(string title, string city, string publishingCompany, string issn)
         {
             Title = title;
