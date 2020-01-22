@@ -12,5 +12,7 @@ namespace Epam.Task01.Library.AbstractDAL
         void AddIssue(Issue issue);
 
         IEnumerable<Issue> GetIssueItems();
+
+        Issue GetIssueItemById(int id);
     }
 }

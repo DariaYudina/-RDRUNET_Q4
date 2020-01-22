@@ -423,6 +423,9 @@ namespace Epam.Task01.Library.ConsolePL
                     case 1:
                         CteateNewIssue(out Issue issue);
                         break;
+                    case 2:
+                        SelectExistingIssue();
+                        break;
                     default:
                         Console.WriteLine("----------------------------------------------------------------");
                         Console.WriteLine("Enter an existing menu item");
@@ -432,9 +435,6 @@ namespace Epam.Task01.Library.ConsolePL
             }
             _validationResult = new List<ValidationObject>();
             var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);
-
-
-
 
             int yearOfPublishing;
             Console.WriteLine("Enter patent yearOfPublishing:");
@@ -507,6 +507,24 @@ namespace Epam.Task01.Library.ConsolePL
             }
             issue = null;
             return true;
+        }
+
+        private void SelectExistingIssue()
+        {
+            Console.WriteLine("Issues: ");
+            foreach (var item in DependencyResolver.IssueLogic.GetIssueItems())
+            {
+                Console.WriteLine($"{item.IssueId}. | Title: {item.Title} | City: {item.City} | Publishing company: {item.PublishingCompany}");
+            }
+            Console.WriteLine("Select menu item number:");
+            if (!int.TryParse(Console.ReadLine(), out int selectedoption))
+            {
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("pagecount must be a number");
+                Console.WriteLine("----------------------------------------------------------------");
+                return;
+            }
+            DependencyResolver.IssueLogic.GetIssueItemById(selectedoption);
         }
 
         private void SearchBooksByAutors()
