@@ -11,6 +11,7 @@ namespace Epam.Task01.Library.CollectionBLL
     {
         private readonly IPatentDao _patentDao;
         private readonly IPatentValidation _patentValidation;
+
         public PatentLogic(IPatentDao patentDao, IPatentValidation validator)
         {
             _patentDao = patentDao;
@@ -22,7 +23,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _patentValidation.ValidationResult = validationResult;
             if (patent == null)
             {
-                _patentValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
+                _patentValidation.ValidationResult.Add(new ValidationObject("Patent must be not null and not empty", "Patent"));
                 return false;
             }
             if (patent.Authors == null || patent.Authors.Count == 0)

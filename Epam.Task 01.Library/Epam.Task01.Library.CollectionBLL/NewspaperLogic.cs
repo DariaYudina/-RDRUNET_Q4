@@ -23,7 +23,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _newspaperValidation.ValidationResult = validationResult;
             if (newspaper == null)
             {
-                _newspaperValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
+                _newspaperValidation.ValidationResult.Add(new ValidationObject("Newspaper must be not null and not empty", "Newspaper"));
                 return false;
             }
             if(newspaper.Issue == null)

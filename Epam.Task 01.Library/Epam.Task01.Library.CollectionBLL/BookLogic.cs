@@ -23,7 +23,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _bookValidation.ValidationResult = validationResult;
             if(book == null)
             {
-                _bookValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
+                _bookValidation.ValidationResult.Add(new ValidationObject("Book must be not null and not empty", "Book"));
                 return false;
             }
             if(book.Authors == null || book.Authors.Count == 0)

@@ -27,7 +27,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _issueValidation.ValidationResult = validationResult;
             if (issue == null)
             {
-                _issueValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Book"));
+                _issueValidation.ValidationResult.Add(new ValidationObject("Issue must be not null and not empty", "Issue"));
                 return false;
             }
             IIssueValidation issueValidationObject = _issueValidation.CheckISSN(issue).CheckNewspaperCity(issue).CheckPublishingCompany(issue).CheckTitle(issue);

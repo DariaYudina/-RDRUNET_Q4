@@ -39,12 +39,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public static IEnumerable<T> GetLibraryItemByType<T>()
         {
-            return _libraryCatalog.OfType<T>();
-        }
-
-        public static IEnumerable<AbstractLibraryItem> Test()
-        {
-            return _libraryCatalog.Values.Where(i => i is Patent || i is Book);
+            return _libraryCatalog.Values.OfType<T>().ToList();
         }
 
         public static void AddIssue(Issue issue)

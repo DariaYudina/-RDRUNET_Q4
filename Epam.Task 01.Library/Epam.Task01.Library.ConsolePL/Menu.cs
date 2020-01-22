@@ -70,7 +70,7 @@ namespace Epam.Task01.Library.ConsolePL
                             SearchBooksAndPatentsByAutors();
                             break;
                         case 10:
-                            GetBooksGroupByPublishingCompanyWithTitle();
+                            GetBooksGroupByPublishingCompanyByPublishingCompany();
                             break;
                         case 11:
                             GetGroupLibraryItemByYearOfPublishing();
@@ -92,18 +92,19 @@ namespace Epam.Task01.Library.ConsolePL
             while (repeat);
         }
 
-        public void GetBooksGroupByPublishingCompanyWithTitle()
+        public void GetBooksGroupByPublishingCompanyByPublishingCompany()
         {
             Console.WriteLine("Enter title:");
             string title = Console.ReadLine();
+            var res = GroupBooksByPublishingCompany(title);
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("Catalog:");
-            foreach (var item in GroupBooksByPublishingCompany(title))
+            foreach (var item in res)
             {
-                Console.WriteLine($"Year: {item.Key}");
+                Console.WriteLine($"Publishing company: {item.Key}");
                 foreach (var i in item)
                 {
-                    Console.WriteLine($"\t{i.Title}");
+                    Console.WriteLine($"\tid:{i.LibaryItemId}| Название: {i.Title} isbn:{i.isbn}");
                 }
             }
             Console.WriteLine("----------------------------------------------------------------");
@@ -304,6 +305,7 @@ namespace Epam.Task01.Library.ConsolePL
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
+
         }
 
         private void AddPatent()
@@ -409,16 +411,31 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void AddNewspaper()
         {
+            Console.WriteLine("Options:" + Environment.NewLine +
+                "1. Create new issue " + Environment.NewLine +
+                "2. Select exist issue" + Environment.NewLine +
+                "Enter the selected menu item:"
+                );
+            if (int.TryParse(Console.ReadLine(), out int selectedOption))
+            {
+                switch (selectedOption)
+                {
+                    case 1:
+                        CteateNewIssue(out Issue issue);
+                        break;
+                    default:
+                        Console.WriteLine("----------------------------------------------------------------");
+                        Console.WriteLine("Enter an existing menu item");
+                        Console.WriteLine("----------------------------------------------------------------");
+                        break;
+                }
+            }
             _validationResult = new List<ValidationObject>();
             var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);
-            Console.WriteLine("Enter patent title: ");
-            string title = Console.ReadLine();
-            Console.WriteLine("Enter patent city: ");
-            string city = Console.ReadLine();
-            Console.WriteLine("Enter patent publishingcompany: ");
-            string publishingcompany = Console.ReadLine();
-            Console.WriteLine("Enter patent issn:");
-            string issn = Console.ReadLine();
+
+
+
+
             int yearOfPublishing;
             Console.WriteLine("Enter patent yearOfPublishing:");
             if (!int.TryParse(Console.ReadLine(), out yearOfPublishing))
@@ -459,16 +476,37 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
                 return;
             }
-
             Console.WriteLine("Enter patent commentary:");
             string commentary = Console.ReadLine();
-            Newspaper newspaper = new Newspaper(new Issue(title, city, publishingcompany, issn), yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
+            Newspaper newspaper = new Newspaper( new Issue("","","",""), yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
             bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
             Console.WriteLine(res);
             foreach (ValidationObject error in _validationResult)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
+        }
+
+        private bool CteateNewIssue(out Issue issue)
+        {
+            _validationResult = new List<ValidationObject>();
+            Console.WriteLine("Enter patent title: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("Enter patent city: ");
+            string city = Console.ReadLine();
+            Console.WriteLine("Enter patent publishingcompany: ");
+            string publishingcompany = Console.ReadLine();
+            Console.WriteLine("Enter patent issn:");
+            string issn = Console.ReadLine();
+            issue = new Issue(title, city, publishingcompany, issn);
+            bool res = DependencyResolver.IssueLogic.AddIssue(_validationResult, issue);
+            Console.WriteLine(res);
+            foreach (ValidationObject error in _validationResult)
+            {
+                Console.WriteLine(error.Property + ": " + error.Message);
+            }
+            issue = null;
+            return true;
         }
 
         private void SearchBooksByAutors()
@@ -545,9 +583,9 @@ namespace Epam.Task01.Library.ConsolePL
             return DependencyResolver.CommonLogic.GetLibraryItemsByYearOfPublishing();
         }
 
-        private IEnumerable<IGrouping<string, Book>> GroupBooksByPublishingCompany(string title)
+        private IEnumerable<IGrouping<string, Book>> GroupBooksByPublishingCompany(string publishingCompany)
         {
-            return DependencyResolver.BookLogic.GetBooksByPublishingCompany(title);
+            return DependencyResolver.BookLogic.GetBooksByPublishingCompany(publishingCompany);
         }
     }
 }

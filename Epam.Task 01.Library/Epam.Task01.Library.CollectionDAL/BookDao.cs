@@ -22,9 +22,9 @@ namespace Epam.Task01.Library.CollectionDAL
             return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.LibaryItemId == id);
         }
 
-        public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany)
+        public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishing_Company)
         {
-            return MemoryStorage.GetLibraryItemByType<Book>().Where(book => book.PublishingCompany.Contains(publishingCompany)).GroupBy(book => book.PublishingCompany);
+            return MemoryStorage.GetLibraryItemByType<Book>().Where(publishingCompany => publishingCompany.PublishingCompany.StartsWith(publishing_Company)).GroupBy(publishingCompany => publishingCompany.PublishingCompany).ToList();
         }
 
         public bool CheckBookUniqueness(Book book)
