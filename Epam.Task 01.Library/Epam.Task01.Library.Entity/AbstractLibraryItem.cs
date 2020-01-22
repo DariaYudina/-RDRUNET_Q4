@@ -10,7 +10,7 @@
 
         public string Commentary { get; set; }
 
-        public int YearOfPublishing { get; set; }
+        public virtual int YearOfPublishing { get; set; }
 
         public AbstractLibraryItem() { }
 
