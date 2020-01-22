@@ -9,6 +9,7 @@ namespace Epam.Task01.Library.Entity
         public int CountOfPublishing { get; set; }
 
         public DateTime DateOfPublishing { get; set; }
+
         public override int YearOfPublishing
         {
             get => DateOfPublishing.Year;

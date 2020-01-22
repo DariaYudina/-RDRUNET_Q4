@@ -14,8 +14,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public bool CheckNewspaperUniqueness(Newspaper newspaper)
         {
-            var allitems = MemoryStorage.GetAllAbstractLibraryItems();
-            var newspapers = allitems.OfType<Newspaper>();
+            var newspapers = MemoryStorage.GetLibraryItemByType<Newspaper>();
 
             if ( newspaper.Issue.Issn != "" && newspaper.Issue.Issn != null)
             {

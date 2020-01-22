@@ -14,7 +14,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public bool CheckPatentUniqueness(Patent patent)
         {
-            var patents = MemoryStorage.GetAllAbstractLibraryItems().OfType<Patent>();
+            var patents = MemoryStorage.GetLibraryItemByType<Patent>();
             foreach (var item in patents)
             {
                 if (item.RegistrationNumber == patent.RegistrationNumber && item.Country == patent.Country)
