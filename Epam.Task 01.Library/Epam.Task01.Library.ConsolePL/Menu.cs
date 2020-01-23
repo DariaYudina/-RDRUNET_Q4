@@ -270,12 +270,12 @@ namespace Epam.Task01.Library.ConsolePL
 
             Console.WriteLine("Enter book title: ");
             string title = Console.ReadLine();
-            Console.WriteLine("Введите место издания(город) книги: ");
+            Console.WriteLine("Enter the place of publication (city) of the book: ");
             string city = Console.ReadLine();
-            Console.WriteLine("Введите издательство книги: ");
+            Console.WriteLine("Enter publishing company of book: ");
             string publishingCompany = Console.ReadLine();
             int year;
-            Console.WriteLine("Введите год издания книги: ");
+            Console.WriteLine("Enter book year of publication : ");
             if (!int.TryParse(Console.ReadLine(), out year))
             {
                 Console.WriteLine("----------------------------------------------------------------");
@@ -283,10 +283,10 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
                 return;
             }
-            Console.WriteLine("Введите ISBN издания книги: ");
+            Console.WriteLine("Entr book ISBN: ");
             string isbn = Console.ReadLine();
             int pagecount;
-            Console.WriteLine("Введите количество страниц книги: ");
+            Console.WriteLine("Enter book page count: ");
             if (!int.TryParse(Console.ReadLine(), out pagecount))
             {
                 Console.WriteLine("----------------------------------------------------------------");
@@ -294,7 +294,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
                 return;
             }
-            Console.WriteLine("Введите примечание книги: ");
+            Console.WriteLine("Enter book commentary: ");
             string commentary = Console.ReadLine();
 
             Book book = new Book(authors, city, publishingCompany, year, isbn, title, pagecount, commentary);
@@ -411,6 +411,7 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void AddNewspaper()
         {
+            Issue _issue = null;
             Console.WriteLine("Options:" + Environment.NewLine +
                 "1. Create new issue " + Environment.NewLine +
                 "2. Select exist issue" + Environment.NewLine +
@@ -421,11 +422,22 @@ namespace Epam.Task01.Library.ConsolePL
                 switch (selectedOption)
                 {
                     case 1:
-                        CteateNewIssue(out Issue issue);
-                        break;
+                        {
+                            if (!CteateNewIssue(out Issue issue))
+                            {
+                                Console.WriteLine("Issue not created");
+                            }
+                            _issue = issue;
+                            break;
+                        }
+
                     case 2:
-                        SelectExistingIssue();
-                        break;
+                        {
+                            SelectExistingIssue(out Issue issue);
+                            _issue = issue;
+                            break;
+                        }
+
                     default:
                         Console.WriteLine("----------------------------------------------------------------");
                         Console.WriteLine("Enter an existing menu item");
@@ -433,57 +445,67 @@ namespace Epam.Task01.Library.ConsolePL
                         break;
                 }
             }
-            _validationResult = new List<ValidationObject>();
-            var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);
 
-            int yearOfPublishing;
-            Console.WriteLine("Enter patent yearOfPublishing:");
-            if (!int.TryParse(Console.ReadLine(), out yearOfPublishing))
+            if (_issue != null)
             {
-                Console.WriteLine("----------------------------------------------------------------");
-                Console.WriteLine("yearOfPublishing must be a number");
-                Console.WriteLine("----------------------------------------------------------------");
-                return;
-            }
+                _validationResult = new List<ValidationObject>();
+                var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);
 
-            int countOfPublishing;
-            Console.WriteLine("Enter patent countOfPublishing:");
-            if (!int.TryParse(Console.ReadLine(), out countOfPublishing))
-            {
-                Console.WriteLine("----------------------------------------------------------------");
-                Console.WriteLine("countOfPublishing must be a number");
-                Console.WriteLine("----------------------------------------------------------------");
-                return;
-            }
+                int yearOfPublishing;
+                Console.WriteLine("Enter patent yearOfPublishing:");
+                if (!int.TryParse(Console.ReadLine(), out yearOfPublishing))
+                {
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("yearOfPublishing must be a number");
+                    Console.WriteLine("----------------------------------------------------------------");
+                    return;
+                }
 
-            DateTime dateOfPublishing;
-            Console.WriteLine("Enter patent dateOfPublishing:");
-            Console.WriteLine($"{Environment.NewLine} Please specify a date. Format: " + datexample);
-            if (!DateTime.TryParse(Console.ReadLine(), out dateOfPublishing))
-            {
-                Console.WriteLine("----------------------------------------------------------------");
-                Console.WriteLine("dateOfPublishing must be a date");
-                Console.WriteLine("----------------------------------------------------------------");
-                return;
-            }
+                int countOfPublishing;
+                Console.WriteLine("Enter patent countOfPublishing:");
+                if (!int.TryParse(Console.ReadLine(), out countOfPublishing))
+                {
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("countOfPublishing must be a number");
+                    Console.WriteLine("----------------------------------------------------------------");
+                    return;
+                }
 
-            int pagecount;
-            Console.WriteLine("Enter patent pagecount:");
-            if (!int.TryParse(Console.ReadLine(), out pagecount))
-            {
-                Console.WriteLine("----------------------------------------------------------------");
-                Console.WriteLine("pagecount must be a number");
-                Console.WriteLine("----------------------------------------------------------------");
-                return;
+                DateTime dateOfPublishing;
+                Console.WriteLine("Enter patent dateOfPublishing:");
+                Console.WriteLine($"{Environment.NewLine} Please specify a date. Format: " + datexample);
+                if (!DateTime.TryParse(Console.ReadLine(), out dateOfPublishing))
+                {
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("dateOfPublishing must be a date");
+                    Console.WriteLine("----------------------------------------------------------------");
+                    return;
+                }
+
+                int pagecount;
+                Console.WriteLine("Enter patent pagecount:");
+                if (!int.TryParse(Console.ReadLine(), out pagecount))
+                {
+                    Console.WriteLine("----------------------------------------------------------------");
+                    Console.WriteLine("pagecount must be a number");
+                    Console.WriteLine("----------------------------------------------------------------");
+                    return;
+                }
+
+                Console.WriteLine("Enter patent commentary:");
+                string commentary = Console.ReadLine();
+
+                Newspaper newspaper = new Newspaper(_issue, yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
+                bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
+                Console.WriteLine(res);
+                foreach (ValidationObject error in _validationResult)
+                {
+                    Console.WriteLine(error.Property + ": " + error.Message);
+                }
             }
-            Console.WriteLine("Enter patent commentary:");
-            string commentary = Console.ReadLine();
-            Newspaper newspaper = new Newspaper( new Issue("","","",""), yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
-            bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
-            Console.WriteLine(res);
-            foreach (ValidationObject error in _validationResult)
+            else
             {
-                Console.WriteLine(error.Property + ": " + error.Message);
+                Console.WriteLine("Issue must bu not null or empty");
             }
         }
 
@@ -499,18 +521,20 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("Enter patent issn:");
             string issn = Console.ReadLine();
             issue = new Issue(title, city, publishingcompany, issn);
-            bool res = DependencyResolver.IssueLogic.AddIssue(_validationResult, issue);
-            Console.WriteLine(res);
-            foreach (ValidationObject error in _validationResult)
+            if (!DependencyResolver.IssueLogic.AddIssue(_validationResult, issue))
             {
-                Console.WriteLine(error.Property + ": " + error.Message);
+                foreach (ValidationObject error in _validationResult)
+                {
+                    Console.WriteLine(error.Property + ": " + error.Message);
+                }
+                return false;
             }
-            issue = null;
             return true;
         }
 
-        private void SelectExistingIssue()
+        private void SelectExistingIssue(out Issue issue)
         {
+            issue = null;
             Console.WriteLine("Issues: ");
             foreach (var item in DependencyResolver.IssueLogic.GetIssueItems())
             {
@@ -524,7 +548,9 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("----------------------------------------------------------------");
                 return;
             }
-            DependencyResolver.IssueLogic.GetIssueItemById(selectedoption);
+
+            issue = DependencyResolver.IssueLogic.GetIssueItemById(selectedoption);
+
         }
 
         private void SearchBooksByAutors()

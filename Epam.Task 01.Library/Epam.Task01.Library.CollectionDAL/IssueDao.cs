@@ -12,12 +12,17 @@ namespace Epam.Task01.Library.CollectionDAL
     {
         public void AddIssue(Issue issue)
         {
-            throw new NotImplementedException();
+            MemoryStorage.AddIssue(issue);
+        }
+
+        public Issue GetIssueItemById(int id)
+        {
+            return MemoryStorage.GetIssueItemById(id);
         }
 
         public IEnumerable<Issue> GetIssueItems()
         {
-            throw new NotImplementedException();
+            return MemoryStorage.GetAllIssues();
         }
     }
 }

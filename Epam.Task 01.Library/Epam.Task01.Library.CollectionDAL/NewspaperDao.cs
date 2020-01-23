@@ -20,7 +20,7 @@ namespace Epam.Task01.Library.CollectionDAL
             {
                 foreach (Newspaper item in newspapers)
                 {
-                    if (item.Issue.Issn == newspaper.Issue.Issn && item.Title == newspaper.Title)
+                    if (item.Issue.Issn == newspaper.Issue.Issn && item.Title != newspaper.Title)
                     {
                         return false;
                     }

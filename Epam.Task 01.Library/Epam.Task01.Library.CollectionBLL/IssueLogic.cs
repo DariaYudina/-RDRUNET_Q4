@@ -39,6 +39,11 @@ namespace Epam.Task01.Library.CollectionBLL
             return false;
         }
 
+        public Issue GetIssueItemById(int id)
+        {
+            return _issueDao.GetIssueItemById(id);
+        }
+
         public IEnumerable<Issue> GetIssueItems()
         {
             return _issueDao.GetIssueItems();
