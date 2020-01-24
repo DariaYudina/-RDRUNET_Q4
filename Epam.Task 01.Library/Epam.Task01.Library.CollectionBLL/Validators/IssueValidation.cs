@@ -16,17 +16,23 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public List<ValidationObject> ValidationResult { get; set; }
 
-        public IssueValidation()
+        private ICommonValidation CommonValidation { get; set; }
+
+        private const int TimberLinePublishingCompany = 300;
+        private const int TimberLineTitle = 300;
+        public IssueValidation(ICommonValidation commonValidation)
         {
             ValidationResult = new List<ValidationObject>();
+            CommonValidation = commonValidation;
         }
 
         public IIssueValidation CheckISSN(Issue issue)
         {
-            if(issue.Issn == null)
+            if (issue.Issn == null)
             {
                 return this;
             }
+
             string IssnPattern = @"^(ISSN\s\d{4}-\d{4})$";
             bool notvalid = !Regex.IsMatch(issue.Issn, IssnPattern);
             IsValid &= !notvalid;
@@ -61,7 +67,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public IIssueValidation CheckPublishingCompany(Issue issue)
         {
-            bool notvalid = issue.PublishingCompany.Length > 300;
+            bool notvalid = !CommonValidation.CheckNumericalInRange(issue.PublishingCompany.Length, TimberLinePublishingCompany, null);
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -71,12 +77,13 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
 
         public IIssueValidation CheckTitle(Issue issue)
         {
-            bool notvalid = issue.Title.Length > 300 | CheckStringIsNullorEmpty(issue.Title);
+            bool notvalid = !CommonValidation.CheckNumericalInRange(issue.Title.Length, TimberLineTitle, null) | CheckStringIsNullorEmpty(issue.Title);
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -86,8 +93,10 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
+
         private bool CheckStringIsNullorEmpty(string str)
         {
             bool notvalid = string.IsNullOrWhiteSpace(str);
@@ -99,8 +108,10 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
                     ValidationObject e = new ValidationObject("Is nill or white space string", "str");
                     ValidationResult.Add(e);
                 }
+
                 return true;
             }
+
             return false;
         }
     }

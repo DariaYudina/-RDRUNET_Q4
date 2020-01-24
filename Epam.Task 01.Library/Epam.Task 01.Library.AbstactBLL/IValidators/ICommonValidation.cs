@@ -10,5 +10,6 @@ namespace AbstractValidation
         ICommonValidation CheckTitle(AbstractLibraryItem item);
         ICommonValidation CheckPagesCount(AbstractLibraryItem item);
         ICommonValidation CheckCommentary(AbstractLibraryItem item);
+        bool CheckNumericalInRange(int number, int? timberline, int? bottomline);
     }
 }

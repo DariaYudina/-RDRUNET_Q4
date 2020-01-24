@@ -40,7 +40,7 @@ namespace Epam.Task01.Library.Common
 
         public static IIssueDao IssueDao { get; }
 
-        public static IIssueValidation IssueValidation => new IssueValidation();
+        public static IIssueValidation IssueValidation => new IssueValidation(CommonValidation);
 
         static DependencyResolver()
         {

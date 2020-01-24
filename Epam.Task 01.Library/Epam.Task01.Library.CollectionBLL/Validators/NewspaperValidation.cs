@@ -13,7 +13,11 @@ namespace CollectionValidation
         public bool IsValid { get; set; } = true;
 
         private ICommonValidation CommonValidation { get; set; }
+
         private IIssueValidation IssueValidation { get; set; }
+
+        private const int BottomLineYear = 1400;
+        private const int BottomLineCountOfPublishing = 0;
 
         public NewspaperValidation(ICommonValidation commonValidation, IIssueValidation issueValidation)
         {
@@ -48,7 +52,7 @@ namespace CollectionValidation
 
         public INewspaperValidation CheckCountOfPublishing(Newspaper newspaper)
         {
-            bool notvalid = newspaper.CountOfPublishing <= 0;
+            bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.CountOfPublishing, null, BottomLineCountOfPublishing);
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -58,13 +62,18 @@ namespace CollectionValidation
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
 
         public INewspaperValidation CheckDateOfPublishing(Newspaper newspaper)
         {
-            bool notvalid = newspaper.DateOfPublishing.Year < 1400 || newspaper.DateOfPublishing > DateTime.Now || newspaper.DateOfPublishing.Year != newspaper.YearOfPublishing;
+            bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.DateOfPublishing.Year, null, BottomLineYear)
+                            || newspaper.DateOfPublishing > DateTime.Now
+                            || newspaper.DateOfPublishing.Year != newspaper.YearOfPublishing;
+
             IsValid &= !notvalid;
+
             if (notvalid)
             {
                 if (ValidationResult != null)
@@ -76,9 +85,10 @@ namespace CollectionValidation
 
             return this;
         }
+
         public INewspaperValidation CheckYearOfPublishing(Newspaper newspaper)
         {
-            bool notvalid = newspaper.YearOfPublishing < 1400 && newspaper.YearOfPublishing > DateTime.Now.Year;
+            bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.YearOfPublishing, DateTime.Now.Year, BottomLineYear);
             IsValid &= !notvalid;
             if (notvalid)
             {

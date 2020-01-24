@@ -22,5 +22,9 @@ namespace Epam.Task01.Library.Entity
             base.YearOfPublishing = yearOfPublishing;
             this.isbn = isbn;
         }
+
+        public Book()
+        {
+        }
     }
 }

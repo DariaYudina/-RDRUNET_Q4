@@ -14,6 +14,12 @@ namespace CollectionValidation
 
         private ICommonValidation CommonValidation { get; set; }
 
+        private const int BottomLineYear = 1474;
+        private const string NamePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+        private const string LastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+        private const string CountryPattern = @"^(([A-Z][a-z]+)|([А-Я][а-я]+)|([A-Z]+|[А-Я]+))$";
+        private const int BottomLinePageCount = 0;
+
         public PatentValidation(ICommonValidation commonValidation)
         {
             ValidationResult = new List<ValidationObject>();
@@ -24,7 +30,8 @@ namespace CollectionValidation
         {
             if (IsValid != false)
             {
-                bool notvalid = patent.ApplicationDate.Year < 1474 && patent.ApplicationDate > DateTime.Now ;
+                bool notvalid = !CommonValidation.CheckNumericalInRange(patent.ApplicationDate.Year, BottomLineYear, null)
+                                 && patent.ApplicationDate > DateTime.Now ;
                 IsValid &= !notvalid;
                 if (notvalid)
                 {
@@ -46,10 +53,9 @@ namespace CollectionValidation
         public IPatentValidation CheckAuthorsFirstName(Patent patent)
         {
             bool notvalid = false;
-            string namePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
             foreach (Author item in patent.Authors)
             {
-                if (!Regex.IsMatch(item.FirstName, namePattern))
+                if (!Regex.IsMatch(item.FirstName, NamePattern))
                 {
                     notvalid = true;
                     ValidationObject e = new ValidationObject("Author first name is not valid", "Firstname ");
@@ -65,10 +71,9 @@ namespace CollectionValidation
         public IPatentValidation CheckAuthorsLastName(Patent patent)
         {
             bool notvalid = false;
-            string lastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
             foreach (Author item in patent.Authors)
             {
-                if (!Regex.IsMatch(item.FirstName, lastnamePattern))
+                if (!Regex.IsMatch(item.FirstName, LastnamePattern))
                 {
                     notvalid = true;
                     ValidationObject e = new ValidationObject("Author last name is not valid", "Lastname ");
@@ -95,8 +100,8 @@ namespace CollectionValidation
 
         public IPatentValidation CheckCountry(Patent patent)
         {
-            string countryPattern = @"^(([A-Z][a-z]+)|([А-Я][а-я]+)|([A-Z]+|[А-Я]+))$";
-            bool notvalid = !Regex.IsMatch(patent.Country, countryPattern);
+
+            bool notvalid = !Regex.IsMatch(patent.Country, CountryPattern);
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -136,7 +141,7 @@ namespace CollectionValidation
         {
             if (IsValid != false)
             {
-                bool notvalid = patent.PagesCount < 0;
+                bool notvalid = !CommonValidation.CheckNumericalInRange(patent.PagesCount, null, BottomLinePageCount);
                 IsValid &= !notvalid;
                 if (notvalid)
                 {

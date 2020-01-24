@@ -14,6 +14,14 @@ namespace CollectionValidation
 
         private ICommonValidation CommonValidation { get; set; }
 
+        private const string BookCityPattern = @"^((([A-Z][a-z]+)((-[a-z]+)?)((-([A-Z][a-z]+))?))|(([А-Я][а-я]+)((-[а-я]+)?)((-([А-Я][а-я]+))?)))$";
+        private const string ISBNPattern = @"^(ISBN\s(([0-7])|(8\d|9[0-4])|(9([5-8]\d)|(9[0-3]))|(99[4-8][0-9])|(999[0-9][0-9]))-\d{1,7}-\d{1,7}-([0-9]|X))$";
+        private const string NamePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+        private const string LastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+        private const int BottomLineYear = 1400;
+        private const int TimberLineISBNLength = 10;
+        private const int TimberLinePublishingCompany = 300;
+
         public BookValidation(ICommonValidation commonValidation)
         {
             ValidationResult = new List<ValidationObject>();
@@ -22,8 +30,7 @@ namespace CollectionValidation
 
         public IBookValidation CheckBookCity(Book book)
         {
-            string bookCityPattern = @"^((([A-Z][a-z]+)((-[a-z]+)?)((-([A-Z][a-z]+))?))|(([А-Я][а-я]+)((-[а-я]+)?)((-([А-Я][а-я]+))?)))$";
-            bool notvalid = !Regex.IsMatch(book.City, bookCityPattern);
+            bool notvalid = !Regex.IsMatch(book.City, BookCityPattern);
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -43,7 +50,6 @@ namespace CollectionValidation
             {
                 return this;
             }
-            string ISBNPattern = @"^(ISBN\s(([0-7])|(8\d|9[0-4])|(9([5-8]\d)|(9[0-3]))|(99[4-8][0-9])|(999[0-9][0-9]))-\d{1,7}-\d{1,7}-([0-9]|X))$";
             bool notvalid = !Regex.IsMatch(book.isbn, ISBNPattern);
             if (!notvalid)
             {
@@ -64,7 +70,7 @@ namespace CollectionValidation
 
         public IBookValidation CheckPublishingCompany(Book book)
         {
-            bool notvalid = book.PublishingCompany.Length > 300;
+            bool notvalid = !CommonValidation.CheckNumericalInRange(book.PublishingCompany.Length, TimberLinePublishingCompany, null);
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -79,7 +85,7 @@ namespace CollectionValidation
 
         public IBookValidation CheckYearOfPublishing(Book book)
         {
-            bool notvalid = book.YearOfPublishing < 1400 && book.YearOfPublishing > DateTime.Now.Year;
+            bool notvalid = !CommonValidation.CheckNumericalInRange(book.YearOfPublishing, DateTime.Now.Year, BottomLineYear);
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -95,10 +101,9 @@ namespace CollectionValidation
         public IBookValidation CheckAuthorsFirstName(Book book)
         {
             bool notvalid = false;
-            string namePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
             foreach (Author item in book.Authors)
             {
-                if (!Regex.IsMatch(item.FirstName, namePattern))
+                if (!Regex.IsMatch(item.FirstName, NamePattern))
                 {
                     notvalid = true;
                     ValidationObject e = new ValidationObject("Author first name is not valid", "Firstname ");
@@ -114,10 +119,9 @@ namespace CollectionValidation
         public IBookValidation CheckAuthorsLastName(Book book)
         {
             bool notvalid = false;
-            string lastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
             foreach (Author item in book.Authors)
             {
-                if (!Regex.IsMatch(item.FirstName, lastnamePattern))
+                if (!Regex.IsMatch(item.FirstName, LastnamePattern))
                 {
                     notvalid = true;
                     ValidationObject e = new ValidationObject("Author last name is not valid", "Lastname ");
@@ -133,6 +137,7 @@ namespace CollectionValidation
         public IBookValidation CheckByCommonValidation(Book book)
         {
             CommonValidation.CheckTitle(book).CheckPagesCount(book);
+
             foreach (var item in CommonValidation.ValidationResult)
             {
                 this.ValidationResult.Add(item);
@@ -146,7 +151,7 @@ namespace CollectionValidation
         {
             string wishoutISBN = isbn.Substring(5, isbn.Length - 5);
             string withoutdefice = wishoutISBN.Replace("-", "");
-            return withoutdefice.Length != 10;
+            return withoutdefice.Length != TimberLineISBNLength;
         }
     }
 }

@@ -53,6 +53,7 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return _issues.Values;
         }
+
         public static Issue GetIssueItemById(int id)
         {
             _issues.TryGetValue(id, out Issue issue);
