@@ -13,18 +13,14 @@ namespace Epam.Task01.Library.Entity
         public string isbn { get; set; }
 
         public Book(List<Author> authors, string city, string publishingCompany, int yearOfPublishing, string isbn,
-                    string title, int pageCount, string commentary)
-                    : base(title, pageCount, commentary)
+                    string title, int pagesCount, string commentary)
+                    : base(title, pagesCount, commentary)
         {
             Authors = authors;
             City = city;
             PublishingCompany = publishingCompany;
             base.YearOfPublishing = yearOfPublishing;
             this.isbn = isbn;
-        }
-
-        public Book()
-        {
         }
     }
 }

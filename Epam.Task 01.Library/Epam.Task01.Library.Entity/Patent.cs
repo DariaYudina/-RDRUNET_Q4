@@ -15,8 +15,6 @@ namespace Epam.Task01.Library.Entity
 
         public DateTime PublicationDate { get; set; }
 
-        public Patent() { }
-
         public Patent(List<Author> authors, string country, int registrationNumber, DateTime applicationDate, DateTime publicationDate,
                     string title, int pageCount, string commentary )
                     : base(title, pageCount, commentary)

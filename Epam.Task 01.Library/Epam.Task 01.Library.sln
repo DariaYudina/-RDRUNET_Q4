@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.Common"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.BLL", "Epam.Task01.Library.CollectionBLL\Epam.Task01.Library.BLL.csproj", "{3006573F-D1AF-4FE6-8A27-700C128EA042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{1C554B87-EAB7-4FCF-8BC6-725AE66E2D0F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.UnitTests", "UnitTest\Epam.Task01.Library.UnitTests.csproj", "{1C554B87-EAB7-4FCF-8BC6-725AE66E2D0F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
