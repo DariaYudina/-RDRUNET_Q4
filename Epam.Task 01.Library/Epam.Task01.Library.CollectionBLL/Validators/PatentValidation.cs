@@ -15,8 +15,7 @@ namespace CollectionValidation
         private ICommonValidation CommonValidation { get; set; }
 
         private const int BottomLineYear = 1474;
-        private const string NamePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
-        private const string LastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+        private const string AuthorPattern = @"^(([A-Z][a-z]+)|([A-Z][a-z]+-[A-Z][a-z]+))\s(([A-Z][a-z]+)|([A-Z][a-z]+-[A-Z][a-z]+)(\s([a-z]+\s[A-Z][a-z]+))*)?$";
         private const string CountryPattern = @"^(([A-Z][a-z]+)|([А-Я][а-я]+)|([A-Z]+|[А-Я]+))$";
         private const int BottomLinePageCount = 0;
 
@@ -48,42 +47,6 @@ namespace CollectionValidation
             {
                 return this;
             }
-        }
-
-        public IPatentValidation CheckAuthorsFirstName(Patent patent)
-        {
-            bool notvalid = false;
-            foreach (Author item in patent.Authors)
-            {
-                if (!Regex.IsMatch(item.FirstName, NamePattern))
-                {
-                    notvalid = true;
-                    ValidationObject e = new ValidationObject("Author first name is not valid", "Firstname ");
-                    ValidationResult.Add(e);
-                    break;
-                }
-            }
-
-            IsValid &= !notvalid;
-            return this;
-        }
-
-        public IPatentValidation CheckAuthorsLastName(Patent patent)
-        {
-            bool notvalid = false;
-            foreach (Author item in patent.Authors)
-            {
-                if (!Regex.IsMatch(item.FirstName, LastnamePattern))
-                {
-                    notvalid = true;
-                    ValidationObject e = new ValidationObject("Author last name is not valid", "Lastname ");
-                    ValidationResult.Add(e);
-                    break;
-                }
-            }
-
-            IsValid &= !notvalid;
-            return this;
         }
 
         public IPatentValidation CheckByCommonValidation(Patent patent)
@@ -158,6 +121,26 @@ namespace CollectionValidation
             {
                 return this;
             }
+        }
+
+        public IPatentValidation CheckAuthors(Patent patent)
+        {
+            bool notvalid = false;
+            string fullname;
+            foreach (Author item in patent.Authors)
+            {
+                fullname = item.FirstName + " " + item.LastName;
+                if (!Regex.IsMatch(fullname, AuthorPattern))
+                {
+                    notvalid = true;
+                    ValidationObject e = new ValidationObject("Author full name is not valid", "Author");
+                    ValidationResult.Add(e);
+                    break;
+                }
+            }
+
+            IsValid &= !notvalid;
+            return this;
         }
     }
 }

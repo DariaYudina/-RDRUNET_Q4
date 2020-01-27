@@ -31,7 +31,7 @@ namespace Epam.Task01.Library.CollectionBLL
                 _bookValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));
                 return false;
             }
-            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book).CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book).CheckAuthorsFirstName(book).CheckAuthorsLastName(book);
+            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book).CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book).CheckAuthors(book);
             if (!CheckBookUniqueness(book))
             {
                 _bookValidation.ValidationResult.Add(new ValidationObject("Book is not unique ", "Book"));

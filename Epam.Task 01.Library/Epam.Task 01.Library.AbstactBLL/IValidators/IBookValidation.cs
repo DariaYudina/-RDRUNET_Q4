@@ -17,10 +17,10 @@ namespace AbstractValidation
 
         IBookValidation CheckYearOfPublishing(Book book);
 
-        IBookValidation CheckAuthorsFirstName(Book book);
-
-        IBookValidation CheckAuthorsLastName(Book book);
-
         IBookValidation CheckByCommonValidation(Book book);
+
+        IBookValidation CheckAuthors(Book book);
+
+        bool CheckISBNLengthIsNotTimberLineISBNLength(string isbn);
     }
 }

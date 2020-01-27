@@ -6,10 +6,11 @@ namespace AbstractValidation
     public interface ICommonValidation
     {
         List<ValidationObject> ValidationResult { get; set; }
-        bool IsValid { get; set; }
+        bool IsValid { get;  }
         ICommonValidation CheckTitle(AbstractLibraryItem item);
         ICommonValidation CheckPagesCount(AbstractLibraryItem item);
         ICommonValidation CheckCommentary(AbstractLibraryItem item);
-        bool CheckNumericalInRange(int number, int? timberline, int? bottomline);
+        bool CheckNumericalInRange(int number, int? timberLine, int? bottomLine);
+        bool CheckStringIsNotNullorEmpty(string str);
     }
 }

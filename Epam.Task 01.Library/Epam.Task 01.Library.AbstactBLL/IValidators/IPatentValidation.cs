@@ -17,9 +17,7 @@ namespace AbstractValidation
 
         IPatentValidation CheckPublicationDate(Patent patent);
 
-        IPatentValidation CheckAuthorsFirstName(Patent patent);
-
-        IPatentValidation CheckAuthorsLastName(Patent patent);
+        IPatentValidation CheckAuthors(Patent patent);
 
         IPatentValidation CheckByCommonValidation(Patent patent);
     }

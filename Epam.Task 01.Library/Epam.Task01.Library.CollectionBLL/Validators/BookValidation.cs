@@ -3,7 +3,8 @@ using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
+//private const string NamePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+//private const string LastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
 namespace CollectionValidation
 {
     public class BookValidation : IBookValidation
@@ -14,10 +15,9 @@ namespace CollectionValidation
 
         private ICommonValidation CommonValidation { get; set; }
 
-        private const string BookCityPattern = @"^((([A-Z][a-z]+)((-[a-z]+)?)((-([A-Z][a-z]+))?))|(([А-Я][а-я]+)((-[а-я]+)?)((-([А-Я][а-я]+))?)))$";
+        private const string BookCityPattern = @"^((([A-Z][a-z]+)((\s([A-Z][a-z]+|[a-z]+))*)((-[a-z]+)?)((-([A-Z][a-z]+))?))|(([А-Я][а-я]+)((\s([А-Я][а-я]+|[а-я]+))*)((-[а-я]+)?)((-([А-Я][а-я]+))?)))$";
         private const string ISBNPattern = @"^(ISBN\s(([0-7])|(8\d|9[0-4])|(9([5-8]\d)|(9[0-3]))|(99[4-8][0-9])|(999[0-9][0-9]))-\d{1,7}-\d{1,7}-([0-9]|X))$";
-        private const string NamePattern = @"^(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]+-[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
-        private const string LastnamePattern = @"^(([a-z]+)\s)?(([A-Z][a-z]+|[А-Я][а-я]+)|([A-Z][a-z]*(-|')[A-Z][a-z]+|[А-Я][а-я]+-[А-Я][а-я]+))$";
+        private const string AuthorPattern = @"^(([A-Z][a-z]+)|([A-Z][a-z]+-[A-Z][a-z]+))\s(([A-Z][a-z]+)|([A-Z][a-z]+-[A-Z][a-z]+)(\s([a-z]+\s[A-Z][a-z]+))*)?$";
         private const int BottomLineYear = 1400;
         private const int TimberLineISBNLength = 10;
         private const int TimberLinePublishingCompany = 300;
@@ -50,11 +50,13 @@ namespace CollectionValidation
             {
                 return this;
             }
+
             bool notvalid = !Regex.IsMatch(book.isbn, ISBNPattern);
             if (!notvalid)
             {
-                notvalid &= CheckISBNLength(book.isbn);
+                notvalid |= CheckISBNLengthIsNotTimberLineISBNLength(book.isbn);
             }
+
             IsValid &= !notvalid;
             if (notvalid)
             {
@@ -80,6 +82,7 @@ namespace CollectionValidation
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
 
@@ -95,36 +98,21 @@ namespace CollectionValidation
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
 
-        public IBookValidation CheckAuthorsFirstName(Book book)
+        public IBookValidation CheckAuthors(Book book)
         {
             bool notvalid = false;
+            string fullname;
             foreach (Author item in book.Authors)
             {
-                if (!Regex.IsMatch(item.FirstName, NamePattern))
+                fullname = item.FirstName + " " + item.LastName;
+                if (!Regex.IsMatch(fullname, AuthorPattern))
                 {
                     notvalid = true;
-                    ValidationObject e = new ValidationObject("Author first name is not valid", "Firstname ");
-                    ValidationResult.Add(e);
-                    break;
-                }
-            }
-
-            IsValid &= !notvalid;
-            return this;
-        }
-
-        public IBookValidation CheckAuthorsLastName(Book book)
-        {
-            bool notvalid = false;
-            foreach (Author item in book.Authors)
-            {
-                if (!Regex.IsMatch(item.FirstName, LastnamePattern))
-                {
-                    notvalid = true;
-                    ValidationObject e = new ValidationObject("Author last name is not valid", "Lastname ");
+                    ValidationObject e = new ValidationObject("Author full name is not valid", "Author");
                     ValidationResult.Add(e);
                     break;
                 }
@@ -147,11 +135,16 @@ namespace CollectionValidation
             return this;
         }
 
-        private bool CheckISBNLength(string isbn)
+        public bool CheckISBNLengthIsNotTimberLineISBNLength(string isbn)
         {
             string wishoutISBN = isbn.Substring(5, isbn.Length - 5);
             string withoutdefice = wishoutISBN.Replace("-", "");
             return withoutdefice.Length != TimberLineISBNLength;
+        }
+
+        public IBookValidation CheckAuthorsFirstName(Book book)
+        {
+            throw new NotImplementedException();
         }
     }
 }

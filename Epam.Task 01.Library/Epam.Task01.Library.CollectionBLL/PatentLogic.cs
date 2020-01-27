@@ -31,7 +31,7 @@ namespace Epam.Task01.Library.CollectionBLL
                 _patentValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));
                 return false;
             }
-            IPatentValidation patentvalidationObject = _patentValidation.CheckByCommonValidation(patent).CheckCountry(patent).CheckRegistrationNumber(patent).CheckPublicationDate(patent).CheckAuthorsFirstName(patent).CheckAuthorsLastName(patent);
+            IPatentValidation patentvalidationObject = _patentValidation.CheckByCommonValidation(patent).CheckCountry(patent).CheckRegistrationNumber(patent).CheckPublicationDate(patent).CheckAuthors(patent);
             if (!CheckPatentUniqueness(patent))
             {
                 _patentValidation.ValidationResult.Add(new ValidationObject("Patent is not unique ", "Patent"));

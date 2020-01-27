@@ -13,7 +13,7 @@ namespace CollectionValidation
         private const int BottomlinePagesCountLength = 0;
         private const int TimberlineTitle = 300;
 
-        public bool IsValid { get; set; } = true;
+        public bool IsValid { get; private set; } = true;
 
         public CommonValidation()
         {
@@ -22,7 +22,7 @@ namespace CollectionValidation
 
         public ICommonValidation CheckCommentary(AbstractLibraryItem item)
         {
-            if (item == null)
+            if (item.Commentary == null)
             {
                 return this;
             }
@@ -58,20 +58,29 @@ namespace CollectionValidation
 
         public ICommonValidation CheckTitle(AbstractLibraryItem item)
         {
-            bool notvalid = !CheckNumericalInRange(item.Title.Length, TimberlineTitle, null) | CheckStringIsNullorEmpty(item.Title);
+            bool notvalid = false;
+            if (CheckStringIsNotNullorEmpty(item.Title))
+            {
+                notvalid = !CheckNumericalInRange(item.Title.Length, TimberlineTitle, null);
+            }
+            else
+            {
+                notvalid = true;
+                return this;
+            }
             IsValid &= !notvalid;
             if (notvalid)
             {
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("Title must be less than 300 characters", "Title");
+                    ValidationObject e = new ValidationObject("Title must be less than 300 characters and must be not null or empty", "Title");
                     ValidationResult.Add(e);
                 }
             }
             return this;
         }
 
-        private bool CheckStringIsNullorEmpty(string str)
+        public bool CheckStringIsNotNullorEmpty(string str)
         {
             bool notvalid = string.IsNullOrWhiteSpace(str);
             IsValid &= !notvalid;
@@ -79,38 +88,46 @@ namespace CollectionValidation
             {
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("Is nill or white space string", "str");
+                    ValidationObject e = new ValidationObject("Is null or white space string", "str");
                     ValidationResult.Add(e);
                 }
-                return true;
+
+                return false;
             }
-            return false;
+
+            return true;
         }
 
-        public bool CheckNumericalInRange(int number, int? timberline, int? bottomline )
+        public bool CheckNumericalInRange(int number, int? timberLine, int? bottomline )
         {
+
             if (bottomline == null)
             {
-                if (number <= timberline)
+                if (number <= timberLine)
                 {
                     return true;
                 }
             }
 
-            if (timberline == null)
+            if (timberLine == null)
             {
-                if (number <= bottomline)
+                if (number >= bottomline)
                 {
                     return true;
                 }
             }
 
-            if ( number <= timberline && number >= bottomline)
+            if ( number <= timberLine && number >= bottomline)
             {
                 return true;
             }
 
-            if (timberline == null && bottomline == null)
+            if ( number >= timberLine && number <= bottomline)
+            {
+                return true;
+            }
+
+            if (timberLine == null && bottomline == null)
             {
                 return true;
             }
