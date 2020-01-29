@@ -358,15 +358,8 @@ namespace Epam.Task01.Library.ConsolePL
             } while (repeat);
             string title = Console.ReadLine();
             string counry = Console.ReadLine();
-            int registrationNumber;
             Console.WriteLine("Enter patent registration number:");
-            if (!int.TryParse(Console.ReadLine(), out registrationNumber))
-            {
-                Console.WriteLine("----------------------------------------------------------------");
-                Console.WriteLine("registrationNumber must be a number");
-                Console.WriteLine("----------------------------------------------------------------");
-                return;
-            }
+            string registrationNumber = Console.ReadLine();
             DateTime applicationDate;
             Console.WriteLine("Enter patent application date:");
             var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);

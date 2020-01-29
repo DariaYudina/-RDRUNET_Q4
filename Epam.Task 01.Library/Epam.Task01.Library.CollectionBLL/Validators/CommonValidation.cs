@@ -24,17 +24,15 @@ namespace CollectionValidation
         {
             if (item.Commentary == null)
             {
-                return this;
-            }
-
-            bool notvalid = !CheckNumericalInRange(item.Commentary.Length, TimberlineCommentaryLength, null);
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
+                bool notvalid = !CheckNumericalInRange(item.Commentary.Length, TimberlineCommentaryLength, null);
+                IsValid &= !notvalid;
+                if (notvalid)
                 {
-                    ValidationObject e = new ValidationObject("Commentary", "Commentary must be less than 2000 characters");
-                    ValidationResult.Add(e);
+                    if (ValidationResult != null)
+                    {
+                        ValidationObject e = new ValidationObject("Commentary", "Commentary must be less than 2000 characters");
+                        ValidationResult.Add(e);
+                    }
                 }
             }
 
@@ -77,6 +75,7 @@ namespace CollectionValidation
                     ValidationResult.Add(e);
                 }
             }
+
             return this;
         }
 

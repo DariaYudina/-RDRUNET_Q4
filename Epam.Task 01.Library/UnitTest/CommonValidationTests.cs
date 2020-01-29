@@ -16,13 +16,13 @@ namespace UnitTest
     [TestClass]
     public class CommonValidationTests
     {
-        ICommonValidation CommonValidation;
-        AbstractLibraryItem DefaultAbstractLibraryItem;
+        private ICommonValidation _commonValidation;
+        private AbstractLibraryItem _defaultAbstractLibraryItem;
 
         [TestInitialize]
         public void Initialize()
         {
-            CommonValidation = new CommonValidation();
+            _commonValidation = new CommonValidation();
 
             AbstractLibraryItem defaultAbstractLibraryItem = new Book 
             ( authors: new List<Author>() { new Author("", "") },
@@ -35,7 +35,7 @@ namespace UnitTest
               commentary : ""
             );
 
-            DefaultAbstractLibraryItem = defaultAbstractLibraryItem;
+            _defaultAbstractLibraryItem = defaultAbstractLibraryItem;
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace UnitTest
             int number = -1;
 
             // Act
-            bool result = CommonValidation.CheckNumericalInRange(number, timberline, bottomline);
+            bool result = _commonValidation.CheckNumericalInRange(number, timberline, bottomline);
 
             // Assert
             Assert.IsTrue(result);
@@ -65,7 +65,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = CommonValidation.CheckNumericalInRange(number, timberline, bottomline);
+            bool result = _commonValidation.CheckNumericalInRange(number, timberline, bottomline);
 
             // Assert
 
@@ -83,7 +83,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = CommonValidation.CheckNumericalInRange(number, timberline, bottomline);
+            bool result = _commonValidation.CheckNumericalInRange(number, timberline, bottomline);
 
             // Assert
 
@@ -101,7 +101,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = CommonValidation.CheckNumericalInRange(number, timberline, bottomline);
+            bool result = _commonValidation.CheckNumericalInRange(number, timberline, bottomline);
 
             // Assert
 
@@ -119,7 +119,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = CommonValidation.CheckNumericalInRange(number, timberline, bottomline);
+            bool result = _commonValidation.CheckNumericalInRange(number, timberline, bottomline);
 
             // Assert
 
@@ -137,7 +137,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = CommonValidation.CheckNumericalInRange(number, timberline, bottomline);
+            bool result = _commonValidation.CheckNumericalInRange(number, timberline, bottomline);
 
             // Assert
 
@@ -155,7 +155,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = CommonValidation.CheckNumericalInRange(number, timberline, bottomline);
+            bool result = _commonValidation.CheckNumericalInRange(number, timberline, bottomline);
 
             // Assert
 
@@ -168,12 +168,12 @@ namespace UnitTest
             // Arrange
 
             string commentaryText = "0123456789";
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             // Act
 
-            DefaultAbstractLibraryItem.Commentary = commentaryText;
-            var validation = CommonValidation.CheckCommentary(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.Commentary = commentaryText;
+            var validation = _commonValidation.CheckCommentary(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -195,12 +195,12 @@ namespace UnitTest
                 stringBuilder.Append("*");
             }
             string commentaryText = stringBuilder.ToString();
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count + 1;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
 
             // Act
 
-            DefaultAbstractLibraryItem.Commentary = commentaryText;
-            var validation = CommonValidation.CheckCommentary(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.Commentary = commentaryText;
+            var validation = _commonValidation.CheckCommentary(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -217,12 +217,12 @@ namespace UnitTest
             // Arrange
 
             string commentaryText = null;
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             // Act
 
-            DefaultAbstractLibraryItem.Commentary = commentaryText;
-            var validation = CommonValidation.CheckCommentary(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.Commentary = commentaryText;
+            var validation = _commonValidation.CheckCommentary(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -238,12 +238,12 @@ namespace UnitTest
             // Arrange
 
             int pagesCount = 100;
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             // Act
 
-            DefaultAbstractLibraryItem.PagesCount = pagesCount;
-            var validation = CommonValidation.CheckPagesCount(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.PagesCount = pagesCount;
+            var validation = _commonValidation.CheckPagesCount(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -259,12 +259,12 @@ namespace UnitTest
             // Arrange
 
             int pagesCount = 0;
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             // Act
 
-            DefaultAbstractLibraryItem.PagesCount = pagesCount;
-            var validation = CommonValidation.CheckPagesCount(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.PagesCount = pagesCount;
+            var validation = _commonValidation.CheckPagesCount(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -280,12 +280,12 @@ namespace UnitTest
             // Arrange
 
             int pagesCount = -1;
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count + 1;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
 
             // Act
 
-            DefaultAbstractLibraryItem.PagesCount = pagesCount;
-            var validation = CommonValidation.CheckPagesCount(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.PagesCount = pagesCount;
+            var validation = _commonValidation.CheckPagesCount(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -301,12 +301,12 @@ namespace UnitTest
             // Arrange 
 
             string title = "0123456789";
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             //Act
 
-            DefaultAbstractLibraryItem.Title = title;
-            var validation = CommonValidation.CheckTitle(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.Title = title;
+            var validation = _commonValidation.CheckTitle(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -321,7 +321,7 @@ namespace UnitTest
         {
             // Arrange 
 
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count + 1;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
             int titleLength = 301;
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < titleLength; i++)
@@ -332,8 +332,8 @@ namespace UnitTest
 
             //Act
 
-            DefaultAbstractLibraryItem.Title = titleText;
-            var validation = CommonValidation.CheckTitle(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.Title = titleText;
+            var validation = _commonValidation.CheckTitle(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -349,12 +349,12 @@ namespace UnitTest
             // Arrange 
 
             string title = null;
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count + 1;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
 
             //Act
 
-            DefaultAbstractLibraryItem.Title = title;
-            var validation = CommonValidation.CheckTitle(DefaultAbstractLibraryItem);
+            _defaultAbstractLibraryItem.Title = title;
+            var validation = _commonValidation.CheckTitle(_defaultAbstractLibraryItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -370,13 +370,13 @@ namespace UnitTest
             // Arrange 
 
             string text = "test";
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             //Act
 
-            CommonValidation.CheckStringIsNotNullorEmpty(text);
-            bool result = CommonValidation.IsValid;
-            int actualValidationResuilCount = CommonValidation.ValidationResult.Count;
+            _commonValidation.CheckStringIsNotNullorEmpty(text);
+            bool result = _commonValidation.IsValid;
+            int actualValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             //Assert
 
@@ -390,13 +390,13 @@ namespace UnitTest
             // Arrange 
 
             string text = null;
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count + 1;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
 
             //Act
 
-            CommonValidation.CheckStringIsNotNullorEmpty(text);
-            bool result = CommonValidation.IsValid;
-            int actualValidationResuilCount = CommonValidation.ValidationResult.Count;
+            _commonValidation.CheckStringIsNotNullorEmpty(text);
+            bool result = _commonValidation.IsValid;
+            int actualValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             //Assert
 
@@ -410,13 +410,13 @@ namespace UnitTest
             // Arrange 
 
             string text = "   ";
-            int expectedValidationResuilCount = CommonValidation.ValidationResult.Count + 1;
+            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
 
             //Act
 
-            CommonValidation.CheckStringIsNotNullorEmpty(text);
-            bool result = CommonValidation.IsValid;
-            int actualValidationResuilCount = CommonValidation.ValidationResult.Count;
+            _commonValidation.CheckStringIsNotNullorEmpty(text);
+            bool result = _commonValidation.IsValid;
+            int actualValidationResuilCount = _commonValidation.ValidationResult.Count;
 
             //Assert
 

@@ -21,27 +21,31 @@ namespace Epam.Task01.Library.CollectionBLL
         public bool AddBook(List<ValidationObject> validationResult, Book book)
         {
             _bookValidation.ValidationResult = validationResult;
-            if(book == null)
+            if (book == null)
             {
                 _bookValidation.ValidationResult.Add(new ValidationObject("Book must be not null and not empty", "Book"));
                 return false;
             }
-            if(book.Authors == null || book.Authors.Count == 0)
+
+            if (book.Authors == null || book.Authors.Count == 0)
             {
                 _bookValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));
                 return false;
             }
+
             IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book).CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book).CheckAuthors(book);
             if (!CheckBookUniqueness(book))
             {
                 _bookValidation.ValidationResult.Add(new ValidationObject("Book is not unique ", "Book"));
                 return false;
             }
+
             if ( bookvalidationObject.IsValid)
             {
                 _bookDao.AddBook(book);
                 return true;
             }
+
             return false;
         }
 

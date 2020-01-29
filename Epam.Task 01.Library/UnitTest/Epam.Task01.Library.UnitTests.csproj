@@ -62,8 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookLogicTests.cs" />
     <Compile Include="BookValidationTests.cs" />
     <Compile Include="CommonValidationTests.cs" />
+    <Compile Include="IssueValidationTests.cs" />
+    <Compile Include="NewspaperValidationTests.cs" />
+    <Compile Include="PatentValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

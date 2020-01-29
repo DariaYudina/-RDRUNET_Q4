@@ -20,6 +20,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         private const int TimberLinePublishingCompany = 300;
         private const int TimberLineTitle = 300;
+
         public IssueValidation(ICommonValidation commonValidation)
         {
             ValidationResult = new List<ValidationObject>();
@@ -67,13 +68,25 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public IIssueValidation CheckPublishingCompany(Issue issue)
         {
-            bool notvalid = !CommonValidation.CheckNumericalInRange(issue.PublishingCompany.Length, TimberLinePublishingCompany, null);
-            IsValid &= !notvalid;
-            if (notvalid)
+            if(issue.PublishingCompany != null)
             {
+                bool notvalid = !CommonValidation.CheckNumericalInRange(issue.PublishingCompany.Length, TimberLinePublishingCompany, null);
+                IsValid &= !notvalid;
+                if (notvalid)
+                {
+                    if (ValidationResult != null)
+                    {
+                        ValidationObject e = new ValidationObject("PublishingCompany must be less than 300 characters", "PublishingCompany");
+                        ValidationResult.Add(e);
+                    }
+                }
+            }
+            else
+            {
+                IsValid &= false;
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("PublishingCompany must be less than 300 characters", "PublishingCompany");
+                    ValidationObject e = new ValidationObject("PublishingCompany must be not null or empty", "PublishingCompany");
                     ValidationResult.Add(e);
                 }
             }
@@ -83,13 +96,25 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public IIssueValidation CheckTitle(Issue issue)
         {
-            bool notvalid = !CommonValidation.CheckNumericalInRange(issue.Title.Length, TimberLineTitle, null) | CheckStringIsNullorEmpty(issue.Title);
-            IsValid &= !notvalid;
-            if (notvalid)
+            if (issue.Title != null)
             {
+                bool notvalid = !CommonValidation.CheckNumericalInRange(issue.Title.Length, TimberLineTitle, null) || CheckStringIsNullorEmpty(issue.Title);
+                IsValid &= !notvalid;
+                if (notvalid)
+                {
+                    if (ValidationResult != null)
+                    {
+                        ValidationObject e = new ValidationObject("Title must be less than 300 characters", "Title");
+                        ValidationResult.Add(e);
+                    }
+                }
+            }
+            else
+            {
+                IsValid &= false;
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("Title must be less than 300 characters", "Title");
+                    ValidationObject e = new ValidationObject("Title must not null or empty", "Title");
                     ValidationResult.Add(e);
                 }
             }
@@ -97,7 +122,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
             return this;
         }
 
-        private bool CheckStringIsNullorEmpty(string str)
+        public bool CheckStringIsNullorEmpty(string str)
         {
             bool notvalid = string.IsNullOrWhiteSpace(str);
             IsValid &= !notvalid;
@@ -105,7 +130,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
             {
                 if (ValidationResult != null)
                 {
-                    ValidationObject e = new ValidationObject("Is nill or white space string", "str");
+                    ValidationObject e = new ValidationObject("Is null or white space string", "str");
                     ValidationResult.Add(e);
                 }
 
@@ -114,5 +139,6 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
             return false;
         }
+
     }
 }

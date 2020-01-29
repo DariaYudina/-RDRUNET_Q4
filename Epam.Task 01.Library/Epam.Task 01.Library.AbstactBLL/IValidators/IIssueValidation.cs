@@ -16,5 +16,6 @@ namespace Epam.Task_01.Library.AbstactBLL.IValidators
         IIssueValidation CheckPublishingCompany(Issue issue);
         IIssueValidation CheckISSN(Issue issue);
         IIssueValidation CheckTitle(Issue issue);
+        bool CheckStringIsNullorEmpty(string str);
     }
 }

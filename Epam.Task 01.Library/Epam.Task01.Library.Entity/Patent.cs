@@ -9,13 +9,13 @@ namespace Epam.Task01.Library.Entity
 
         public string Country { get; set; }
 
-        public int RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; }
 
-        public DateTime ApplicationDate { get; set; }
+        public DateTime? ApplicationDate { get; set; }
 
         public DateTime PublicationDate { get; set; }
 
-        public Patent(List<Author> authors, string country, int registrationNumber, DateTime applicationDate, DateTime publicationDate,
+        public Patent(List<Author> authors, string country, string registrationNumber, DateTime applicationDate, DateTime publicationDate,
                     string title, int pageCount, string commentary )
                     : base(title, pageCount, commentary)
         {

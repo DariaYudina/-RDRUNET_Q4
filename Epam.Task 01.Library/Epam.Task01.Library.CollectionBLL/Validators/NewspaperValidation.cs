@@ -17,7 +17,7 @@ namespace CollectionValidation
         private IIssueValidation IssueValidation { get; set; }
 
         private const int BottomLineYear = 1400;
-        private const int BottomLineCountOfPublishing = 0;
+        private const int BottomLineCountOfPublishing = 1;
 
         public NewspaperValidation(ICommonValidation commonValidation, IIssueValidation issueValidation)
         {
