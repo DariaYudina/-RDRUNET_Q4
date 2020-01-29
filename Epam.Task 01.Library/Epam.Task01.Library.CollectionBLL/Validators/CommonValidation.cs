@@ -22,7 +22,7 @@ namespace CollectionValidation
 
         public ICommonValidation CheckCommentary(AbstractLibraryItem item)
         {
-            if (item.Commentary == null)
+            if (item.Commentary != null)
             {
                 bool notvalid = !CheckNumericalInRange(item.Commentary.Length, TimberlineCommentaryLength, null);
                 IsValid &= !notvalid;
@@ -66,6 +66,7 @@ namespace CollectionValidation
                 notvalid = true;
                 return this;
             }
+
             IsValid &= !notvalid;
             if (notvalid)
             {

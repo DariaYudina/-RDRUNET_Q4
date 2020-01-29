@@ -27,20 +27,18 @@ namespace CollectionValidation
 
         public IPatentValidation CheckApplicationDate(Patent patent)
         {
-            if (patent.ApplicationDate == null)
+            if (patent.ApplicationDate != null)
             {
-                return this;
-            }
-
-            var data = (DateTime)patent.ApplicationDate;
-            bool notvalid = !CommonValidation.CheckNumericalInRange(data.Year, BottomLineYear, null) || patent.ApplicationDate > DateTime.Now;
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
+                var data = (DateTime)patent.ApplicationDate;
+                bool notvalid = !CommonValidation.CheckNumericalInRange(data.Year, BottomLineYear, null) || patent.ApplicationDate > DateTime.Now;
+                IsValid &= !notvalid;
+                if (notvalid)
                 {
-                    ValidationObject e = new ValidationObject("ApplicationDate must be more than 1474 and less than current year", "ApplicationDate");
-                    ValidationResult.Add(e);
+                    if (ValidationResult != null)
+                    {
+                        ValidationObject e = new ValidationObject("ApplicationDate must be more than 1474 and less than current year", "ApplicationDate");
+                        ValidationResult.Add(e);
+                    }
                 }
             }
 

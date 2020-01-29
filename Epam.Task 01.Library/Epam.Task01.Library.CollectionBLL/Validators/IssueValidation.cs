@@ -29,23 +29,20 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public IIssueValidation CheckISSN(Issue issue)
         {
-            if (issue.Issn == null)
+            if (issue.Issn != null)
             {
-                return this;
-            }
-
-            string IssnPattern = @"^(ISSN\s\d{4}-\d{4})$";
-            bool notvalid = !Regex.IsMatch(issue.Issn, IssnPattern);
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
+                string IssnPattern = @"^(ISSN\s\d{4}-\d{4})$";
+                bool notvalid = !Regex.IsMatch(issue.Issn, IssnPattern);
+                IsValid &= !notvalid;
+                if (notvalid)
                 {
-                    ValidationObject e = new ValidationObject("Issn is not valid", "Issn");
-                    ValidationResult.Add(e);
+                    if (ValidationResult != null)
+                    {
+                        ValidationObject e = new ValidationObject("Issn is not valid", "Issn");
+                        ValidationResult.Add(e);
+                    }
                 }
             }
-
             return this;
         }
 
@@ -68,7 +65,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
         public IIssueValidation CheckPublishingCompany(Issue issue)
         {
-            if(issue.PublishingCompany != null)
+            if (issue.PublishingCompany != null)
             {
                 bool notvalid = !CommonValidation.CheckNumericalInRange(issue.PublishingCompany.Length, TimberLinePublishingCompany, null);
                 IsValid &= !notvalid;
@@ -139,6 +136,5 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
 
             return false;
         }
-
     }
 }

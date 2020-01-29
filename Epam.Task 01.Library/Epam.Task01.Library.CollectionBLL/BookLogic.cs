@@ -21,6 +21,7 @@ namespace Epam.Task01.Library.CollectionBLL
         public bool AddBook(List<ValidationObject> validationResult, Book book)
         {
             _bookValidation.ValidationResult = validationResult;
+
             if (book == null)
             {
                 _bookValidation.ValidationResult.Add(new ValidationObject("Book must be not null and not empty", "Book"));
