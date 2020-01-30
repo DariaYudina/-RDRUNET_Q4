@@ -15,11 +15,13 @@ namespace Epam.Task01.Library.IntegrationTests
     {
         private Patent _defaultPatentItem;
         private IPatentDao _patentDao;
+        private ICommonDao _commonDao;
 
         [TestInitialize]
         public void Initialize()
         {
             _patentDao = new PatentDao();
+            _commonDao = new CommonDao();
 
             Patent defaultPatentItem = new Patent
             (
@@ -34,6 +36,90 @@ namespace Epam.Task01.Library.IntegrationTests
             );
 
             _defaultPatentItem = defaultPatentItem;
+        }
+
+        [TestMethod]
+        public void AddPatent_AddingValidItem_Successfully()
+        {
+            // Arrange
+
+            var expectedCount = _patentDao.GetPatentItems().Count() + 1;
+
+            // Act
+            _patentDao.AddPatent(_defaultPatentItem);
+            var actualValidationResuilCount = _patentDao.GetPatentItems().Count();
+
+            //Assert
+
+            Assert.AreEqual(expectedCount, actualValidationResuilCount);
+            _commonDao.DeleteLibraryItemById(_defaultPatentItem.LibaryItemId);
+        }
+
+        [TestMethod]
+        public void GetPatentItems_ToNotEmptyDao_ReturnItems()
+        {
+            // Arrange
+
+            _patentDao.AddPatent(_defaultPatentItem);
+            int expectedCount = 1;
+
+            // Act
+
+            var result = _patentDao.GetPatentItems().Count();
+
+            //Assert
+
+            Assert.AreEqual(expectedCount, result);
+            _commonDao.DeleteLibraryItemById(_defaultPatentItem.LibaryItemId);
+        }
+
+        [TestMethod]
+        public void GetPatentItems_ToEmptyDao_ReturnEmptyCollection()
+        {
+            // Arrange
+
+            int expectedCount = 0;
+
+            // Act
+
+            var result = _patentDao.GetPatentItems().Count();
+
+            //Assert
+            Assert.AreEqual(expectedCount, result);
+        }
+
+        [TestMethod]
+        public void CheckPatentUniqueness_UniquenessNewspaper_ReturnTrue()
+        {
+            // Arrange
+
+            bool expectedCount = true;
+
+            // Act
+
+            var result = _patentDao.CheckPatentUniqueness(_defaultPatentItem);
+
+            //Assert
+
+            Assert.AreEqual(expectedCount, result);
+        }
+
+        [TestMethod]
+        public void CheckPatentUniqueness_NotUniquenessNewspaper_ReturnFalse()
+        {
+            // Arrange
+
+            _patentDao.AddPatent(_defaultPatentItem);
+            bool expectedCount = false;
+
+            // Act
+
+            var result = _patentDao.CheckPatentUniqueness(_defaultPatentItem);
+
+            //Assert
+
+            Assert.AreEqual(expectedCount, result);
+            _commonDao.DeleteLibraryItemById(_defaultPatentItem.LibaryItemId);
         }
     }
 }

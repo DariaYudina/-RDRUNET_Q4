@@ -14,11 +14,13 @@ namespace Epam.Task01.Library.IntegrationTests
     {
         private Newspaper _defaultNewspaperItem;
         private INewspaperDao _newspaperDao;
+        private ICommonDao _commonDao;
 
         [TestInitialize]
         public void Initialize()
         {
             _newspaperDao = new NewspaperDao();
+            _commonDao = new CommonDao();
 
             Newspaper defaultNewspaperItem = new Newspaper
             (
@@ -47,15 +49,15 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            MemoryStorage.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
         }
 
         [TestMethod]
-        public void GetIssueItems_ToNotEmptyDao_ReturnItems()
+        public void GetNewspaperItems_ToNotEmptyDao_ReturnItems()
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultNewspaperItem);
+            _newspaperDao.AddNewspaper(_defaultNewspaperItem);
             int expectedCount = 1;
 
             // Act
@@ -65,11 +67,11 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, result);
-            MemoryStorage.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
         }
 
         [TestMethod]
-        public void GetIssueItems_ToEmptyDao_ReturnEmptyCollection()
+        public void GetNewspaperItems_ToEmptyDao_ReturnEmptyCollection()
         {
             // Arrange
 
@@ -104,7 +106,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultNewspaperItem);
+            _newspaperDao.AddNewspaper(_defaultNewspaperItem);
             bool expectedCount = false;
 
             // Act
@@ -114,7 +116,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, result);
-            MemoryStorage.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
         }
 
     }

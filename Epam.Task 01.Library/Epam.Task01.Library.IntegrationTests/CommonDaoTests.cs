@@ -40,7 +40,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
             int deletedItemId = _defaultBookItem.LibaryItemId;
 
             // Act
@@ -50,7 +50,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.IsTrue(result);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -67,7 +67,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
             
             Assert.IsFalse(result);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
             int expectedCount = 1;
 
             // Act
@@ -85,7 +85,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, result);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -103,14 +103,12 @@ namespace Epam.Task01.Library.IntegrationTests
             Assert.AreEqual(expectedCount, result);
         }
 
-        
-
         [TestMethod]
         public void GetLibraryItemsByTitle_FoundedTitle_ReturnItems()
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
             string foundedTitle = _defaultBookItem.Title;
             int expectedCount = 1;
 
@@ -120,7 +118,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -144,7 +142,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
             var foundedAuthor = _defaultBookItem.Authors[0];
             int expectedCount = 1;
 
@@ -154,7 +152,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result.Count());
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -177,7 +175,7 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetTwoTypesByAuthor_FoundedExsistAuthor_ReturnItems()
         {
             // Arrange
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
             var foundedAuthor = _defaultBookItem.Authors[0];
             int expectedCount = 1;
 
@@ -189,7 +187,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result.Count());
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -214,7 +212,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
             int expectedCount = 1;
 
             // Act
@@ -223,7 +221,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -246,7 +244,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
             string foundedTitle = _defaultBookItem.Title;
             int expectedCount = 1;
 
@@ -256,7 +254,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]

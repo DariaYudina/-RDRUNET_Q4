@@ -48,5 +48,15 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.GetAllAbstractLibraryItems().OrderByDescending(u => u.YearOfPublishing);
         }
+
+        public void AddAbstractLibraryItem(AbstractLibraryItem item)
+        {
+            MemoryStorage.AddLibraryItem(item);
+        }
+
+        public bool DeleteIssueItemById(int id)
+        {
+            return MemoryStorage.DeleteIssueById(id);
+        }
     }
 }

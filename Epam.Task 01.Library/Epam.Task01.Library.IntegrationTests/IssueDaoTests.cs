@@ -15,11 +15,13 @@ namespace Epam.Task01.Library.IntegrationTests
     {
         private Issue _defaultIssueItem;
         private IIssueDao _issueDao;
+        private ICommonDao _commonDao;
 
         [TestInitialize]
         public void Initialize()
         {
             _issueDao = new IssueDao();
+            _commonDao = new CommonDao();
 
             Issue defaultIssueItem = new Issue
             (
@@ -46,7 +48,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            MemoryStorage.DeleteIssueById(_defaultIssueItem.IssueId);
+            _commonDao.DeleteIssueItemById(_defaultIssueItem.IssueId);
         }
 
         [TestMethod]
@@ -61,7 +63,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            MemoryStorage.DeleteIssueById(_defaultIssueItem.IssueId);
+            _commonDao.DeleteIssueItemById(_defaultIssueItem.IssueId);
         }
 
         [TestMethod]
@@ -81,7 +83,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            MemoryStorage.AddIssue(_defaultIssueItem);
+            _issueDao.AddIssue(_defaultIssueItem);
             int expectedCount = 1;
 
             // Act
@@ -91,7 +93,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, result);
-            MemoryStorage.DeleteIssueById(_defaultIssueItem.IssueId);
+            _commonDao.DeleteIssueItemById(_defaultIssueItem.IssueId);
         }
 
         [TestMethod]

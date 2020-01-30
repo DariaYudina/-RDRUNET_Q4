@@ -15,11 +15,13 @@ namespace Epam.Task01.Library.IntegrationTests
     {
         private Book _defaultBookItem;
         private IBookDao _bookDao;
+        private ICommonDao _commonDao;
 
         [TestInitialize]
         public void Initialize()
         {
             _bookDao = new BookDao();
+            _commonDao = new CommonDao();
 
              Book defaultBookItem = new Book
             (authors: new List<Author>() { new Author("", "") },
@@ -47,7 +49,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -62,7 +64,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(foundId, item.LibaryItemId);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -95,7 +97,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.IsTrue(actualResult);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         [TestMethod]
@@ -126,15 +128,16 @@ namespace Epam.Task01.Library.IntegrationTests
         public void CheckBookUniquenessy_NotUniquenessyItem_ReturnFalse()
         {
             // Arrange
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+
             string foundCompany = _defaultBookItem.PublishingCompany;
             // Act
+            _bookDao.AddBook(_defaultBookItem);
             var result = _bookDao.CheckBookUniqueness(_defaultBookItem);
 
             //Assert
 
             Assert.IsFalse(result);
-            MemoryStorage.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         
