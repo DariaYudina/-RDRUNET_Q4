@@ -41,7 +41,9 @@ namespace Epam.Task01.Library.IntegrationTests
         public void AddBook_AddingValidItem_Successfully()
         {
             // Arrange
+
             var expectedCount = _bookDao.GetBookItems().Count() + 1;
+
             // Act
             _bookDao.AddBook(_defaultBookItem);
             var actualValidationResuilCount = _bookDao.GetBookItems().Count();
@@ -56,7 +58,8 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetBookById_FoundExistingId_ReturnBook()
         {
             // Arrange
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+
+            _bookDao.AddBook(_defaultBookItem);
             int foundId = _defaultBookItem.LibaryItemId;
             // Act
             Book item = _bookDao.GetBookById(_defaultBookItem.LibaryItemId);
@@ -71,6 +74,7 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetBookById_FoundNotExistingI_ReturnNull()
         {
             // Act
+
             Book item = _bookDao.GetBookById(_defaultBookItem.LibaryItemId);
 
             //Assert
@@ -82,10 +86,13 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnIGroupingItems()
         {
             // Arrange
-            MemoryStorage.AddLibraryItem(_defaultBookItem);
+
+            _bookDao.AddBook(_defaultBookItem);
             string foundCompany = _defaultBookItem.PublishingCompany;
             bool actualResult = false;
+
             // Act
+
             var result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
             foreach (var item in result)
             {

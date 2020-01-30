@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
-    public static class MemoryStorage
+    internal static class MemoryStorage
     {
         private static readonly Dictionary<int, AbstractLibraryItem> _libraryCatalog;
         private static readonly Dictionary<int, Issue> _issues;
