@@ -1,6 +1,6 @@
 ﻿namespace Epam.Task01.Library.Entity
 {
-    public struct Author
+    public class Author
     {
         public string FirstName { get; set; }
 

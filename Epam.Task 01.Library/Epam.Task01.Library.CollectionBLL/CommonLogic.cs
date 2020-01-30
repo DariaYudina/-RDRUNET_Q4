@@ -45,7 +45,7 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public IEnumerable<Book> GetBooksByAuthor(Author author)
         {
-            return _commonDao.GetTypeByAuthor<Book>().Where(item => item.Authors.Contains(author));
+            return _commonDao.GetTypeByAuthor<Book>().Where(item => item.Authors.Contains(author)).ToList();
         }
 
         public IEnumerable<Patent> GetPatentsByAuthor(Author author)

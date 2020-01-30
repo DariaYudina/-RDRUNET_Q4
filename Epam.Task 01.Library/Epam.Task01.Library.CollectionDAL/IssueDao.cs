@@ -24,5 +24,6 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.GetAllIssues();
         }
+       
     }
 }

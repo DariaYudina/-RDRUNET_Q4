@@ -1,10 +1,11 @@
 ﻿using Epam.Task01.Library.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
-    public class MemoryStorage
+    public static class MemoryStorage
     {
         private static readonly Dictionary<int, AbstractLibraryItem> _libraryCatalog;
         private static readonly Dictionary<int, Issue> _issues;
@@ -35,6 +36,11 @@ namespace Epam.Task01.Library.CollectionDAL
         public static bool DeleteLibraryItemById(int id)
         {
             return _libraryCatalog.Remove(id);
+        }
+
+        public static bool DeleteIssueById(int id)
+        {
+            return _issues.Remove(id);
         }
 
         public static IEnumerable<T> GetLibraryItemByType<T>()
