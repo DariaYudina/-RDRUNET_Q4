@@ -249,7 +249,7 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void GetPatentsByAuthor__AuthorsNotFounded_ReturnFoundedItems1()
+        public void GetPatentsByAuthor__AuthorsNotFounded_ReturnFoundedItems()
         {
             // Arrange
 
@@ -266,12 +266,12 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void SortByYear__AuthorsNotFounded_ReturnFoundedItems1()
+        public void SortByYear__AuthorsNotFounded_ReturnSortedItems()
         {
             // Arrange
 
-            List<AbstractLibraryItem> sorted = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
-            _commonDaoMock.Setup(b => b.SortByYear()).Returns(sorted);
+            List<AbstractLibraryItem> forSort = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
+            _commonDaoMock.Setup(b => b.SortByYear()).Returns(forSort);
 
             // Act
 
@@ -279,7 +279,24 @@ namespace UnitTest
 
             //Assert
 
-            Assert.AreEqual(sorted.Count, result.Count());
+            Assert.AreEqual(forSort.Count, result.Count());
+        }
+
+        [TestMethod]
+        public void SortByYear__AuthorsNotFounded_ReturnSortedDescItems()
+        {
+            // Arrange
+
+            List<AbstractLibraryItem> forSort = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
+            _commonDaoMock.Setup(b => b.SortByYearDesc()).Returns(forSort);
+
+            // Act
+
+            var result = _commonLogic.SortByYearDesc().ToList();
+
+            //Assert
+
+            Assert.AreEqual(forSort.Count, result.Count());
         }
     }
 }
