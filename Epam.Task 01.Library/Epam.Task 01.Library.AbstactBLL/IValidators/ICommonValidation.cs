@@ -1,6 +1,8 @@
 ﻿using Epam.Task01.Library.Entity;
 using System.Collections.Generic;
 
+// кодестайл 
+
 namespace AbstractValidation
 {
     public interface ICommonValidation

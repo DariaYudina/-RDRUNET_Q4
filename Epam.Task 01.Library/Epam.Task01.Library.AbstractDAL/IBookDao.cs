@@ -6,7 +6,7 @@ namespace Epam.Task01.Library.AbstractDAL
 {
     public interface IBookDao
     {
-        void AddBook(Book item);
+        void AddBook(Book item);  //неплохо было бы, чтобы при добавлении сущности возвращался Id
 
         IEnumerable<Book> GetBookItems();
 
@@ -14,6 +14,6 @@ namespace Epam.Task01.Library.AbstractDAL
 
         IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany);
 
-        bool CheckBookUniqueness(Book book);
+        bool CheckBookUniqueness(Book book); // зачем в интерфейсе на ДАО этот метод?
     }
 }

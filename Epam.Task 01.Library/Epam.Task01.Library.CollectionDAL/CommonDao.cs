@@ -29,14 +29,14 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem
         {
-            return MemoryStorage.GetAllAbstractLibraryItems().OfType<T>();
+            return MemoryStorage.GetAllAbstractLibraryItems().OfType<T>();  // При чем тут автор?
         }
 
         public IEnumerable<AbstractLibraryItem> GetTwoTypesByAuthor<T, G>()
             where T : AbstractLibraryItem
             where G : AbstractLibraryItem
         {
-            return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i is T || i is G);
+            return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i is T || i is G);     // тут тоже автора не вижу
         }
 
         public IEnumerable<AbstractLibraryItem> SortByYear()

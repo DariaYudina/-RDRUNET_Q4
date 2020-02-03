@@ -30,7 +30,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public static bool GetLibraryItemById(int id, out AbstractLibraryItem result)
         {
-            return _libraryCatalog.TryGetValue(id, out result);
+            return _libraryCatalog.TryGetValue(id, out result); //зачем возвращать bool если можно вернуть сущность?
         }
 
         public static bool DeleteLibraryItemById(int id)

@@ -44,7 +44,7 @@ namespace UnitTest
             // Arrange
 
             string city = "Саратов";
-            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count; // и сколько ты ожидаешь получить?
 
             // Act
 

@@ -3,6 +3,8 @@ using Epam.Task01.Library.Entity;
 using System.Collections.Generic;
 using System.Linq;
 
+// нарушение кодестайл
+
 namespace Epam.Task_01.Library.AbstactBLL
 {
     public interface IBookLogic
@@ -11,6 +13,6 @@ namespace Epam.Task_01.Library.AbstactBLL
         bool AddBook(List<ValidationObject> validationResult, Book book);
         Book GetBookById(int id);
         IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany);
-        bool CheckBookUniqueness(Book book);
+        bool CheckBookUniqueness(Book book);    // зачем?
     }
 }

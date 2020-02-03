@@ -45,13 +45,13 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public IEnumerable<Book> GetBooksByAuthor(Author author)
         {
-            return _commonDao.GetTypeByAuthor<Book>().Where(item => item.Authors.Contains(author)).ToList();
+            return _commonDao.GetTypeByAuthor<Book>().Where(item => item.Authors.Contains(author)).ToList(); // как метод Contains определяет, содержится ли элемент в коллекции?
         }
 
         public IEnumerable<Patent> GetPatentsByAuthor(Author author)
         {
 
-            return _commonDao.GetTypeByAuthor<Patent>().Where(item => item.Authors.Contains(author));
+            return _commonDao.GetTypeByAuthor<Patent>().Where(item => item.Authors.Contains(author));   // чтобы получить один патент из 1000000 ты сначала их все вытащишь на уровень логики, а потом переберешь
         }
 
         public IEnumerable<AbstractLibraryItem> SortByYear()

@@ -19,7 +19,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public Book GetBookById(int id)
         {
-            return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.LibaryItemId == id);
+            return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.LibaryItemId == id);  // а может быть другая сущность с тем же Id?
         }
 
         public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishing_Company)
@@ -34,7 +34,7 @@ namespace Epam.Task01.Library.CollectionDAL
             {
                 foreach (Book item in books)
                 {
-                    if (item.isbn == book.isbn)
+                    if (item.isbn == book.isbn) // а если нет, то ты начнешь проверять остальное?
                     {
                         return false;
                     }
@@ -47,9 +47,10 @@ namespace Epam.Task01.Library.CollectionDAL
                 {
                     for (int i = 0; i < item.Authors.Count(); i++)
                     {
+                        // есть книга с авторами { Иван Петров, Петр Иванов} добавляю книгу с авторами { Петр Иванов, Иван Петров} что получу при проверке авторов?
                         if (item.Authors[i].FirstName == book.Authors[i].FirstName && item.Authors[i].LastName == book.Authors[i].LastName)
                         {
-                            res &= false;
+                            res &= false;   // имею книгу с автором {Иван Петров}, добавляю с авторами { Иван Петров, Петр Иванов}. Пройдет валидация на уникальность?
                         }
                     }
                     if (item.Title == book.Title && item.YearOfPublishing == book.YearOfPublishing && !res)

@@ -5,6 +5,9 @@ using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
 
+
+// кодестайл 
+
 namespace Epam.Task01.Library.CollectionBLL
 {
     public class NewspaperLogic : INewspaperLogic

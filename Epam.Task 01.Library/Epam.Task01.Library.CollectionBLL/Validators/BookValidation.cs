@@ -37,9 +37,9 @@ namespace CollectionValidation
                 IsValid &= !notvalid;
                 if (notvalid)
                 {
-                    if (ValidationResult != null)
+                    if (ValidationResult != null)   // а если null? Бросаем все?
                     {
-                        ValidationObject e = new ValidationObject("Book city is not valid", "City");
+                        ValidationObject e = new ValidationObject("Book city is not valid", "City"); // завтра City поменяется на Town. Везде будешь переписывать? nameof()?
                         ValidationResult.Add(e);
                     }
                 }
@@ -170,6 +170,7 @@ namespace CollectionValidation
 
         public bool CheckISBNLengthIsNotTimberLineISBNLength(string isbn)
         {
+            // WTF???
             string wishoutISBN = isbn.Substring(5, isbn.Length - 5);
             string withoutdefice = wishoutISBN.Replace("-", "");
             return withoutdefice.Length != TimberLineISBNLength;

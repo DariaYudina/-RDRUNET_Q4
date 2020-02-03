@@ -20,7 +20,7 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public bool AddBook(List<ValidationObject> validationResult, Book book)
         {
-            _bookValidation.ValidationResult = validationResult;
+            _bookValidation.ValidationResult = validationResult; // для чего это?
 
             if (book == null)
             {
@@ -28,13 +28,13 @@ namespace Epam.Task01.Library.CollectionBLL
                 return false;
             }
 
-            if (book.Authors == null || book.Authors.Count == 0)
+            if (book.Authors == null || book.Authors.Count == 0)    // кто автор у Библии, Большой Советской Энциклопедии?
             {
                 _bookValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));
                 return false;
             }
 
-            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book).CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book).CheckAuthors(book);
+            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book).CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book).CheckAuthors(book); //сломал глаза пока дочитал до конца
             if (!CheckBookUniqueness(book))
             {
                 _bookValidation.ValidationResult.Add(new ValidationObject("Book is not unique ", "Book"));
@@ -65,7 +65,7 @@ namespace Epam.Task01.Library.CollectionBLL
             return _bookDao.GetBooksByPublishingCompany(publishingCompany);
         }
 
-        public bool CheckBookUniqueness(Book book)
+        public bool CheckBookUniqueness(Book book)      // кто у тебя еще использует этот метод снаружи класса?
         {
             return _bookDao.CheckBookUniqueness(book);
         }

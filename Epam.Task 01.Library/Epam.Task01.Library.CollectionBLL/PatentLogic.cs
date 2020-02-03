@@ -28,7 +28,7 @@ namespace Epam.Task01.Library.CollectionBLL
             }
             if (patent.Authors == null || patent.Authors.Count == 0)
             {
-                _patentValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));
+                _patentValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));  // где требование по наличию авторов?
                 return false;
             }
             IPatentValidation patentvalidationObject = _patentValidation.CheckByCommonValidation(patent).CheckCountry(patent).CheckRegistrationNumber(patent).CheckPublicationDate(patent).CheckAuthors(patent);

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// кодестайл
+
 namespace Epam.Task_01.Library.AbstactBLL
 {
     public interface IIssueLogic

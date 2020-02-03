@@ -10,6 +10,6 @@ namespace Epam.Task_01.Library.AbstactBLL
 
         IEnumerable<Patent> GetPatentItems();
 
-        bool CheckPatentUniqueness(Patent patent);
+        bool CheckPatentUniqueness(Patent patent); // зачем здесь?
     }
 }

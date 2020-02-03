@@ -43,7 +43,7 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void AddBook_AddingValidBook_ReturnTrue()
+        public void AddBook_AddingValidBook_ReturnTrue()    //так кто в итоге вернул true?
         {
             // Arrange
             List<ValidationObject> validationObjects = new List<ValidationObject>();

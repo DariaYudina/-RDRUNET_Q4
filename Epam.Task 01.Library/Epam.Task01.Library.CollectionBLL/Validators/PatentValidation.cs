@@ -32,7 +32,7 @@ namespace CollectionValidation
                 var data = (DateTime)patent.ApplicationDate;
                 bool notvalid = !CommonValidation.CheckNumericalInRange(data.Year, BottomLineYear, null) || patent.ApplicationDate > DateTime.Now;
                 IsValid &= !notvalid;
-                if (notvalid)
+                if (notvalid)       // ты можешь сама глядя на свой код сказать, что тут будет?
                 {
                     if (ValidationResult != null)
                     {

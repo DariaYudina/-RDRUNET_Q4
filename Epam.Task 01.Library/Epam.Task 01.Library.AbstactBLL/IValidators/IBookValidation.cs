@@ -21,6 +21,6 @@ namespace AbstractValidation
 
         IBookValidation CheckAuthors(Book book);
 
-        bool CheckISBNLengthIsNotTimberLineISBNLength(string isbn);
+        bool CheckISBNLengthIsNotTimberLineISBNLength(string isbn);     // при чем тут граница леса?
     }
 }
