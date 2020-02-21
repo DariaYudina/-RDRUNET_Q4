@@ -25,6 +25,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             Patent defaultPatentItem = new Patent
             (
+                id: 3,
                 authors: new List<Author>() { new Author("", "") },
                 country: "",
                 registrationNumber: "",
@@ -52,7 +53,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            _commonDao.DeleteLibraryItemById(_defaultPatentItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultPatentItem.Id);
         }
 
         [TestMethod]
@@ -70,7 +71,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultPatentItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultPatentItem.Id);
         }
 
         [TestMethod]
@@ -86,40 +87,6 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-        }
-
-        [TestMethod]
-        public void CheckPatentUniqueness_UniquenessNewspaper_ReturnTrue()
-        {
-            // Arrange
-
-            bool expectedCount = true;
-
-            // Act
-
-            var result = _patentDao.CheckPatentUniqueness(_defaultPatentItem);
-
-            //Assert
-
-            Assert.AreEqual(expectedCount, result);
-        }
-
-        [TestMethod]
-        public void CheckPatentUniqueness_NotUniquenessNewspaper_ReturnFalse()
-        {
-            // Arrange
-
-            _patentDao.AddPatent(_defaultPatentItem);
-            bool expectedCount = false;
-
-            // Act
-
-            var result = _patentDao.CheckPatentUniqueness(_defaultPatentItem);
-
-            //Assert
-
-            Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultPatentItem.LibaryItemId);
         }
     }
 }

@@ -6,12 +6,12 @@ using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.CollectionBLL;
 using Epam.Task01.Library.CollectionBLL.Validators;
 using Epam.Task01.Library.CollectionDAL;
+using Epam.Task01.Library.DBDAL;
 
 namespace Epam.Task01.Library.Common
 {
     public static class DependencyResolver
     {
-
         public static IBookLogic BookLogic => new BookLogic(BookDao, BookValidation);
 
         public static IBookDao BookDao { get; }
@@ -44,11 +44,11 @@ namespace Epam.Task01.Library.Common
 
         static DependencyResolver()
         {
-            CommonDao = new CommonDao();
-            BookDao = new BookDao();
-            PatentDao = new PatentDao();
-            NewspaperDao = new NewspaperDao();
-            IssueDao = new IssueDao();
+            CommonDao = new CommonDBDao();
+            BookDao = new BookDBDao();
+            PatentDao = new PatentDBDao();
+            NewspaperDao = new NewspaperDBDao();
+            IssueDao = new IssueDBDao();
         }
     }
 }

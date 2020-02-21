@@ -2,7 +2,7 @@
 {
     public abstract class AbstractLibraryItem
     {
-        public int LibaryItemId { get; set; }
+        public int Id { get; set; }
 
         public string Title { get; set; }
 
@@ -16,6 +16,14 @@
 
         public AbstractLibraryItem(string title, int pagesCount, string commentary)
         {
+            Title = title;
+            PagesCount = pagesCount;
+            Commentary = commentary;
+        }
+
+        public AbstractLibraryItem(int id, string title, int pagesCount, string commentary)
+        {
+            Id = id;
             Title = title;
             PagesCount = pagesCount;
             Commentary = commentary;

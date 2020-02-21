@@ -24,22 +24,25 @@ namespace Epam.Task01.Library.CollectionBLL
         public bool AddNewspaper(List<ValidationObject> validationResult, Newspaper newspaper)
         {
             _newspaperValidation.ValidationResult = validationResult;
+
             if (newspaper == null)
             {
                 _newspaperValidation.ValidationResult.Add(new ValidationObject("Newspaper must be not null and not empty", "Newspaper"));
                 return false;
             }
+
             if(newspaper.Issue == null)
             {
                 _newspaperValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Issue"));
                 return false;
             }
-            INewspaperValidation newspapervalidationObject = _newspaperValidation.CheckByCommonValidation(newspaper).CheckByIssueValidation(newspaper).CheckCountOfPublishing(newspaper).CheckYearOfPublishing(newspaper).CheckDateOfPublishing(newspaper);
-            if (!CheckNewspaperUniqueness(newspaper))
-            {
-                _newspaperValidation.ValidationResult.Add(new ValidationObject("Newspaper is not unique ", "Newspaper"));
-                return false;
-            }
+
+            INewspaperValidation newspapervalidationObject = _newspaperValidation
+                .CheckByCommonValidation(newspaper)
+                .CheckByIssueValidation(newspaper)
+                .CheckCountOfPublishing(newspaper)
+                .CheckYearOfPublishing(newspaper)
+                .CheckDateOfPublishing(newspaper);
 
             if (newspapervalidationObject.IsValid)
             {
@@ -55,9 +58,5 @@ namespace Epam.Task01.Library.CollectionBLL
             return _newspaperDao.GetNewspaperItems();
         }
 
-        public bool CheckNewspaperUniqueness(Newspaper newspaper)
-        {
-            return _newspaperDao.CheckNewspaperUniqueness(newspaper);
-        }
     }
 }

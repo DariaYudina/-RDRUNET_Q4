@@ -30,16 +30,15 @@ namespace Epam.Task01.Library.CollectionBLL
 
             if (book.Authors == null || book.Authors.Count == 0)    // кто автор у Библии, Большой Советской Энциклопедии?
             {
-                _bookValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));
-                return false;
+                book.Authors = new List<Author>();
             }
 
-            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book).CheckBookCity(book).CheckPublishingCompany(book).CheckISBN(book).CheckYearOfPublishing(book).CheckAuthors(book); //сломал глаза пока дочитал до конца
-            if (!CheckBookUniqueness(book))
-            {
-                _bookValidation.ValidationResult.Add(new ValidationObject("Book is not unique ", "Book"));
-                return false;
-            }
+            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book)
+                                                                    .CheckBookCity(book).
+                                                                    CheckPublishingCompany(book).
+                                                                    CheckISBN(book).
+                                                                    CheckYearOfPublishing(book).
+                                                                    CheckAuthors(book);
 
             if ( bookvalidationObject.IsValid)
             {
@@ -65,9 +64,5 @@ namespace Epam.Task01.Library.CollectionBLL
             return _bookDao.GetBooksByPublishingCompany(publishingCompany);
         }
 
-        public bool CheckBookUniqueness(Book book)      // кто у тебя еще использует этот метод снаружи класса?
-        {
-            return _bookDao.CheckBookUniqueness(book);
-        }
     }
 }

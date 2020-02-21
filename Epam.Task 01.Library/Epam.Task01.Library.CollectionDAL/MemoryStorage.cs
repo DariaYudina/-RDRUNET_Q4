@@ -19,8 +19,8 @@ namespace Epam.Task01.Library.CollectionDAL
         public static void AddLibraryItem(AbstractLibraryItem item)
         {
             var lastid = MemoryStorage._libraryCatalog.Any() ? _libraryCatalog.Keys.Max()+1 : 1;
-            item.LibaryItemId = lastid;
-            _libraryCatalog.Add(item.LibaryItemId, item);
+            item.Id = lastid;
+            _libraryCatalog.Add(item.Id, item);
         }
 
         public static IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()
@@ -51,8 +51,8 @@ namespace Epam.Task01.Library.CollectionDAL
         public static void AddIssue(Issue issue)
         {
             var lastid = MemoryStorage._issues.Any() ? _issues.Keys.Max() + 1 : 1;
-            issue.IssueId = lastid;
-            _issues.Add(issue.IssueId, issue);
+            issue.Id = lastid;
+            _issues.Add(issue.Id, issue);
         }
 
         public static IEnumerable<Issue> GetAllIssues()

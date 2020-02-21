@@ -19,7 +19,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public Book GetBookById(int id)
         {
-            return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.LibaryItemId == id);  // а может быть другая сущность с тем же Id?
+            return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.Id == id);  // а может быть другая сущность с тем же Id?
         }
 
         public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishing_Company)
@@ -63,6 +63,11 @@ namespace Epam.Task01.Library.CollectionDAL
             }
 
             return true;
+        }
+
+        public IEnumerable<Book> GetBooksByPublishingCompany2(string publishingCompany)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

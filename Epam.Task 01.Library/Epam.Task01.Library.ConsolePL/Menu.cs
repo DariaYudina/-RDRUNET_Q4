@@ -104,7 +104,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine($"Publishing company: {item.Key}");
                 foreach (var i in item)
                 {
-                    Console.WriteLine($"\tid:{i.LibaryItemId}| Название: {i.Title} isbn:{i.isbn}");
+                    Console.WriteLine($"\tid:{i.Id}| Название: {i.Title} isbn:{i.isbn}");
                 }
             }
             Console.WriteLine("----------------------------------------------------------------");
@@ -186,7 +186,7 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("Catalog:");
             foreach (AbstractLibraryItem item in _library)
             {
-                Console.WriteLine("Catalog id: " + item.LibaryItemId + "| Title: " + item.Title);
+                Console.WriteLine("Catalog id: " + item.Id + "| Title: " + item.Title);
             }
 
             Console.WriteLine("----------------------------------------------------------------");
@@ -394,7 +394,7 @@ namespace Epam.Task01.Library.ConsolePL
             }
 
             string commentary = Console.ReadLine();
-            Patent patent = new Patent(authors, counry, registrationNumber, applicationDate, publicationDate, title, pagecount, commentary);
+            Patent patent = new Patent(1, authors, counry, registrationNumber, applicationDate, publicationDate, title, pagecount, commentary);
             bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
             foreach (ValidationObject error in _validationResult)
             {
@@ -488,7 +488,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("Enter patent commentary:");
                 string commentary = Console.ReadLine();
 
-                Newspaper newspaper = new Newspaper(_issue, yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
+                Newspaper newspaper = new Newspaper(1, _issue, yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
                 bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
                 Console.WriteLine(res);
                 foreach (ValidationObject error in _validationResult)
@@ -531,7 +531,7 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("Issues: ");
             foreach (var item in DependencyResolver.IssueLogic.GetIssueItems())
             {
-                Console.WriteLine($"{item.IssueId}. | Title: {item.Title} | City: {item.City} | Publishing company: {item.PublishingCompany}");
+                Console.WriteLine($"{item.Id}. | Title: {item.Title} | City: {item.City} | Publishing company: {item.PublishingCompany}");
             }
             Console.WriteLine("Select menu item number:");
             if (!int.TryParse(Console.ReadLine(), out int selectedoption))
@@ -554,7 +554,7 @@ namespace Epam.Task01.Library.ConsolePL
             var res = DependencyResolver.CommonLogic.GetBooksByAuthor(new Author(author[0], author[1]));
             foreach (AbstractLibraryItem item in res)
             {
-                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+                Console.WriteLine(item.Id + " " + item.Title);
             }
         }
 
@@ -567,7 +567,7 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("----------------------------------------------------------------");
             foreach (AbstractLibraryItem item in res)
             {
-                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+                Console.WriteLine(item.Id + " " + item.Title);
             }
             Console.WriteLine("----------------------------------------------------------------");
         }
@@ -581,7 +581,7 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("----------------------------------------------------------------");
             foreach (AbstractLibraryItem item in res)
             {
-                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+                Console.WriteLine(item.Id + " " + item.Title);
             }
             Console.WriteLine("----------------------------------------------------------------");
         }
@@ -610,7 +610,7 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("----------------------------------------------------------------");
             foreach (var item in res)
             {
-                Console.WriteLine(item.LibaryItemId + " " + item.Title);
+                Console.WriteLine(item.Id + " " + item.Title);
             }
             Console.WriteLine("----------------------------------------------------------------");
         }

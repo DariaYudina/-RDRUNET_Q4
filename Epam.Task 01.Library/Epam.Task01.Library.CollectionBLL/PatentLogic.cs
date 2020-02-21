@@ -31,12 +31,12 @@ namespace Epam.Task01.Library.CollectionBLL
                 _patentValidation.ValidationResult.Add(new ValidationObject("Authors must be not null and not empty", "Authors"));  // где требование по наличию авторов?
                 return false;
             }
-            IPatentValidation patentvalidationObject = _patentValidation.CheckByCommonValidation(patent).CheckCountry(patent).CheckRegistrationNumber(patent).CheckPublicationDate(patent).CheckAuthors(patent);
-            if (!CheckPatentUniqueness(patent))
-            {
-                _patentValidation.ValidationResult.Add(new ValidationObject("Patent is not unique ", "Patent"));
-                return false;
-            }
+            IPatentValidation patentvalidationObject = _patentValidation
+                .CheckByCommonValidation(patent)
+                .CheckCountry(patent)
+                .CheckRegistrationNumber(patent)
+                .CheckPublicationDate(patent)
+                .CheckAuthors(patent);
 
             if (patentvalidationObject.IsValid)
             {
@@ -50,11 +50,6 @@ namespace Epam.Task01.Library.CollectionBLL
         public IEnumerable<Patent> GetPatentItems()
         {
             return _patentDao.GetPatentItems();
-        }
-
-        public bool CheckPatentUniqueness(Patent patent)
-        {
-            return _patentDao.CheckPatentUniqueness(patent);
         }
     }
 }

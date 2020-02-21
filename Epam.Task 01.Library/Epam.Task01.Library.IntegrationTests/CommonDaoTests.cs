@@ -22,7 +22,8 @@ namespace Epam.Task01.Library.IntegrationTests
             _commonDao = new CommonDao();
 
             Book defaultBookItem = new Book
-           (authors: new List<Author>() { new Author("", "") },
+           ( id: 1,
+             authors: new List<Author>() { new Author("", "") },
              city: "",
              publishingCompany: "",
              yearOfPublishing: 0,
@@ -41,7 +42,7 @@ namespace Epam.Task01.Library.IntegrationTests
             // Arrange
 
             _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            int deletedItemId = _defaultBookItem.LibaryItemId;
+            int deletedItemId = _defaultBookItem.Id;
 
             // Act
 
@@ -50,7 +51,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.IsTrue(result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -58,7 +59,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
 
-            int deletedItemId = _defaultBookItem.LibaryItemId;
+            int deletedItemId = _defaultBookItem.Id;
 
             // Act
             
@@ -67,7 +68,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
             
             Assert.IsFalse(result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -85,7 +86,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -118,7 +119,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -152,7 +153,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result.Count());
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -187,7 +188,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result.Count());
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -221,7 +222,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -254,7 +255,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]

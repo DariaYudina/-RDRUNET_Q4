@@ -13,7 +13,7 @@ namespace Epam.Task01.Library.AbstractDAL
         Book GetBookById(int id);
 
         IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany);
+        IEnumerable<Book> GetBooksByPublishingCompany2(string publishingCompany);
 
-        bool CheckBookUniqueness(Book book); // зачем в интерфейсе на ДАО этот метод?
     }
 }

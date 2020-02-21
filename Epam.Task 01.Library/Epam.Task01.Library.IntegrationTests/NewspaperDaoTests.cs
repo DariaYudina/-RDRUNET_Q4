@@ -24,6 +24,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             Newspaper defaultNewspaperItem = new Newspaper
             (
+                id: 2,
                 issue: new Issue("", "", "", ""),
                 yearOfPublishing: 2000,
                 countOfPublishing: 0,
@@ -49,7 +50,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.Id);
         }
 
         [TestMethod]
@@ -67,7 +68,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.Id);
         }
 
         [TestMethod]
@@ -84,40 +85,5 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
             Assert.AreEqual(expectedCount, result);
         }
-
-        [TestMethod]
-        public void CheckNewspaperUniqueness_UniquenessNewspaper_ReturnTrue()
-        {
-            // Arrange
-
-            bool expectedCount = true;
-
-            // Act
-
-            var result = _newspaperDao.CheckNewspaperUniqueness(_defaultNewspaperItem);
-
-            //Assert
-
-            Assert.AreEqual(expectedCount, result);
-        }
-
-        [TestMethod]
-        public void CheckNewspaperUniqueness_NotUniquenessNewspaper_ReturnFalse()
-        {
-            // Arrange
-
-            _newspaperDao.AddNewspaper(_defaultNewspaperItem);
-            bool expectedCount = false;
-
-            // Act
-
-            var result = _newspaperDao.CheckNewspaperUniqueness(_defaultNewspaperItem);
-
-            //Assert
-
-            Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.LibaryItemId);
-        }
-
     }
 }

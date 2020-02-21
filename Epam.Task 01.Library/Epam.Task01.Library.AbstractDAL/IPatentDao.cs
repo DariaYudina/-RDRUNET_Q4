@@ -9,6 +9,5 @@ namespace Epam.Task01.Library.AbstractDAL
 
         IEnumerable<Patent> GetPatentItems();
 
-        bool CheckPatentUniqueness(Patent patent); // зачем это тут?
     }
 }

@@ -24,7 +24,8 @@ namespace Epam.Task01.Library.IntegrationTests
             _commonDao = new CommonDao();
 
              Book defaultBookItem = new Book
-            (authors: new List<Author>() { new Author("", "") },
+            ( id: 1,
+              authors: new List<Author>() { new Author("", "") },
               city: "",
               publishingCompany: "",
               yearOfPublishing: 0,
@@ -51,7 +52,7 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -60,14 +61,14 @@ namespace Epam.Task01.Library.IntegrationTests
             // Arrange
 
             _bookDao.AddBook(_defaultBookItem);
-            int foundId = _defaultBookItem.LibaryItemId;
+            int foundId = _defaultBookItem.Id;
             // Act
-            Book item = _bookDao.GetBookById(_defaultBookItem.LibaryItemId);
+            Book item = _bookDao.GetBookById(_defaultBookItem.Id);
 
             //Assert
 
-            Assert.AreEqual(foundId, item.LibaryItemId);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            Assert.AreEqual(foundId, item.Id);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -75,7 +76,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Act
 
-            Book item = _bookDao.GetBookById(_defaultBookItem.LibaryItemId);
+            Book item = _bookDao.GetBookById(_defaultBookItem.Id);
 
             //Assert
 
@@ -104,7 +105,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.IsTrue(actualResult);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -118,33 +119,6 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
 
             Assert.AreEqual(0, result.Count);
-        }
-
-        [TestMethod]
-        public void CheckBookUniquenessy_UniquenessyItem_ReturnTrue()
-        {
-            // Act
-            var result = _bookDao.CheckBookUniqueness(_defaultBookItem);
-
-            //Assert
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void CheckBookUniquenessy_NotUniquenessyItem_ReturnFalse()
-        {
-            // Arrange
-
-            string foundCompany = _defaultBookItem.PublishingCompany;
-            // Act
-            _bookDao.AddBook(_defaultBookItem);
-            var result = _bookDao.CheckBookUniqueness(_defaultBookItem);
-
-            //Assert
-
-            Assert.IsFalse(result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.LibaryItemId);
         }
 
         

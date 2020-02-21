@@ -18,9 +18,9 @@ namespace Epam.Task01.Library.AbstractDAL
 
         bool DeleteLibraryItemById(int id);
 
-        bool DeleteIssueItemById(int id);   // зачем в общей логике удаление отдельной сущности?
+        //bool DeleteIssueItemById(int id);   // зачем в общей логике удаление отдельной сущности?
 
-        IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing();    
+        IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing();
 
         IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem;
 
