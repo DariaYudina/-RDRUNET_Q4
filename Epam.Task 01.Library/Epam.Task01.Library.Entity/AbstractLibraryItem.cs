@@ -14,19 +14,21 @@
 
         public AbstractLibraryItem() { }
 
-        public AbstractLibraryItem(string title, int pagesCount, string commentary)
+        public AbstractLibraryItem(string title, int pagesCount, string commentary, int yearOfPublishing)
         {
             Title = title;
             PagesCount = pagesCount;
             Commentary = commentary;
+            YearOfPublishing = yearOfPublishing;
         }
 
-        public AbstractLibraryItem(int id, string title, int pagesCount, string commentary)
+        public AbstractLibraryItem(int id, string title, int pagesCount, string commentary, int yearOfPublishing)
         {
             Id = id;
             Title = title;
             PagesCount = pagesCount;
             Commentary = commentary;
+            YearOfPublishing = yearOfPublishing;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Epam.Task01.Library.Entity
 
         public Book(List<Author> authors, string city, string publishingCompany, int yearOfPublishing, string isbn,
             string title, int pagesCount, string commentary)
-            : base(title, pagesCount, commentary)
+            : base(title, pagesCount, commentary, yearOfPublishing)
         {
             Authors = authors;
             City = city;
@@ -27,7 +27,7 @@ namespace Epam.Task01.Library.Entity
 
         public Book(int id, List<Author> authors, string city, string publishingCompany, int yearOfPublishing, string isbn,
                     string title, int pagesCount, string commentary)
-                    : base(id, title, pagesCount, commentary)
+                    : base(id, title, pagesCount, commentary, yearOfPublishing)
         {
             Authors = authors;
             City = city;

@@ -15,7 +15,6 @@ namespace Epam.Task01.Library.ConsolePL
         {
             //Menu menu = new Menu();
             //menu.Open();
-            AbstractLibraryItem news;
 
             foreach (var item in DependencyResolver.CommonDao.GetLibraryItemsByYearOfPublishing())
             {
@@ -23,14 +22,9 @@ namespace Epam.Task01.Library.ConsolePL
                 //{
                 //    Console.WriteLine("----" + item2.Id + item2.FirstName + item2.LastName);
                 //}
-                if(item is Newspaper)
-                {
-                    Console.WriteLine(item.Title);
-                    Newspaper n = (Newspaper)item;
-
-                    Console.WriteLine(item.GetType().Name);
-                }
-
+                Console.WriteLine(item.YearOfPublishing);
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.GetType().Name);
 
                 Console.WriteLine("-");
             }
