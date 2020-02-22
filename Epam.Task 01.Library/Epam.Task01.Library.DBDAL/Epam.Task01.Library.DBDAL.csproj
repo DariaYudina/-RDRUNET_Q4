@@ -48,6 +48,7 @@
     <Compile Include="AuthorDBDao.cs" />
     <Compile Include="BookDBDao.cs" />
     <Compile Include="CommonDBDao.cs" />
+    <Compile Include="CustomContractResolver.cs" />
     <Compile Include="IssueDBDao.cs" />
     <Compile Include="NewspaperDBDao.cs" />
     <Compile Include="PatentDBDao.cs" />

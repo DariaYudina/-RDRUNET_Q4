@@ -85,13 +85,13 @@ namespace Epam.Task01.Library.DBDAL
                
                 while (reader.Read())
                 {
-                    //var issue = (reader["Newspaper"]) is DBNull
-                    //                          ? new Issue()
-                    //                          : JsonConvert.DeserializeObject<Issue>((string)(reader["Newspaper"]));
+                    var items = (reader["Newspaper"]) is DBNull
+                           ? new List<Issue>()
+                           : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
                     yield return new Newspaper
                     {
                         Id = (int)(reader["Id"]),
-                        Issue = new Issue(),
+                        Issue = items[0],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
                         CountOfPublishing = (int)(reader["CountOfPublishing"]),
                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
@@ -164,13 +164,13 @@ namespace Epam.Task01.Library.DBDAL
 
                 while (reader.Read())
                 {
-                    //var issue = (reader["Newspaper"]) is DBNull
-                    //                          ? new Issue()
-                    //                          : JsonConvert.DeserializeObject<Issue>((string)(reader["Newspaper"]));
+                    var issue = (reader["Newspaper"]) is DBNull
+                                              ? new List<Issue>()
+                                              : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
                     yield return new Newspaper
                     {
                         Id = (int)(reader["Id"]),
-                        Issue = new Issue(),
+                        Issue = issue[0],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
                         CountOfPublishing = (int)(reader["CountOfPublishing"]),
                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
@@ -178,13 +178,140 @@ namespace Epam.Task01.Library.DBDAL
                         Commentary = (string)reader["Commentary"]
                     };
                 }
-
             }
         }
 
-        public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
+        public IEnumerable<AbstractLibraryItem> GetLibraryItemsByYearOfPublishing()
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetSortedLibraryItemsByYear";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                connection.Open();
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var type = (string)(reader["LibraryType"]);
+
+                    switch (type)
+                    {
+                        case "Book":
+                            
+                            {
+                                List<Author> authorjson = (reader["Authors"]) is DBNull
+                                ? new List<Author>()
+                                : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+
+
+                                var Id = (int)(reader["Id"]);
+                                var Authors = authorjson;
+                                var City = (string)reader["City"];
+                                var PublishingCompany = (string)reader["PublishingCompany"];
+                                var YearOfPublishing = (int)(reader["BooksYearOfPublishing"]);
+                                var isbn = (string)reader["ISBN"];
+                                var Title = (string)reader["Title"];
+                                var PagesCount = (int)(reader["PagesCount"]);
+                                var Commentary = (string)reader["Commentary"];
+
+                                yield return new Book
+                                {
+                                    Id = (int)(reader["Id"]),
+                                    Authors = authorjson,
+                                    City = (string)reader["City"],
+                                    PublishingCompany = (string)reader["PublishingCompany"],
+                                    YearOfPublishing = (int)(reader["BooksYearOfPublishing"]),
+                                    isbn = (string)reader["ISBN"],
+                                    Title = (string)reader["Title"],
+                                    PagesCount = (int)(reader["PagesCount"]),
+                                    Commentary = (string)reader["Commentary"]
+                                };
+                                break;
+                            }
+                        case "Issue":
+                            {
+                                var issue = (reader["Newspaper"]) is DBNull
+                                ? new List<Issue>()
+                                : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
+
+                                    yield return new Newspaper
+                                    {
+                                        Id = (int)(reader["Id"]),
+                                        Issue = issue[0],
+                                        YearOfPublishing = (int)(reader["NewspapersYearOfPublishing"]),
+                                        CountOfPublishing = (int)(reader["CountOfPublishing"]),
+                                        DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
+                                        PagesCount = (int)(reader["PagesCount"]),
+                                        Commentary = (string)reader["Commentary"]
+                                    };
+                                break; 
+                            }
+                        case "Patent":
+                            {
+                                List<Author> authorjson = (reader["Authors"]) is DBNull
+                                                            ? new List<Author>()
+                                                            : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+                                yield return new Patent
+                                {
+                                    Id = (int)(reader["Id"]),
+                                    Authors = authorjson,
+                                    Country = (string)reader["Country"],
+                                    RegistrationNumber = (string)reader["RegistrationNumber"],
+                                    ApplicationDate = (DateTime)(reader["ApplicationDate"]),
+                                    PublicationDate = (DateTime)reader["PublicationDate"],
+                                    Title = (string)reader["Title"],
+                                    PagesCount = (int)(reader["PagesCount"]),
+                                    Commentary = (string)reader["Commentary"]
+                                };
+                                break;
+                            }
+                        default:
+                            break;
+                    }
+                }
+
+                reader.NextResult();
+                while (reader.Read())
+                {
+                    List<Author> authorjson = (reader["Authors"]) is DBNull
+                                               ? new List<Author>()
+                                               : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+                    yield return new Patent
+                    {
+                        Id = (int)(reader["Id"]),
+                        Authors = authorjson,
+                        Country = (string)reader["Country"],
+                        RegistrationNumber = (string)reader["RegistrationNumber"],
+                        ApplicationDate = (DateTime)(reader["ApplicationDate"]),
+                        PublicationDate = (DateTime)reader["PublicationDate"],
+                        Title = (string)reader["Title"],
+                        PagesCount = (int)(reader["PagesCount"]),
+                        Commentary = (string)reader["Commentary"]
+                    };
+                }
+
+                reader.NextResult();
+
+                while (reader.Read())
+                {
+                    var items = (reader["Newspaper"]) is DBNull
+                           ? new List<Issue>()
+                           : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
+                    yield return new Newspaper
+                    {
+                        Id = (int)(reader["Id"]),
+                        Issue = items[0],
+                        YearOfPublishing = (int)(reader["YearOfPublishing"]),
+                        CountOfPublishing = (int)(reader["CountOfPublishing"]),
+                        DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
+                        PagesCount = (int)(reader["PagesCount"]),
+                        Commentary = (string)reader["Commentary"]
+                    };
+                }
+            }
         }
 
         public IEnumerable<AbstractLibraryItem> GetTwoTypesByAuthor<T, G>()
@@ -208,5 +335,6 @@ namespace Epam.Task01.Library.DBDAL
         {
             throw new NotImplementedException();
         }
+
     }
 }

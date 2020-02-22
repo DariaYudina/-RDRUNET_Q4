@@ -33,10 +33,7 @@ namespace Epam.Task01.Library.CollectionBLL
             return _commonDao.DeleteLibraryItemById(id);
         }
 
-        public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
-        {
-            return _commonDao.GetLibraryItemsByYearOfPublishing();
-        }
+
 
         public IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author)
         {
@@ -63,5 +60,12 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _commonDao.SortByYearDesc();
         }
+
+        public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
+        {
+            //return _commonDao.GetLibraryItemsByYearOfPublishing();
+            throw new System.NotImplementedException();
+        }
+
     }
 }

@@ -58,5 +58,10 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.DeleteIssueById(id);
         }
+
+        IEnumerable<AbstractLibraryItem> ICommonDao.GetLibraryItemsByYearOfPublishing()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

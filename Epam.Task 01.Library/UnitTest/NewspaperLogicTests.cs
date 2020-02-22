@@ -53,7 +53,6 @@ namespace UnitTest
             _newspaperDaoMock.Setup(b => b.AddNewspaper(It.IsAny<Newspaper>()))
                 .Callback<Newspaper>(n => newspapers.Add(n));
             _newspaperDaoMock.Setup(b => b.GetNewspaperItems()).Returns(newspapers);
-            _newspaperDaoMock.Setup(b => b.CheckNewspaperUniqueness(It.IsAny<Newspaper>())).Returns(true);
 
             _newspaperValidationMock.Setup(s => s.IsValid).Returns(true);
             _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
@@ -81,7 +80,6 @@ namespace UnitTest
             List<Newspaper> newspapers = new List<Newspaper>();
 
             _newspaperDaoMock.Setup(b => b.GetNewspaperItems()).Returns(newspapers);
-            _newspaperDaoMock.Setup(b => b.CheckNewspaperUniqueness(It.IsAny<Newspaper>())).Returns(false);
 
             _newspaperValidationMock.Setup(s => s.IsValid).Returns(false);
             _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
@@ -133,38 +131,6 @@ namespace UnitTest
             //Assert
 
             CollectionAssert.AreEqual(newspapers, actualNewspapers);
-        }
-
-        [TestMethod]
-        public void CheckNewspaperUniqueness_CheckUniquenessNewspapers_ReturnTrue()
-        {
-            // Arrange
-
-            _newspaperDaoMock.Setup(b => b.CheckNewspaperUniqueness(It.IsAny<Newspaper>())).Returns(true);
-
-            // Act
-
-            bool result = _newspaperLogic.CheckNewspaperUniqueness(_defaultNewspaperItem);
-
-            //Assert
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void CheckNewspaperUniqueness_ChecknotUniquenessNewspapers_ReturnFalse()
-        {
-            // Arrange
-
-            _newspaperDaoMock.Setup(b => b.CheckNewspaperUniqueness(It.IsAny<Newspaper>())).Returns(false);
-
-            // Act
-
-            bool result = _newspaperLogic.CheckNewspaperUniqueness(_defaultNewspaperItem);
-
-            //Assert
-
-            Assert.IsFalse(result);
         }
 
     }

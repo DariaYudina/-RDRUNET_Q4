@@ -53,7 +53,6 @@ namespace UnitTest
             _patentDaoMock.Setup(b => b.AddPatent(It.IsAny<Patent>()))
                 .Callback<Patent>(n => patents.Add(n));
             _patentDaoMock.Setup(b => b.GetPatentItems()).Returns(patents);
-            _patentDaoMock.Setup(b => b.CheckPatentUniqueness(It.IsAny<Patent>())).Returns(true);
 
             _patentValidationMock.Setup(s => s.IsValid).Returns(true);
             _patentValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
@@ -81,7 +80,6 @@ namespace UnitTest
             List<Patent> patents = new List<Patent>();
 
             _patentDaoMock.Setup(b => b.GetPatentItems()).Returns(patents);
-            _patentDaoMock.Setup(b => b.CheckPatentUniqueness(It.IsAny<Patent>())).Returns(false);
 
             _patentValidationMock.Setup(s => s.IsValid).Returns(false);
             _patentValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
@@ -135,36 +133,5 @@ namespace UnitTest
             CollectionAssert.AreEqual(patents, actual);
         }
 
-        [TestMethod]
-        public void CheckPatentUniqueness_CheckUniquenessPatents_ReturnTrue()
-        {
-            // Arrange
-
-            _patentDaoMock.Setup(b => b.CheckPatentUniqueness(It.IsAny<Patent>())).Returns(true);
-
-            // Act
-
-            bool result = _patentLogic.CheckPatentUniqueness(_defaultPatentItem);
-
-            //Assert
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void CheckPatentUniqueness_ChecknotUniquenessPatents_ReturnFalse()
-        {
-            // Arrange
-
-            _patentDaoMock.Setup(b => b.CheckPatentUniqueness(It.IsAny<Patent>())).Returns(false); 
-
-            // Act
-
-            bool result = _patentLogic.CheckPatentUniqueness(_defaultPatentItem);
-
-            //Assert
-
-            Assert.IsFalse(result);
-        }
     }
 }

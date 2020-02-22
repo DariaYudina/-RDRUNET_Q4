@@ -115,13 +115,13 @@ namespace Epam.Task01.Library.DBDAL
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    //var issue = (reader["Newspaper"]) is DBNull
-                    //                          ? new Issue()
-                    //                          : JsonConvert.DeserializeObject<Issue>((string)(reader["Newspaper"]));
+                    var issue = (reader["Newspaper"]) is DBNull
+                                              ? new List<Issue>()
+                                              : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
                     yield return new Newspaper
                     {
                         Id = (int)(reader["Id"]),
-                        Issue = new Issue(),
+                        Issue = issue[0],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
                         CountOfPublishing = (int)(reader["CountOfPublishing"]),
                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),

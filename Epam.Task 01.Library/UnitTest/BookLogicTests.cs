@@ -52,7 +52,6 @@ namespace UnitTest
             _bookDaoMock.Setup(b => b.AddBook(It.IsAny<Book>()))
                 .Callback<Book>(book => books.Add(book));
             _bookDaoMock.Setup(b => b.GetBookItems()).Returns(books);
-            _bookDaoMock.Setup(b => b.CheckBookUniqueness(It.IsAny<Book>())).Returns(true);
 
             _bookValidationMock.Setup(s => s.IsValid).Returns(true);
             _bookValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
@@ -81,7 +80,6 @@ namespace UnitTest
             List<Book> books = new List<Book>();
 
             _bookDaoMock.Setup(b => b.GetBookItems()).Returns(books);
-            _bookDaoMock.Setup(b => b.CheckBookUniqueness(It.IsAny<Book>())).Returns(true);
 
             _bookValidationMock.Setup(s => s.IsValid).Returns(false);
             _bookValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
@@ -166,37 +164,37 @@ namespace UnitTest
         }
 
         
-        [TestMethod]
-        public void CheckBookUniqueness_CheckUniquenessBooks_ReturnTrue()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void CheckBookUniqueness_CheckUniquenessBooks_ReturnTrue()
+        //{
+        //    // Arrange
 
-            _bookDaoMock.Setup(b => b.CheckBookUniqueness(It.IsAny<Book>())).Returns(true);
+        //    _bookDaoMock.Setup(b => b.CheckBookUniqueness(It.IsAny<Book>())).Returns(true);
 
-            // Act
+        //    // Act
 
-            bool result = _bookLogic.CheckBookUniqueness(_defaultBookItem);
+        //    bool result = _bookLogic.CheckBookUniqueness(_defaultBookItem);
 
-            //Assert
+        //    //Assert
 
-            Assert.IsTrue(result);
-        }
+        //    Assert.IsTrue(result);
+        //}
 
-        [TestMethod]
-        public void CheckBookUniqueness_CheckNotUniquenessBooks_ReturnFalse()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void CheckBookUniqueness_CheckNotUniquenessBooks_ReturnFalse()
+        //{
+        //    // Arrange
 
-            _bookDaoMock.Setup(b => b.CheckBookUniqueness(It.IsAny<Book>())).Returns(false);
+        //    _bookDaoMock.Setup(b => b.CheckBookUniqueness(It.IsAny<Book>())).Returns(false);
 
-            // Act
+        //    // Act
 
-            bool result = _bookLogic.CheckBookUniqueness(_defaultBookItem);
+        //    bool result = _bookLogic.CheckBookUniqueness(_defaultBookItem);
 
-            //Assert
+        //    //Assert
 
-            Assert.IsFalse(result);
-        }
+        //    Assert.IsFalse(result);
+        //}
 
         
         [TestMethod]
