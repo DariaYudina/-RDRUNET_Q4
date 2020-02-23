@@ -150,5 +150,44 @@ namespace Epam.Task01.Library.DBDAL
                 }
             }
         }
+        public IEnumerable<Patent> GetPatentByAuthor(int id)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetPatentsByAuthor";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                var Id = new SqlParameter
+                {
+                    ParameterName = "@Id",
+                    Value = id,
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Input
+                };
+                command.Parameters.Add(Id);
+                connection.Open();
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    List<Author> authorjson = (reader["Authors"]) is DBNull
+                                               ? new List<Author>()
+                                               : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+                    yield return new Patent
+                    {
+                        Id = (int)(reader["Id"]),
+                        Authors = authorjson,
+                        Country = (string)reader["Country"],
+                        RegistrationNumber = (string)reader["RegistrationNumber"],
+                        ApplicationDate = (DateTime)(reader["ApplicationDate"]),
+                        PublicationDate = (DateTime)reader["PublicationDate"],
+                        Title = (string)reader["Title"],
+                        PagesCount = (int)(reader["PagesCount"]),
+                        Commentary = (string)reader["Commentary"]
+                    };
+                }
+            }
+        }
     }
 }
