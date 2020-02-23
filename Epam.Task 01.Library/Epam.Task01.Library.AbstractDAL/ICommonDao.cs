@@ -6,8 +6,6 @@ namespace Epam.Task01.Library.AbstractDAL
 {
     public interface ICommonDao
     {
-        void AddAbstractLibraryItem(AbstractLibraryItem item);
-
         IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems();
 
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string name);

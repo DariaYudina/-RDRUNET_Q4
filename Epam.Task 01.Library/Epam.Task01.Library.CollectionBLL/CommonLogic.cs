@@ -18,7 +18,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _commonValidator = validator;
         }
 
-        public IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()
+        public IEnumerable<AbstractLibraryItem> GetAllLibraryItems()
         {
             return _commonDao.GetAllAbstractLibraryItems();
         }

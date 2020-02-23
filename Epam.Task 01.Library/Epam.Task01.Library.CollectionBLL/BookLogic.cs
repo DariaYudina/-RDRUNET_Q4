@@ -28,11 +28,6 @@ namespace Epam.Task01.Library.CollectionBLL
                 return false;
             }
 
-            if (book.Authors == null || book.Authors.Count == 0)    // кто автор у Библии, Большой Советской Энциклопедии?
-            {
-                book.Authors = new List<Author>();
-            }
-
             IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book)
                                                                     .CheckBookCity(book).
                                                                     CheckPublishingCompany(book).

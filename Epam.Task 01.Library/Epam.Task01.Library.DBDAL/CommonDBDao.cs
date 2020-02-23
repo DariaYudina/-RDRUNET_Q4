@@ -16,14 +16,32 @@ namespace Epam.Task01.Library.DBDAL
     {
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-        public void AddAbstractLibraryItem(AbstractLibraryItem item)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool DeleteLibraryItemById(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "DeleteLibraryItemById";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                var Id = new SqlParameter
+                {
+                    ParameterName = "@Id",
+                    Value = id,
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Input
+                };
+
+                var RowCountResult = new SqlParameter
+                {
+                    ParameterName = "@CntDeleteRow",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Output
+                };
+                command.Parameters.Add(Id);
+                command.Parameters.Add(RowCountResult);
+                connection.Open();
+                return true;
+            }
         }
 
         public IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()

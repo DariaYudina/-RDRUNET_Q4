@@ -37,24 +37,6 @@ namespace Epam.Task01.Library.IntegrationTests
         }
 
         [TestMethod]
-        public void DeleteLibraryItemById_ByExsistId_ReturnTrue()
-        {
-            // Arrange
-
-            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            int deletedItemId = _defaultBookItem.Id;
-
-            // Act
-
-            var result = _commonDao.DeleteLibraryItemById(deletedItemId);
-
-            //Assert
-
-            Assert.IsTrue(result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-        }
-
-        [TestMethod]
         public void DeleteLibraryItemById_ByNotExsistId_ReturnFalse()
         {
             // Arrange
@@ -68,24 +50,6 @@ namespace Epam.Task01.Library.IntegrationTests
             //Assert
             
             Assert.IsFalse(result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-        }
-
-        [TestMethod]
-        public void GetAllAbstractLibraryItems_ToNotEmptyDao_ReturnItems()
-        {
-            // Arrange
-
-            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            int expectedCount = 1;
-
-            // Act
-
-            var result = _commonDao.GetAllAbstractLibraryItems().Count();
-
-            //Assert
-
-            Assert.AreEqual(expectedCount, result);
             _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
@@ -105,24 +69,6 @@ namespace Epam.Task01.Library.IntegrationTests
         }
 
         [TestMethod]
-        public void GetLibraryItemsByTitle_FoundedTitle_ReturnItems()
-        {
-            // Arrange
-
-            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            string foundedTitle = _defaultBookItem.Title;
-            int expectedCount = 1;
-
-            // Act
-
-            var result = _commonDao.GetLibraryItemsByTitle(foundedTitle).Count();
-
-            //Assert
-            Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-        }
-
-        [TestMethod]
         public void GetLibraryItemsByTitle_NotFoundedTitle_ReturnEmptyCollection()
         {
             // Arrange
@@ -136,24 +82,6 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-        }
-
-         [TestMethod]
-        public void GetTypeByAuthor_FoundedExsistAuthor_ReturnItems()
-        {
-            // Arrange
-
-            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            var foundedAuthor = _defaultBookItem.Authors[0];
-            int expectedCount = 1;
-
-            // Act
-
-            var result = _commonDao.GetTypeByAuthor<Book>().Where(item => item.Authors.Contains(foundedAuthor)).ToList();
-
-            //Assert
-            Assert.AreEqual(expectedCount, result.Count());
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]
@@ -172,24 +100,6 @@ namespace Epam.Task01.Library.IntegrationTests
             Assert.AreEqual(expectedCount, result.Count());
         }
 
-        [TestMethod]
-        public void GetTwoTypesByAuthor_FoundedExsistAuthor_ReturnItems()
-        {
-            // Arrange
-            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            var foundedAuthor = _defaultBookItem.Authors[0];
-            int expectedCount = 1;
-
-            // Act
-
-            var result = _commonDao.GetTwoTypesByAuthor<Book, Patent>().Where(i => (i is Patent && ((Patent)i).Authors.Contains(foundedAuthor))
-                         || (i is Book && ((Book)i).Authors.Contains(foundedAuthor)));
-
-
-            //Assert
-            Assert.AreEqual(expectedCount, result.Count());
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-        }
 
         [TestMethod]
         public void GetTwoTypesByAuthor_FoundedNotExsistAuthor_ReturnItems()
@@ -209,23 +119,6 @@ namespace Epam.Task01.Library.IntegrationTests
         }
 
         [TestMethod]
-        public void SortByYear_GetItems_ReturnSortedItems()
-        {
-            // Arrange
-
-            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            int expectedCount = 1;
-
-            // Act
-
-            var result = _commonDao.SortByYear().Count();
-
-            //Assert
-            Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-        }
-
-        [TestMethod]
         public void SortByYear_GetItemsEmptyCollection_ReturnEmptyCollection()
         {
             // Arrange
@@ -238,24 +131,6 @@ namespace Epam.Task01.Library.IntegrationTests
 
             //Assert
             Assert.AreEqual(expectedCount, result);
-        }
-
-        [TestMethod]
-        public void SortByYearDesc_GetItems_ReturnSortedItems()
-        {
-            // Arrange
-
-            _commonDao.AddAbstractLibraryItem(_defaultBookItem);
-            string foundedTitle = _defaultBookItem.Title;
-            int expectedCount = 1;
-
-            // Act
-
-            var result = _commonDao.SortByYearDesc().Count();
-
-            //Assert
-            Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
 
         [TestMethod]

@@ -6,9 +6,9 @@ namespace Epam.Task_01.Library.AbstactBLL
 {
     public interface ICommonLogic
     {
-        IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems(); // ты получаешь абстрактные сущности?
+        IEnumerable<AbstractLibraryItem> GetAllLibraryItems(); 
 
-        IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title);  // а здесь нет?
+        IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title);  
 
         IEnumerable<AbstractLibraryItem> SortByYear();
 

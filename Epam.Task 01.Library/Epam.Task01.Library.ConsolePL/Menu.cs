@@ -180,7 +180,7 @@ namespace Epam.Task01.Library.ConsolePL
         {
             if(_library == null)
             {
-                _library = DependencyResolver.CommonLogic.GetAllAbstractLibraryItems();
+                _library = DependencyResolver.CommonLogic.GetAllLibraryItems();
             }
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("Catalog:");

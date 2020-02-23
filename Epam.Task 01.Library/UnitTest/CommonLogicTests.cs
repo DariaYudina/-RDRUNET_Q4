@@ -53,7 +53,7 @@ namespace UnitTest
 
             // Act
 
-            List<AbstractLibraryItem> actualItems = _commonLogic.GetAllAbstractLibraryItems().ToList();
+            List<AbstractLibraryItem> actualItems = _commonLogic.GetAllLibraryItems().ToList();
 
             //Assert
 
@@ -70,7 +70,7 @@ namespace UnitTest
 
             // Act
 
-            List<AbstractLibraryItem> actualItems = _commonLogic.GetAllAbstractLibraryItems().ToList();
+            List<AbstractLibraryItem> actualItems = _commonLogic.GetAllLibraryItems().ToList();
 
             //Assert
 
