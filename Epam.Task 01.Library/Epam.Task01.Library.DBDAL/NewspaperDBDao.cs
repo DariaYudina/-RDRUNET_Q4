@@ -16,7 +16,7 @@ namespace Epam.Task01.Library.DBDAL
     {
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-        public void AddNewspaper(Newspaper item)
+        public void AddNewspaper(Issue item)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -62,14 +62,14 @@ namespace Epam.Task01.Library.DBDAL
                 var NewspaperId = new SqlParameter
                 {
                     ParameterName = "@Newspaper_Id",
-                    Value = item.Issue.Id,
+                    Value = item.Newspaper.Id,
                     SqlDbType = System.Data.SqlDbType.Int,
                     Direction = System.Data.ParameterDirection.Input
                 };
                 var CountOfPublishing = new SqlParameter
                 {
                     ParameterName = "@CountOfPublishing",
-                    Value = item.Issue.Id,
+                    Value = item.Newspaper.Id,
                     SqlDbType = System.Data.SqlDbType.Int,
                     Direction = System.Data.ParameterDirection.Input
                 };
@@ -102,7 +102,7 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
-        public IEnumerable<Newspaper> GetNewspaperItems()
+        public IEnumerable<Issue> GetNewspaperItems()
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -116,12 +116,12 @@ namespace Epam.Task01.Library.DBDAL
                 while (reader.Read())
                 {
                     var issue = (reader["Newspaper"]) is DBNull
-                                              ? new List<Issue>()
-                                              : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
-                    yield return new Newspaper
+                                              ? new List<Newspaper>()
+                                              : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
+                    yield return new Issue
                     {
                         Id = (int)(reader["Id"]),
-                        Issue = issue[0],
+                        Newspaper = issue[0],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
                         CountOfPublishing = (int)(reader["CountOfPublishing"]),
                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),

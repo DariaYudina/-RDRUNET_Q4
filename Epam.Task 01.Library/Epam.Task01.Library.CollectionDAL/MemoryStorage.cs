@@ -8,12 +8,12 @@ namespace Epam.Task01.Library.CollectionDAL
     internal static class MemoryStorage
     {
         private static readonly Dictionary<int, AbstractLibraryItem> _libraryCatalog;
-        private static readonly Dictionary<int, Issue> _issues;
+        private static readonly Dictionary<int, Newspaper> _issues;
 
         static MemoryStorage()
         {
             _libraryCatalog = new Dictionary<int, AbstractLibraryItem>();
-            _issues = new Dictionary<int, Issue>();
+            _issues = new Dictionary<int, Newspaper>();
         }
 
         public static void AddLibraryItem(AbstractLibraryItem item)
@@ -48,21 +48,21 @@ namespace Epam.Task01.Library.CollectionDAL
             return _libraryCatalog.Values.OfType<T>().ToList();
         }
 
-        public static void AddIssue(Issue issue)
+        public static void AddIssue(Newspaper issue)
         {
             var lastid = MemoryStorage._issues.Any() ? _issues.Keys.Max() + 1 : 1;
             issue.Id = lastid;
             _issues.Add(issue.Id, issue);
         }
 
-        public static IEnumerable<Issue> GetAllIssues()
+        public static IEnumerable<Newspaper> GetAllIssues()
         {
             return _issues.Values;
         }
 
-        public static Issue GetIssueItemById(int id)
+        public static Newspaper GetIssueItemById(int id)
         {
-            _issues.TryGetValue(id, out Issue issue);
+            _issues.TryGetValue(id, out Newspaper issue);
             return issue;
         }
     }

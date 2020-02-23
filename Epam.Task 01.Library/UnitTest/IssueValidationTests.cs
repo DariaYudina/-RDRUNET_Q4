@@ -16,7 +16,7 @@ namespace UnitTest
     public class IssueValidationTests
     {
         private IIssueValidation _issueValidation;
-        private Issue _defaultIssueItem;
+        private Newspaper _defaultIssueItem;
         private Mock<ICommonValidation> _commonValidationMock;
 
         [TestInitialize]
@@ -25,7 +25,7 @@ namespace UnitTest
             _commonValidationMock = new Mock<ICommonValidation>();
             _issueValidation = new IssueValidation(_commonValidationMock.Object);
 
-            Issue defaultIssueItem = new Issue
+            Newspaper defaultIssueItem = new Newspaper
             ( title: "",
               city: "",
               publishingCompany:"",

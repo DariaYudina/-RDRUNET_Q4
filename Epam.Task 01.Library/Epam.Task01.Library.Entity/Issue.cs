@@ -1,40 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.Entity
 {
-    public class Issue
+    public class Issue : AbstractLibraryItem
     {
+        public Newspaper Newspaper { get; set; }
+
+        public int CountOfPublishing { get; set; }
+
+        public DateTime DateOfPublishing { get; set; }
+
+        public override int YearOfPublishing
+        {
+            get => DateOfPublishing.Year;
+        }
+
         public Issue() { }
 
-        public Issue(string title, string city, string publishingCompany, string issn)
+        public Issue(Newspaper newspaper, int yearOfPublishing, int countOfPublishing, 
+                         DateTime dateOfPublishing, int pageCount, string commentary)
+                : base(newspaper.Title, pageCount, commentary, yearOfPublishing)
         {
-            Title = title;
-            City = city;
-            PublishingCompany = publishingCompany;
-            Issn = issn;
+
+            base.YearOfPublishing = yearOfPublishing;
+            CountOfPublishing = countOfPublishing;
+            DateOfPublishing = dateOfPublishing;
+            Newspaper = newspaper;
         }
 
-        public Issue(int id, string title, string city, string publishingCompany, string issn)
+        public Issue(int id, Newspaper newspaper, int yearOfPublishing, int countOfPublishing,
+                     DateTime dateOfPublishing, int pageCount, string commentary)
+                        : base(id, newspaper.Title, pageCount, commentary, yearOfPublishing)
         {
-            Id = id;
-            Title = title;
-            City = city;
-            PublishingCompany = publishingCompany;
-            Issn = issn;
+
+            base.YearOfPublishing = yearOfPublishing;
+            CountOfPublishing = countOfPublishing;
+            DateOfPublishing = dateOfPublishing;
+            Newspaper = newspaper;
         }
-
-        public int Id { get; set; }
-
-        public string Title { get; set; }
-
-        public string City { get; set; }
-
-        public string PublishingCompany { get; set; }
-
-        public string Issn { get; set; }
     }
 }

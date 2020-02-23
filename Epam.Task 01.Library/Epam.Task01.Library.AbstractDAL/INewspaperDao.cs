@@ -5,9 +5,9 @@ namespace Epam.Task01.Library.AbstractDAL
 {
     public interface INewspaperDao
     {
-        void AddNewspaper(Newspaper item);
+        void AddNewspaper(Issue item);
 
-        IEnumerable<Newspaper> GetNewspaperItems();
+        IEnumerable<Issue> GetNewspaperItems();
 
     }
 }

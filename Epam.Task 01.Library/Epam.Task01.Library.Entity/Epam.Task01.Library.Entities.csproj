@@ -57,8 +57,8 @@
     <Compile Include="AbstractLibraryItem.cs" />
     <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
-    <Compile Include="Issue.cs" />
     <Compile Include="Newspaper.cs" />
+    <Compile Include="Issue.cs" />
     <Compile Include="Patent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

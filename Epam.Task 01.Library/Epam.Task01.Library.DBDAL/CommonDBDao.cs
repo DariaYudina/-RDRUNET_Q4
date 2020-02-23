@@ -81,12 +81,12 @@ namespace Epam.Task01.Library.DBDAL
                 while (reader.Read())
                 {
                     var items = (reader["Newspaper"]) is DBNull
-                           ? new List<Issue>()
-                           : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
-                    yield return new Newspaper
+                           ? new List<Newspaper>()
+                           : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
+                    yield return new Issue
                     {
                         Id = (int)(reader["Id"]),
-                        Issue = items[0],
+                        Newspaper = items[0],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
                         CountOfPublishing = (int)(reader["CountOfPublishing"]),
                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
@@ -160,12 +160,12 @@ namespace Epam.Task01.Library.DBDAL
                 while (reader.Read())
                 {
                     var issue = (reader["Newspaper"]) is DBNull
-                                              ? new List<Issue>()
-                                              : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
-                    yield return new Newspaper
+                                              ? new List<Newspaper>()
+                                              : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
+                    yield return new Issue
                     {
                         Id = (int)(reader["Id"]),
-                        Issue = issue[0],
+                        Newspaper = issue[0],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
                         CountOfPublishing = (int)(reader["CountOfPublishing"]),
                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
@@ -218,13 +218,13 @@ namespace Epam.Task01.Library.DBDAL
                         case "Issue":
                             {
                                 var issue = (reader["Newspaper"]) is DBNull
-                                ? new List<Issue>()
-                                : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
+                                ? new List<Newspaper>()
+                                : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
 
-                                    yield return new Newspaper
+                                    yield return new Issue
                                     {
                                         Id = (int)(reader["Id"]),
-                                        Issue = issue[0],
+                                        Newspaper = issue[0],
                                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
                                         CountOfPublishing = (int)(reader["CountOfPublishing"]),
                                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
@@ -314,13 +314,13 @@ namespace Epam.Task01.Library.DBDAL
                         case "Issue":
                             {
                                 var issue = (reader["Newspaper"]) is DBNull
-                                ? new List<Issue>()
-                                : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
+                                ? new List<Newspaper>()
+                                : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
 
-                                yield return new Newspaper
+                                yield return new Issue
                                 {
                                     Id = (int)(reader["Id"]),
-                                    Issue = issue[0],
+                                    Newspaper = issue[0],
                                     YearOfPublishing = (int)(reader["YearOfPublishing"]),
                                     CountOfPublishing = (int)(reader["CountOfPublishing"]),
                                     DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
@@ -398,13 +398,13 @@ namespace Epam.Task01.Library.DBDAL
                         case "Issue":
                             {
                                 var issue = (reader["Newspaper"]) is DBNull
-                                ? new List<Issue>()
-                                : JsonConvert.DeserializeObject<List<Issue>>((string)(reader["Newspaper"]));
+                                ? new List<Newspaper>()
+                                : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
 
-                                yield return new Newspaper
+                                yield return new Issue
                                 {
                                     Id = (int)(reader["Id"]),
-                                    Issue = issue[0],
+                                    Newspaper = issue[0],
                                     YearOfPublishing = (int)(reader["YearOfPublishing"]),
                                     CountOfPublishing = (int)(reader["CountOfPublishing"]),
                                     DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),

@@ -9,10 +9,10 @@ namespace Epam.Task01.Library.AbstractDAL
 {
     public interface IIssueDao
     {
-        void AddIssue(Issue issue);
+        void AddIssue(Newspaper issue);
 
-        IEnumerable<Issue> GetIssueItems();
+        IEnumerable<Newspaper> GetIssueItems();
 
-        Issue GetIssueItemById(int id);
+        Newspaper GetIssueItemById(int id);
     }
 }

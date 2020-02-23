@@ -17,7 +17,7 @@ namespace UnitTest
     [TestClass]
     public class NewspaperLogicTests
     {
-        private Newspaper _defaultNewspaperItem;
+        private Issue _defaultNewspaperItem;
 
         private NewspaperLogic _newspaperLogic;
         private Mock<INewspaperDao> _newspaperDaoMock;
@@ -30,9 +30,9 @@ namespace UnitTest
             _newspaperDaoMock = new Mock<INewspaperDao>();
             _newspaperLogic = new NewspaperLogic(_newspaperDaoMock.Object, _newspaperValidationMock.Object);
 
-            Newspaper defaultNewspaperItem = new Newspaper
+            Issue defaultNewspaperItem = new Issue
             (
-                issue: new Issue("","","",""),
+                newspaper: new Newspaper("","","",""),
                 yearOfPublishing: 2000,
                 countOfPublishing: 0,
                 dateOfPublishing: DateTime.Now,
@@ -48,19 +48,19 @@ namespace UnitTest
         {
             // Arrange
             List<ValidationObject> validationObjects = new List<ValidationObject>();
-            List<Newspaper> newspapers = new List<Newspaper>();
+            List<Issue> newspapers = new List<Issue>();
 
-            _newspaperDaoMock.Setup(b => b.AddNewspaper(It.IsAny<Newspaper>()))
-                .Callback<Newspaper>(n => newspapers.Add(n));
+            _newspaperDaoMock.Setup(b => b.AddNewspaper(It.IsAny<Issue>()))
+                .Callback<Issue>(n => newspapers.Add(n));
             _newspaperDaoMock.Setup(b => b.GetNewspaperItems()).Returns(newspapers);
 
             _newspaperValidationMock.Setup(s => s.IsValid).Returns(true);
             _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckByIssueValidation(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckDateOfPublishing(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckYearOfPublishing(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckByIssueValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckDateOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckYearOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 
             // Act
 
@@ -77,17 +77,17 @@ namespace UnitTest
         {
             // Arrange
             List<ValidationObject> validationObjects = new List<ValidationObject>();
-            List<Newspaper> newspapers = new List<Newspaper>();
+            List<Issue> newspapers = new List<Issue>();
 
             _newspaperDaoMock.Setup(b => b.GetNewspaperItems()).Returns(newspapers);
 
             _newspaperValidationMock.Setup(s => s.IsValid).Returns(false);
             _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckByIssueValidation(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckDateOfPublishing(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
-            _newspaperValidationMock.Setup(s => s.CheckYearOfPublishing(It.IsAny<Newspaper>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckByIssueValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckDateOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckYearOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 
             // Act
 
@@ -104,12 +104,12 @@ namespace UnitTest
         {
             // Arrange
 
-            List<Newspaper> newspapers = new List<Newspaper>() { _defaultNewspaperItem, _defaultNewspaperItem, _defaultNewspaperItem };
+            List<Issue> newspapers = new List<Issue>() { _defaultNewspaperItem, _defaultNewspaperItem, _defaultNewspaperItem };
             _newspaperDaoMock.Setup(b => b.GetNewspaperItems()).Returns(newspapers);
 
             // Act
 
-            List<Newspaper> actualNewspapers = _newspaperLogic.GetNewspaperItems().ToList();
+            List<Issue> actualNewspapers = _newspaperLogic.GetNewspaperItems().ToList();
 
             //Assert
 
@@ -121,12 +121,12 @@ namespace UnitTest
         {
             // Arrange
 
-            List<Newspaper> newspapers = new List<Newspaper>() { };
+            List<Issue> newspapers = new List<Issue>() { };
             _newspaperDaoMock.Setup(b => b.GetNewspaperItems()).Returns(newspapers);
 
             // Act
 
-            List<Newspaper> actualNewspapers = _newspaperLogic.GetNewspaperItems().ToList();
+            List<Issue> actualNewspapers = _newspaperLogic.GetNewspaperItems().ToList();
 
             //Assert
 

@@ -13,7 +13,7 @@ namespace Epam.Task01.Library.IntegrationTests
     [TestClass]
     public class IssueDaoTests
     {
-        private Issue _defaultIssueItem;
+        private Newspaper _defaultIssueItem;
         private IIssueDao _issueDao;
         private ICommonDao _commonDao;
 
@@ -23,7 +23,7 @@ namespace Epam.Task01.Library.IntegrationTests
             _issueDao = new IssueDao();
             _commonDao = new CommonDao();
 
-            Issue defaultIssueItem = new Issue
+            Newspaper defaultIssueItem = new Newspaper
             (
               title: "",
               city: "",
@@ -71,7 +71,7 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Act
 
-            Issue item = _issueDao.GetIssueItemById(_defaultIssueItem.Id);
+            Newspaper item = _issueDao.GetIssueItemById(_defaultIssueItem.Id);
 
             //Assert
 

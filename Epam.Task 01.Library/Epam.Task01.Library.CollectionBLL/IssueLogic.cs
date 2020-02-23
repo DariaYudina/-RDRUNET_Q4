@@ -22,7 +22,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _issueValidation = issueValidation;
         }
 
-        public bool AddIssue(List<ValidationObject> validationResult, Issue issue)
+        public bool AddIssue(List<ValidationObject> validationResult, Newspaper issue)
         {
             _issueValidation.ValidationResult = validationResult;
             if (issue == null)
@@ -39,12 +39,12 @@ namespace Epam.Task01.Library.CollectionBLL
             return false;
         }
 
-        public Issue GetIssueItemById(int id)
+        public Newspaper GetIssueItemById(int id)
         {
             return _issueDao.GetIssueItemById(id);
         }
 
-        public IEnumerable<Issue> GetIssueItems()
+        public IEnumerable<Newspaper> GetIssueItems()
         {
             return _issueDao.GetIssueItems();
         }

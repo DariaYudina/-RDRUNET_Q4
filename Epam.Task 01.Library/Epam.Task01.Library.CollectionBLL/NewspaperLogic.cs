@@ -21,7 +21,7 @@ namespace Epam.Task01.Library.CollectionBLL
             _newspaperValidation = validator;
         }
 
-        public bool AddNewspaper(List<ValidationObject> validationResult, Newspaper newspaper)
+        public bool AddNewspaper(List<ValidationObject> validationResult, Issue newspaper)
         {
             _newspaperValidation.ValidationResult = validationResult;
 
@@ -31,7 +31,7 @@ namespace Epam.Task01.Library.CollectionBLL
                 return false;
             }
 
-            if(newspaper.Issue == null)
+            if(newspaper.Newspaper == null)
             {
                 _newspaperValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Issue"));
                 return false;
@@ -53,7 +53,7 @@ namespace Epam.Task01.Library.CollectionBLL
             return false;
         }
 
-        public IEnumerable<Newspaper> GetNewspaperItems()
+        public IEnumerable<Issue> GetNewspaperItems()
         {
             return _newspaperDao.GetNewspaperItems();
         }

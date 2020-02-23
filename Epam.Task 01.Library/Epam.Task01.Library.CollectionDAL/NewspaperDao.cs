@@ -7,20 +7,20 @@ namespace Epam.Task01.Library.CollectionDAL
 {
     public class NewspaperDao : INewspaperDao
     {
-        public void AddNewspaper(Newspaper item)
+        public void AddNewspaper(Issue item)
         {
             MemoryStorage.AddLibraryItem(item);
         }
 
-        public bool CheckNewspaperUniqueness(Newspaper newspaper)
+        public bool CheckNewspaperUniqueness(Issue newspaper)
         {
-            var newspapers = MemoryStorage.GetLibraryItemByType<Newspaper>();
+            var newspapers = MemoryStorage.GetLibraryItemByType<Issue>();
 
-            if ( newspaper.Issue.Issn != "" && newspaper.Issue.Issn != null)
+            if ( newspaper.Newspaper.Issn != "" && newspaper.Newspaper.Issn != null)
             {
-                foreach (Newspaper item in newspapers)
+                foreach (Issue item in newspapers)
                 {
-                    if (item.Issue.Issn == newspaper.Issue.Issn && item.Title != newspaper.Title)
+                    if (item.Newspaper.Issn == newspaper.Newspaper.Issn && item.Title != newspaper.Title)
                     {
                         return false;
                     }
@@ -28,9 +28,9 @@ namespace Epam.Task01.Library.CollectionDAL
             }
             else
             {
-                foreach (Newspaper item in newspapers)
+                foreach (Issue item in newspapers)
                 {
-                    if (item.Title == newspaper.Title && item.DateOfPublishing == newspaper.DateOfPublishing && item.Issue.PublishingCompany == newspaper.Issue.PublishingCompany)
+                    if (item.Title == newspaper.Title && item.DateOfPublishing == newspaper.DateOfPublishing && item.Newspaper.PublishingCompany == newspaper.Newspaper.PublishingCompany)
                     {
                         return false;
                     }
@@ -39,9 +39,9 @@ namespace Epam.Task01.Library.CollectionDAL
             return true;
         }
 
-        public IEnumerable<Newspaper> GetNewspaperItems()
+        public IEnumerable<Issue> GetNewspaperItems()
         {
-            return MemoryStorage.GetLibraryItemByType<Newspaper>();
+            return MemoryStorage.GetLibraryItemByType<Issue>();
         }
     }
 }

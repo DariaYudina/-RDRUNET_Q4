@@ -8,7 +8,7 @@ namespace Epam.Task_01.Library.AbstactBLL
 {
     public interface INewspaperLogic
     {
-        bool AddNewspaper(List<ValidationObject> validationResult, Newspaper newspaper);
-        IEnumerable<Newspaper> GetNewspaperItems();
+        bool AddNewspaper(List<ValidationObject> validationResult, Issue newspaper);
+        IEnumerable<Issue> GetNewspaperItems();
     }
 }

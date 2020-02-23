@@ -10,17 +10,17 @@ namespace Epam.Task01.Library.CollectionDAL
 {
     public class IssueDao : IIssueDao
     {
-        public void AddIssue(Issue issue)
+        public void AddIssue(Newspaper issue)
         {
             MemoryStorage.AddIssue(issue);
         }
 
-        public Issue GetIssueItemById(int id)
+        public Newspaper GetIssueItemById(int id)
         {
             return MemoryStorage.GetIssueItemById(id);
         }
 
-        public IEnumerable<Issue> GetIssueItems()
+        public IEnumerable<Newspaper> GetIssueItems()
         {
             return MemoryStorage.GetAllIssues();
         }

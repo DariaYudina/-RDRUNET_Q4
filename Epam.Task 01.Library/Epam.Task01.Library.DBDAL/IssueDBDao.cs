@@ -15,7 +15,7 @@ namespace Epam.Task01.Library.DBDAL
     {
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-        public void AddIssue(Issue issue)
+        public void AddIssue(Newspaper issue)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -78,7 +78,7 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
-        public Issue GetIssueItemById(int id)
+        public Newspaper GetIssueItemById(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -98,7 +98,7 @@ namespace Epam.Task01.Library.DBDAL
 
                 while (reader.Read())
                 {
-                    return new Issue
+                    return new Newspaper
                     {
                         Id = (int)(reader["Id"]),
                         Title = (string)reader["Title"],
@@ -111,7 +111,7 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
-        public IEnumerable<Issue> GetIssueItems()
+        public IEnumerable<Newspaper> GetIssueItems()
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -123,7 +123,7 @@ namespace Epam.Task01.Library.DBDAL
 
                 while (reader.Read())
                 {
-                    yield return new Issue
+                    yield return new Newspaper
                     {
                         Id = (int)(reader["Id"]),
                         Title = (string)reader["Title"],

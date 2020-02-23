@@ -141,23 +141,23 @@ namespace UnitTest
             Assert.IsFalse(result);
         }
 
-        [TestMethod]
-        public void GetLibraryItemsByYearOfPublishing__FoundedInDaoByYearOfPublishing_ReturnIGroupingItems()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void GetLibraryItemsByYearOfPublishing__FoundedInDaoByYearOfPublishing_ReturnIGroupingItems()
+        //{
+        //    // Arrange
 
-            List<IGrouping<int, AbstractLibraryItem>> items = new List<IGrouping<int, AbstractLibraryItem>>();
+        //    List<IGrouping<int, AbstractLibraryItem>> items = new List<IGrouping<int, AbstractLibraryItem>>();
 
-            _commonDaoMock.Setup(b => b.GetLibraryItemsByYearOfPublishing()).Returns(items);
+        //    _commonDaoMock.Setup(b => b.GetLibraryItemsByYearOfPublishing()).Returns(items);
 
-            // Act
+        //    // Act
 
-            var result = _commonLogic.GetLibraryItemsByYearOfPublishing();
+        //    var result = _commonLogic.GetLibraryItemsByYearOfPublishing();
 
-            //Assert
+        //    //Assert
 
-            Assert.AreEqual(items, result);
-        }
+        //    Assert.AreEqual(items, result);
+        //}
 
         [TestMethod]
         public void GetBooksAndPatentsByAuthor__AuthorsFounded_ReturnFoundedItems()

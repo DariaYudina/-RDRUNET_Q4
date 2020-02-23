@@ -16,7 +16,7 @@ namespace UnitTest
     public class NewspaperValidationTests
     {
         private INewspaperValidation _newspaperValidation;
-        private Newspaper _defaultNewspaperItem;
+        private Issue _defaultNewspaperItem;
         private Mock<ICommonValidation> _commonValidationMock;
         private Mock<IIssueValidation> _issueValidationMock;
 
@@ -27,8 +27,8 @@ namespace UnitTest
             _issueValidationMock = new Mock<IIssueValidation>();
             _newspaperValidation = new NewspaperValidation(_commonValidationMock.Object, _issueValidationMock.Object);
 
-            Newspaper defaultNewspaperItem = new Newspaper
-            (issue: new Issue
+            Issue defaultNewspaperItem = new Issue
+            (newspaper: new Newspaper
               (title: "",
                city: "",
                publishingCompany: "",
@@ -133,17 +133,17 @@ namespace UnitTest
             int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
             _issueValidationMock.Setup(s => s.IsValid).Returns(true);
             _issueValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
-            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckPublishingCompany(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
 
             // Act
 
             _defaultNewspaperItem.Title = "Title";
-            _defaultNewspaperItem.Issue.Issn = "Title";
-            _defaultNewspaperItem.Issue.City = "City";
-            _defaultNewspaperItem.Issue.PublishingCompany = "PublishingCompany";
+            _defaultNewspaperItem.Newspaper.Issn = "Title";
+            _defaultNewspaperItem.Newspaper.City = "City";
+            _defaultNewspaperItem.Newspaper.PublishingCompany = "PublishingCompany";
             var validation = _newspaperValidation.CheckByIssueValidation(_defaultNewspaperItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
@@ -162,17 +162,17 @@ namespace UnitTest
             int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 4;
             _issueValidationMock.Setup(s => s.IsValid).Returns(false);
             _issueValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
-            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(_defaultNewspaperItem.Issue)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckPublishingCompany(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
 
             // Act
 
             _defaultNewspaperItem.Title = "";
-            _defaultNewspaperItem.Issue.Issn = "";
-            _defaultNewspaperItem.Issue.City = "";
-            _defaultNewspaperItem.Issue.PublishingCompany = "";
+            _defaultNewspaperItem.Newspaper.Issn = "";
+            _defaultNewspaperItem.Newspaper.City = "";
+            _defaultNewspaperItem.Newspaper.PublishingCompany = "";
             var validation = _newspaperValidation.CheckByIssueValidation(_defaultNewspaperItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count + 4;

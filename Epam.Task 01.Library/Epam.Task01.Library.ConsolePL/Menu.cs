@@ -404,7 +404,7 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void AddNewspaper()
         {
-            Issue _issue = null;
+            Newspaper _issue = null;
             Console.WriteLine("Options:" + Environment.NewLine +
                 "1. Create new issue " + Environment.NewLine +
                 "2. Select exist issue" + Environment.NewLine +
@@ -416,7 +416,7 @@ namespace Epam.Task01.Library.ConsolePL
                 {
                     case 1:
                         {
-                            if (!CteateNewIssue(out Issue issue))
+                            if (!CteateNewIssue(out Newspaper issue))
                             {
                                 Console.WriteLine("Issue not created");
                             }
@@ -426,7 +426,7 @@ namespace Epam.Task01.Library.ConsolePL
 
                     case 2:
                         {
-                            SelectExistingIssue(out Issue issue);
+                            SelectExistingIssue(out Newspaper issue);
                             _issue = issue;
                             break;
                         }
@@ -488,7 +488,7 @@ namespace Epam.Task01.Library.ConsolePL
                 Console.WriteLine("Enter patent commentary:");
                 string commentary = Console.ReadLine();
 
-                Newspaper newspaper = new Newspaper(1, _issue, yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
+                Issue newspaper = new Issue(1, _issue, yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
                 bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
                 Console.WriteLine(res);
                 foreach (ValidationObject error in _validationResult)
@@ -502,7 +502,7 @@ namespace Epam.Task01.Library.ConsolePL
             }
         }
 
-        private bool CteateNewIssue(out Issue issue)
+        private bool CteateNewIssue(out Newspaper issue)
         {
             _validationResult = new List<ValidationObject>();
             Console.WriteLine("Enter patent title: ");
@@ -513,7 +513,7 @@ namespace Epam.Task01.Library.ConsolePL
             string publishingcompany = Console.ReadLine();
             Console.WriteLine("Enter patent issn:");
             string issn = Console.ReadLine();
-            issue = new Issue(title, city, publishingcompany, issn);
+            issue = new Newspaper(title, city, publishingcompany, issn);
             if (!DependencyResolver.IssueLogic.AddIssue(_validationResult, issue))
             {
                 foreach (ValidationObject error in _validationResult)
@@ -525,7 +525,7 @@ namespace Epam.Task01.Library.ConsolePL
             return true;
         }
 
-        private void SelectExistingIssue(out Issue issue)
+        private void SelectExistingIssue(out Newspaper issue)
         {
             issue = null;
             Console.WriteLine("Issues: ");

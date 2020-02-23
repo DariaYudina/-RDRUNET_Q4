@@ -12,8 +12,8 @@ namespace Epam.Task_01.Library.AbstactBLL
 {
     public interface IIssueLogic
     {
-        IEnumerable<Issue> GetIssueItems();
-        bool AddIssue(List<ValidationObject> validationResult, Issue issue);
-        Issue GetIssueItemById(int id);
+        IEnumerable<Newspaper> GetIssueItems();
+        bool AddIssue(List<ValidationObject> validationResult, Newspaper issue);
+        Newspaper GetIssueItemById(int id);
     }
 }

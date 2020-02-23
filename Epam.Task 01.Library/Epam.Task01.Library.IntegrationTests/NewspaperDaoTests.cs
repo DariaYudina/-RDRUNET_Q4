@@ -12,7 +12,7 @@ namespace Epam.Task01.Library.IntegrationTests
 {
     class NewspaperDaoTests
     {
-        private Newspaper _defaultNewspaperItem;
+        private Issue _defaultNewspaperItem;
         private INewspaperDao _newspaperDao;
         private ICommonDao _commonDao;
 
@@ -22,10 +22,10 @@ namespace Epam.Task01.Library.IntegrationTests
             _newspaperDao = new NewspaperDao();
             _commonDao = new CommonDao();
 
-            Newspaper defaultNewspaperItem = new Newspaper
+            Issue defaultNewspaperItem = new Issue
             (
                 id: 2,
-                issue: new Issue("", "", "", ""),
+                newspaper: new Newspaper("", "", "", ""),
                 yearOfPublishing: 2000,
                 countOfPublishing: 0,
                 dateOfPublishing: DateTime.Now,

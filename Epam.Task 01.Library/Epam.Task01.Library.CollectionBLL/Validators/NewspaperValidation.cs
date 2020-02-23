@@ -26,7 +26,7 @@ namespace CollectionValidation
             IssueValidation = issueValidation;
         }
 
-        public INewspaperValidation CheckByCommonValidation(Newspaper newspaper)
+        public INewspaperValidation CheckByCommonValidation(Issue newspaper)
         {
             CommonValidation.CheckPagesCount(newspaper);
             foreach (var item in CommonValidation.ValidationResult)
@@ -38,9 +38,9 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckByIssueValidation(Newspaper newspaper)
+        public INewspaperValidation CheckByIssueValidation(Issue newspaper)
         {
-            IssueValidation.CheckTitle(newspaper.Issue).CheckISSN(newspaper.Issue).CheckNewspaperCity(newspaper.Issue).CheckPublishingCompany(newspaper.Issue);
+            IssueValidation.CheckTitle(newspaper.Newspaper).CheckISSN(newspaper.Newspaper).CheckNewspaperCity(newspaper.Newspaper).CheckPublishingCompany(newspaper.Newspaper);
             foreach (var item in IssueValidation.ValidationResult)
             {
                 this.ValidationResult.Add(item);
@@ -50,7 +50,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckCountOfPublishing(Newspaper newspaper)
+        public INewspaperValidation CheckCountOfPublishing(Issue newspaper)
         {
             bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.CountOfPublishing, null, BottomLineCountOfPublishing);
             IsValid &= !notvalid;
@@ -66,7 +66,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckDateOfPublishing(Newspaper newspaper)
+        public INewspaperValidation CheckDateOfPublishing(Issue newspaper)
         {
             bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.DateOfPublishing.Year, null, BottomLineYear)
                             || newspaper.DateOfPublishing > DateTime.Now
@@ -86,7 +86,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckYearOfPublishing(Newspaper newspaper)
+        public INewspaperValidation CheckYearOfPublishing(Issue newspaper)
         {
             bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.YearOfPublishing, DateTime.Now.Year, BottomLineYear);
             IsValid &= !notvalid;

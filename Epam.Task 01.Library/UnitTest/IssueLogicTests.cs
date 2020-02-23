@@ -16,7 +16,7 @@ namespace UnitTest
     [TestClass]
     public class IssueLogicTests
     {
-        private Issue _defaultIssueItem;
+        private Newspaper _defaultIssueItem;
 
         private IssueLogic _issueLogic;
         private Mock<IIssueDao> _issueDaoMock;
@@ -29,7 +29,7 @@ namespace UnitTest
             _issueDaoMock = new Mock<IIssueDao>();
             _issueLogic = new IssueLogic(_issueDaoMock.Object, _issueValidationMock.Object);
 
-            Issue defaultIssueItem = new Issue
+            Newspaper defaultIssueItem = new Newspaper
             (
               title: "",
               city: "",
@@ -45,18 +45,18 @@ namespace UnitTest
         {
             // Arrange
             List<ValidationObject> validationObjects = new List<ValidationObject>();
-            List<Issue> issues = new List<Issue>();
+            List<Newspaper> issues = new List<Newspaper>();
 
-            _issueDaoMock.Setup(b => b.AddIssue(It.IsAny<Issue>()))
-                .Callback<Issue>(issue => issues.Add(issue));
+            _issueDaoMock.Setup(b => b.AddIssue(It.IsAny<Newspaper>()))
+                .Callback<Newspaper>(issue => issues.Add(issue));
             _issueDaoMock.Setup(b => b.GetIssueItems()).Returns(issues);
 
             _issueValidationMock.Setup(s => s.IsValid).Returns(true);
             _issueValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _issueValidationMock.Setup(s => s.CheckISSN(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckTitle(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckISSN(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckNewspaperCity(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckPublishingCompany(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckTitle(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
 
             // Act
 
@@ -73,16 +73,16 @@ namespace UnitTest
         {
             // Arrange
             List<ValidationObject> validationObjects = new List<ValidationObject>();
-            List<Issue> issues = new List<Issue>();
+            List<Newspaper> issues = new List<Newspaper>();
 
             _issueDaoMock.Setup(b => b.GetIssueItems()).Returns(issues);
 
             _issueValidationMock.Setup(s => s.IsValid).Returns(false);
             _issueValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _issueValidationMock.Setup(s => s.CheckISSN(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckTitle(It.IsAny<Issue>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckISSN(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckNewspaperCity(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckPublishingCompany(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _issueValidationMock.Setup(s => s.CheckTitle(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
 
             // Act
 
