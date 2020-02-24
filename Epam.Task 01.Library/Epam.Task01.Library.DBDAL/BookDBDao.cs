@@ -16,7 +16,7 @@ namespace Epam.Task01.Library.DBDAL
     {
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-        public void AddBook(Book item)
+        public int AddBook(Book item)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -110,6 +110,8 @@ namespace Epam.Task01.Library.DBDAL
                 command.Parameters.Add(listAuthorsId);
                 connection.Open();
                 command.ExecuteNonQuery();
+
+                return (int)Id.Value;
             }
         }
 
@@ -268,6 +270,11 @@ namespace Epam.Task01.Library.DBDAL
                     };
                 }
             }
+        }
+
+        public IEnumerable<Book> GetBooksByAuthor(Author author)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -66,10 +66,10 @@
     <Compile Include="BookValidationTests.cs" />
     <Compile Include="CommonLogicTests.cs" />
     <Compile Include="CommonValidationTests.cs" />
-    <Compile Include="IssueLogicTests.cs" />
-    <Compile Include="IssueValidationTests.cs" />
     <Compile Include="NewspaperLogicTests.cs" />
     <Compile Include="NewspaperValidationTests.cs" />
+    <Compile Include="IssueLogicTests.cs" />
+    <Compile Include="IssueValidationTests.cs" />
     <Compile Include="PatentLogicTests.cs" />
     <Compile Include="PatentValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

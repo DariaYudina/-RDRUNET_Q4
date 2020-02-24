@@ -1,28 +1,49 @@
 ﻿using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
     public class IssueDao : IIssueDao
     {
-        public void AddIssue(Newspaper issue)
+        public int AddIssue(Issue issue)
         {
-            MemoryStorage.AddIssue(issue);
+            return MemoryStorage.AddLibraryItem(issue);
         }
 
-        public Newspaper GetIssueItemById(int id)
+        private bool CheckNewspaperUniqueness(Issue newspaper)
         {
-            return MemoryStorage.GetIssueItemById(id);
+            var newspapers = MemoryStorage.GetLibraryItemByType<Issue>();
+
+            if ( newspaper.Newspaper.Issn != "" && newspaper.Newspaper.Issn != null)
+            {
+                foreach (Issue item in newspapers)
+                {
+                    if (item.Newspaper.Issn == newspaper.Newspaper.Issn && item.Title != newspaper.Title)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Issue item in newspapers)
+                {
+                    if (item.Title == newspaper.Title
+                        && item.DateOfPublishing == newspaper.DateOfPublishing 
+                        && item.Newspaper.PublishingCompany == newspaper.Newspaper.PublishingCompany)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
-        public IEnumerable<Newspaper> GetIssueItems()
+        public IEnumerable<Issue> GetIssueItems()
         {
-            return MemoryStorage.GetAllIssues();
+            return MemoryStorage.GetLibraryItemByType<Issue>();
         }
     }
 }

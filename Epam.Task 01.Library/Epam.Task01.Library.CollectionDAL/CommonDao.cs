@@ -22,21 +22,9 @@ namespace Epam.Task01.Library.CollectionDAL
             return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i.Title == name);
         }
 
-        public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
+        public IEnumerable<AbstractLibraryItem> GetLibraryItemsByYearOfPublishing()
         {
-            return MemoryStorage.GetAllAbstractLibraryItems().GroupBy(i => i.YearOfPublishing);
-        }
-
-        public IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem
-        {
-            return MemoryStorage.GetAllAbstractLibraryItems().OfType<T>();  // При чем тут автор?
-        }
-
-        public IEnumerable<AbstractLibraryItem> GetTwoTypesByAuthor<T, G>()
-            where T : AbstractLibraryItem
-            where G : AbstractLibraryItem
-        {
-            return MemoryStorage.GetAllAbstractLibraryItems().Where(i => i is T || i is G);     // тут тоже автора не вижу
+            return MemoryStorage.GetAllAbstractLibraryItems();
         }
 
         public IEnumerable<AbstractLibraryItem> SortByYear()
@@ -62,6 +50,12 @@ namespace Epam.Task01.Library.CollectionDAL
         IEnumerable<AbstractLibraryItem> ICommonDao.GetLibraryItemsByYearOfPublishing()
         {
             throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<AbstractLibraryItem> GetBookAndPatentByAuthorId(int id)
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().Where(i => (i is Patent && ((Patent)i).Authors.Any(item => item.Id == id))
+            || (i is Book && ((Book)i).Authors.Any(item => item.Id == id)));
         }
     }
 }

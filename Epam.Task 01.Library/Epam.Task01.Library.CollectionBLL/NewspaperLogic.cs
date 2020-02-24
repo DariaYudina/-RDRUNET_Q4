@@ -1,9 +1,13 @@
 ﻿using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
@@ -12,45 +16,38 @@ namespace Epam.Task01.Library.CollectionBLL
         private readonly INewspaperDao _newspaperDao;
         private readonly INewspaperValidation _newspaperValidation;
 
-        public NewspaperLogic(INewspaperDao newspaperDao, INewspaperValidation validator)
+        public NewspaperLogic(INewspaperDao newspaperDao, INewspaperValidation newspaperValidation)
         {
             _newspaperDao = newspaperDao;
-            _newspaperValidation = validator;
+            _newspaperValidation = newspaperValidation;
         }
 
-        public bool AddNewspaper(List<ValidationObject> validationResult, Issue newspaper)
+        public bool AddNewspaper(List<ValidationObject> validationResult, Newspaper newspaper)
         {
             _newspaperValidation.ValidationResult = validationResult;
-
             if (newspaper == null)
             {
-                _newspaperValidation.ValidationResult.Add(new ValidationObject("Newspaper must be not null and not empty", "Newspaper"));
+                _newspaperValidation.ValidationResult.Add(new ValidationObject("Newspaper must be not null and not empty", "Issue"));
                 return false;
             }
-
-            if(newspaper.Newspaper == null)
-            {
-                _newspaperValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Issue"));
-                return false;
-            }
-
-            INewspaperValidation newspapervalidationObject = _newspaperValidation
-                .CheckByCommonValidation(newspaper)
-                .CheckByIssueValidation(newspaper)
-                .CheckCountOfPublishing(newspaper)
-                .CheckYearOfPublishing(newspaper)
-                .CheckDateOfPublishing(newspaper);
-
-            if (newspapervalidationObject.IsValid)
+            INewspaperValidation issueValidationObject = _newspaperValidation.CheckISSN(newspaper)
+                                                                         .CheckNewspaperCity(newspaper)
+                                                                         .CheckPublishingCompany(newspaper)
+                                                                         .CheckTitle(newspaper);
+            if (issueValidationObject.IsValid)
             {
                 _newspaperDao.AddNewspaper(newspaper);
                 return true;
             }
-
             return false;
         }
 
-        public IEnumerable<Issue> GetNewspaperItems()
+        public Newspaper GetNewspaperItemById(int id)
+        {
+            return _newspaperDao.GetNewspaperItemById(id);
+        }
+
+        public IEnumerable<Newspaper> GetNewspaperItems()
         {
             return _newspaperDao.GetNewspaperItems();
         }

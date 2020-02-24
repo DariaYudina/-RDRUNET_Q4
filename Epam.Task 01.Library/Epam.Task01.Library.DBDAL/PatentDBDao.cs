@@ -16,7 +16,7 @@ namespace Epam.Task01.Library.DBDAL
     {
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-        public void AddPatent(Patent item)
+        public int AddPatent(Patent item)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -116,6 +116,7 @@ namespace Epam.Task01.Library.DBDAL
                 command.Parameters.Add(listAuthorsId);
                 connection.Open();
                 command.ExecuteNonQuery();
+                return (int)Id.Value;
             }
         }
 
@@ -150,7 +151,7 @@ namespace Epam.Task01.Library.DBDAL
                 }
             }
         }
-        public IEnumerable<Patent> GetPatentByAuthor(int id)
+        public IEnumerable<Patent> GetPatentsByAuthorId(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -189,5 +190,6 @@ namespace Epam.Task01.Library.DBDAL
                 }
             }
         }
+
     }
 }

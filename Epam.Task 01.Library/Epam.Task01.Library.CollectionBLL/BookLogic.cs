@@ -54,6 +54,11 @@ namespace Epam.Task01.Library.CollectionBLL
             return _bookDao.GetBookItems();
         }
 
+        public IEnumerable<Book> GetBooksByAuthor(Author author)
+        {
+            return _bookDao.GetBooksByAuthor(author);
+        }
+
         public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany)
         {
             return _bookDao.GetBooksByPublishingCompany(publishingCompany);

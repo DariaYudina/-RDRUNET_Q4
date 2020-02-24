@@ -514,7 +514,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = _bookValidation.CheckISBNLengthIsNotTimberLineISBNLength(input);
+            bool result = _bookValidation.CheckISBNLessThanBottomBorderISBNLength(input);
 
             //Assert
 
@@ -530,7 +530,7 @@ namespace UnitTest
 
             // Act
 
-            bool result = _bookValidation.CheckISBNLengthIsNotTimberLineISBNLength(input);
+            bool result = _bookValidation.CheckISBNLessThanBottomBorderISBNLength(input);
 
             //Assert
 

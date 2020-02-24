@@ -8,19 +8,20 @@ namespace Epam.Task01.Library.CollectionDAL
     internal static class MemoryStorage
     {
         private static readonly Dictionary<int, AbstractLibraryItem> _libraryCatalog;
-        private static readonly Dictionary<int, Newspaper> _issues;
+        private static readonly Dictionary<int, Newspaper> _newspapers;
 
         static MemoryStorage()
         {
             _libraryCatalog = new Dictionary<int, AbstractLibraryItem>();
-            _issues = new Dictionary<int, Newspaper>();
+            _newspapers = new Dictionary<int, Newspaper>();
         }
 
-        public static void AddLibraryItem(AbstractLibraryItem item)
+        public static int AddLibraryItem(AbstractLibraryItem item)
         {
             var lastid = MemoryStorage._libraryCatalog.Any() ? _libraryCatalog.Keys.Max()+1 : 1;
             item.Id = lastid;
             _libraryCatalog.Add(item.Id, item);
+            return item.Id;
         }
 
         public static IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()
@@ -40,7 +41,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public static bool DeleteIssueById(int id)
         {
-            return _issues.Remove(id);
+            return _newspapers.Remove(id);
         }
 
         public static IEnumerable<T> GetLibraryItemByType<T>()
@@ -48,21 +49,22 @@ namespace Epam.Task01.Library.CollectionDAL
             return _libraryCatalog.Values.OfType<T>().ToList();
         }
 
-        public static void AddIssue(Newspaper issue)
+        public static int AddIssue(Newspaper issue)
         {
-            var lastid = MemoryStorage._issues.Any() ? _issues.Keys.Max() + 1 : 1;
+            var lastid = MemoryStorage._newspapers.Any() ? _newspapers.Keys.Max() + 1 : 1;
             issue.Id = lastid;
-            _issues.Add(issue.Id, issue);
+            _newspapers.Add(issue.Id, issue);
+            return issue.Id;
         }
 
-        public static IEnumerable<Newspaper> GetAllIssues()
+        public static IEnumerable<Newspaper> GetAllNewspapers()
         {
-            return _issues.Values;
+            return _newspapers.Values;
         }
 
-        public static Newspaper GetIssueItemById(int id)
+        public static Newspaper GetNewspaperItemById(int id)
         {
-            _issues.TryGetValue(id, out Newspaper issue);
+            _newspapers.TryGetValue(id, out Newspaper issue);
             return issue;
         }
     }

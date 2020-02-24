@@ -1,6 +1,5 @@
 ﻿using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +15,7 @@ namespace Epam.Task01.Library.DBDAL
     {
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
 
-        public void AddNewspaper(Issue item)
+        public int AddNewspaper(Newspaper newspaper)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -34,99 +33,105 @@ namespace Epam.Task01.Library.DBDAL
                 var Title = new SqlParameter
                 {
                     ParameterName = "@Title",
-                    Value = item.Title,
+                    Value = newspaper.Title,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                     Direction = System.Data.ParameterDirection.Input
                 };
-                var PagesCount = new SqlParameter
+                var City = new SqlParameter
                 {
-                    ParameterName = "@PagesCount",
-                    Value = item.PagesCount,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var Commentary = new SqlParameter
-                {
-                    ParameterName = "@Commentary",
-                    Value = item.Commentary,
+                    ParameterName = "@City",
+                    Value = newspaper.Title,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                     Direction = System.Data.ParameterDirection.Input
                 };
-                var LibraryType = new SqlParameter
+                var PublishingCompany = new SqlParameter
                 {
-                    ParameterName = "@LibraryType",
-                    Value = item.GetType().Name,
+                    ParameterName = "@PublishingCompany",
+                    Value = newspaper.Title,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                     Direction = System.Data.ParameterDirection.Input
                 };
-                var NewspaperId = new SqlParameter
+                var ISSN = new SqlParameter
                 {
-                    ParameterName = "@Newspaper_Id",
-                    Value = item.Newspaper.Id,
-                    SqlDbType = System.Data.SqlDbType.Int,
+                    ParameterName = "@ISSN",
+                    Value = newspaper.Title,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                     Direction = System.Data.ParameterDirection.Input
                 };
-                var CountOfPublishing = new SqlParameter
-                {
-                    ParameterName = "@CountOfPublishing",
-                    Value = item.Newspaper.Id,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var DateOfPublishing = new SqlParameter
-                {
-                    ParameterName = "@DateOfPublishing",
-                    Value = item.DateOfPublishing,
-                    SqlDbType = System.Data.SqlDbType.DateTime,
-                    Direction = System.Data.ParameterDirection.Input
-                };
+
                 var YearOfPublishing = new SqlParameter
                 {
                     ParameterName = "@YearOfPublishing",
-                    Value = item.YearOfPublishing,
+                    Value = newspaper.Title,
                     SqlDbType = System.Data.SqlDbType.Int,
                     Direction = System.Data.ParameterDirection.Input
                 };
 
                 command.Parameters.Add(Id);
                 command.Parameters.Add(Title);
-                command.Parameters.Add(PagesCount);
-                command.Parameters.Add(Commentary);
-                command.Parameters.Add(LibraryType);
-                command.Parameters.Add(NewspaperId);
-                command.Parameters.Add(CountOfPublishing);
-                command.Parameters.Add(DateOfPublishing);
+                command.Parameters.Add(City);
+                command.Parameters.Add(PublishingCompany);
+                command.Parameters.Add(ISSN);
                 command.Parameters.Add(YearOfPublishing);
                 connection.Open();
                 command.ExecuteNonQuery();
+
+                return (int)Id.Value;
             }
         }
 
-        public IEnumerable<Issue> GetNewspaperItems()
+        public Newspaper GetNewspaperItemById(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 var command = connection.CreateCommand();
-
-                command.CommandText = "GetIssues";
+                command.CommandText = "GetNewspaperById";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
+                var Id = new SqlParameter
+                {
+                    ParameterName = "@Id",
+                    Value = id,
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Input
+                };
+                command.Parameters.Add(Id);
                 connection.Open();
+                var reader = command.ExecuteReader(CommandBehavior.SingleRow);
 
-                var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var issue = (reader["Newspaper"]) is DBNull
-                                              ? new List<Newspaper>()
-                                              : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
-                    yield return new Issue
+                    return new Newspaper
                     {
                         Id = (int)(reader["Id"]),
-                        Newspaper = issue[0],
-                        YearOfPublishing = (int)(reader["YearOfPublishing"]),
-                        CountOfPublishing = (int)(reader["CountOfPublishing"]),
-                        DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
-                        PagesCount = (int)(reader["PagesCount"]),
-                        Commentary = (string)reader["Commentary"]
+                        Title = (string)reader["Title"],
+                        City = (string)reader["City"],
+                        PublishingCompany = (string)reader["PublishingCompany"],
+                        Issn = (string)reader["ISSN"],
+                    };
+                }
+                return null;
+            }
+        }
+
+        public IEnumerable<Newspaper> GetNewspaperItems()
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "GetNewspapers";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                connection.Open();
+                var reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                while (reader.Read())
+                {
+                    yield return new Newspaper
+                    {
+                        Id = (int)(reader["Id"]),
+                        Title = (string)reader["Title"],
+                        City = (string)reader["City"],
+                        PublishingCompany = (string)reader["PublishingCompany"],
+                        Issn = (string)reader["ISSN"],
                     };
                 }
             }

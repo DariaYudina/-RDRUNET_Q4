@@ -2,6 +2,7 @@
 using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.CollectionBLL;
+using Epam.Task01.Library.CollectionDAL;
 using Epam.Task01.Library.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -16,110 +17,121 @@ namespace UnitTest
     [TestClass]
     public class IssueLogicTests
     {
-        private Newspaper _defaultIssueItem;
+        private Issue _defaultNewspaperItem;
 
-        private IssueLogic _issueLogic;
-        private Mock<IIssueDao> _issueDaoMock;
-        private Mock<IIssueValidation> _issueValidationMock;
+        private IssueLogic _newspaperLogic;
+        private Mock<IIssueDao> _newspaperDaoMock;
+        private Mock<IIssueValidation> _newspaperValidationMock;
 
         [TestInitialize]
         public void Initialize()
         {
-            _issueValidationMock = new Mock<IIssueValidation>();
-            _issueDaoMock = new Mock<IIssueDao>();
-            _issueLogic = new IssueLogic(_issueDaoMock.Object, _issueValidationMock.Object);
+            _newspaperValidationMock = new Mock<IIssueValidation>();
+            _newspaperDaoMock = new Mock<IIssueDao>();
+            _newspaperLogic = new IssueLogic(_newspaperDaoMock.Object, _newspaperValidationMock.Object);
 
-            Newspaper defaultIssueItem = new Newspaper
+            Issue defaultNewspaperItem = new Issue
             (
-              title: "",
-              city: "",
-              publishingCompany: "",
-              issn:""
+                newspaper: new Newspaper("","","",""),
+                yearOfPublishing: 2000,
+                countOfPublishing: 0,
+                dateOfPublishing: DateTime.Now,
+                pageCount: 1,
+                commentary: ""
             );
 
-            _defaultIssueItem = defaultIssueItem;
+            _defaultNewspaperItem = defaultNewspaperItem;
         }
 
         [TestMethod]
-        public void AddIssue_AnyValidIssue_ReturnTrue()
+        public void AddNewspaper_AddingValidNewspaper_ReturnTrue()
         {
             // Arrange
             List<ValidationObject> validationObjects = new List<ValidationObject>();
-            List<Newspaper> issues = new List<Newspaper>();
+            List<Issue> newspapers = new List<Issue>();
 
-            _issueDaoMock.Setup(b => b.AddIssue(It.IsAny<Newspaper>()))
-                .Callback<Newspaper>(issue => issues.Add(issue));
-            _issueDaoMock.Setup(b => b.GetIssueItems()).Returns(issues);
+            _newspaperDaoMock.Setup(b => b.AddIssue(It.IsAny<Issue>()))
+                .Callback<Issue>(n => newspapers.Add(n));
+            _newspaperDaoMock.Setup(b => b.GetIssueItems()).Returns(newspapers);
 
-            _issueValidationMock.Setup(s => s.IsValid).Returns(true);
-            _issueValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _issueValidationMock.Setup(s => s.CheckISSN(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckTitle(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.IsValid).Returns(true);
+            _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckByNewspaperValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckDateOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckYearOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 
             // Act
 
-            _issueLogic.AddIssue(validationObjects, _defaultIssueItem);
+            _newspaperLogic.AddIssue(validationObjects, _defaultNewspaperItem);
             var actualValidationResuilCount = validationObjects.Count;
 
             //Assert
 
-            Assert.IsTrue(issues.Contains(_defaultIssueItem));
+            Assert.IsTrue(newspapers.Contains(_defaultNewspaperItem));
         }
 
         [TestMethod]
-        public void AddIssue_AnyValidIssue_ReturnFalse()
+        public void AddNewspaper_AddingNotValidNewspaper_ReturnFalse()
         {
             // Arrange
             List<ValidationObject> validationObjects = new List<ValidationObject>();
-            List<Newspaper> issues = new List<Newspaper>();
+            List<Issue> newspapers = new List<Issue>();
 
-            _issueDaoMock.Setup(b => b.GetIssueItems()).Returns(issues);
+            _newspaperDaoMock.Setup(b => b.GetIssueItems()).Returns(newspapers);
 
-            _issueValidationMock.Setup(s => s.IsValid).Returns(false);
-            _issueValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _issueValidationMock.Setup(s => s.CheckISSN(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckTitle(It.IsAny<Newspaper>())).Returns(_issueValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.IsValid).Returns(false);
+            _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckByNewspaperValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckDateOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
+            _newspaperValidationMock.Setup(s => s.CheckYearOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 
             // Act
 
-            _issueLogic.AddIssue(validationObjects, _defaultIssueItem);
+            _newspaperLogic.AddIssue(validationObjects, _defaultNewspaperItem);
             var actualValidationResuilCount = validationObjects.Count;
 
             //Assert
 
-            Assert.IsFalse(issues.Contains(_defaultIssueItem));
+            Assert.IsFalse(newspapers.Contains(_defaultNewspaperItem));
         }
 
         [TestMethod]
-        public void GetIssueItemById__IdFoundedBookInCollection_ReturnIssue()
+        public void GetNewspaperItems_GetAnyNewspapersInNotEmptyDao_ReturnNewspaperItemsList()
         {
-            _issueDaoMock.Setup(b => b.GetIssueItemById(It.IsInRange(1, 10, Range.Inclusive))).Returns(_defaultIssueItem);
+            // Arrange
+
+            List<Issue> newspapers = new List<Issue>() { _defaultNewspaperItem, _defaultNewspaperItem, _defaultNewspaperItem };
+            _newspaperDaoMock.Setup(b => b.GetIssueItems()).Returns(newspapers);
 
             // Act
 
-            var resultBook = _issueLogic.GetIssueItemById(5);
+            List<Issue> actualNewspapers = _newspaperLogic.GetIssueItems().ToList();
 
             //Assert
 
-            Assert.IsNotNull(resultBook);
+            CollectionAssert.AreEqual(newspapers, actualNewspapers);
         }
 
         [TestMethod]
-        public void GetIssueItemById__IdNotFoundedBookInCollection_ReturnNull()
+        public void GetNewspaperItems_GetAnyNewspapersInEmptyDao_ReturnEmptyList()
         {
-            _issueDaoMock.Setup(b => b.GetIssueItemById(It.IsInRange(1, 10, Range.Inclusive))).Returns(_defaultIssueItem);
+            // Arrange
+
+            List<Issue> newspapers = new List<Issue>() { };
+            _newspaperDaoMock.Setup(b => b.GetIssueItems()).Returns(newspapers);
 
             // Act
 
-            var resultBook = _issueLogic.GetIssueItemById(11);
+            List<Issue> actualNewspapers = _newspaperLogic.GetIssueItems().ToList();
 
             //Assert
 
-            Assert.IsNull(resultBook);
+            CollectionAssert.AreEqual(newspapers, actualNewspapers);
         }
+
     }
 }

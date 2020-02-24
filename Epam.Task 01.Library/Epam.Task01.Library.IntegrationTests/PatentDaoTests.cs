@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Epam.Task01.Library.IntegrationTests
 {
@@ -16,6 +17,7 @@ namespace Epam.Task01.Library.IntegrationTests
         private Patent _defaultPatentItem;
         private IPatentDao _patentDao;
         private ICommonDao _commonDao;
+        private TransactionScope scope;
 
         [TestInitialize]
         public void Initialize()
@@ -37,6 +39,13 @@ namespace Epam.Task01.Library.IntegrationTests
             );
 
             _defaultPatentItem = defaultPatentItem;
+            scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            scope.Dispose();
         }
 
         [TestMethod]

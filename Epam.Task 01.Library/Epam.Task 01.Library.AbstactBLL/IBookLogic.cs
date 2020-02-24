@@ -13,5 +13,6 @@ namespace Epam.Task_01.Library.AbstactBLL
         bool AddBook(List<ValidationObject> validationResult, Book book);
         Book GetBookById(int id);
         IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany);
+        IEnumerable<Book> GetBooksByAuthor(Author author);
     }
 }

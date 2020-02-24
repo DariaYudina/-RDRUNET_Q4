@@ -489,7 +489,7 @@ namespace Epam.Task01.Library.ConsolePL
                 string commentary = Console.ReadLine();
 
                 Issue newspaper = new Issue(1, _issue, yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
-                bool res = DependencyResolver.NewspaperLogic.AddNewspaper(_validationResult, newspaper);
+                bool res = DependencyResolver.NewspaperLogic.AddIssue(_validationResult, newspaper);
                 Console.WriteLine(res);
                 foreach (ValidationObject error in _validationResult)
                 {
@@ -514,7 +514,7 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("Enter patent issn:");
             string issn = Console.ReadLine();
             issue = new Newspaper(title, city, publishingcompany, issn);
-            if (!DependencyResolver.IssueLogic.AddIssue(_validationResult, issue))
+            if (!DependencyResolver.IssueLogic.AddNewspaper(_validationResult, issue))
             {
                 foreach (ValidationObject error in _validationResult)
                 {
@@ -529,7 +529,7 @@ namespace Epam.Task01.Library.ConsolePL
         {
             issue = null;
             Console.WriteLine("Issues: ");
-            foreach (var item in DependencyResolver.IssueLogic.GetIssueItems())
+            foreach (var item in DependencyResolver.IssueLogic.GetNewspaperItems())
             {
                 Console.WriteLine($"{item.Id}. | Title: {item.Title} | City: {item.City} | Publishing company: {item.PublishingCompany}");
             }
@@ -542,34 +542,34 @@ namespace Epam.Task01.Library.ConsolePL
                 return;
             }
 
-            issue = DependencyResolver.IssueLogic.GetIssueItemById(selectedoption);
+            issue = DependencyResolver.IssueLogic.GetNewspaperItemById(selectedoption);
 
         }
 
         private void SearchBooksByAutors()
         {
-            Console.WriteLine("Enter author name and lastname");
-            string search = Console.ReadLine();
-            string[] author = search.Split(' ');
-            var res = DependencyResolver.CommonLogic.GetBooksByAuthor(new Author(author[0], author[1]));
-            foreach (AbstractLibraryItem item in res)
-            {
-                Console.WriteLine(item.Id + " " + item.Title);
-            }
+            //Console.WriteLine("Enter author name and lastname");
+            //string search = Console.ReadLine();
+            //string[] author = search.Split(' ');
+            //var res = DependencyResolver.CommonLogic.GetBooksByAuthor(new Author(author[0], author[1]));
+            //foreach (AbstractLibraryItem item in res)
+            //{
+            //    Console.WriteLine(item.Id + " " + item.Title);
+            //}
         }
 
         private void SearchPatentsByAutors()
         {
-            Console.WriteLine("Enter author name and lastname");
-            string search = Console.ReadLine();
-            string[] author = search.Split(' ');
-            var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author(author[0], author[1]));
-            Console.WriteLine("----------------------------------------------------------------");
-            foreach (AbstractLibraryItem item in res)
-            {
-                Console.WriteLine(item.Id + " " + item.Title);
-            }
-            Console.WriteLine("----------------------------------------------------------------");
+            //Console.WriteLine("Enter author name and lastname");
+            //string search = Console.ReadLine();
+            //string[] author = search.Split(' ');
+            //var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author(author[0], author[1]));
+            //Console.WriteLine("----------------------------------------------------------------");
+            //foreach (AbstractLibraryItem item in res)
+            //{
+            //    Console.WriteLine(item.Id + " " + item.Title);
+            //}
+            //Console.WriteLine("----------------------------------------------------------------");
         }
 
         private void SearchBooksAndPatentsByAutors()

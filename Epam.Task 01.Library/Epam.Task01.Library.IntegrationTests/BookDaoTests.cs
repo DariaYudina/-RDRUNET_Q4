@@ -1,5 +1,6 @@
 ﻿using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.CollectionDAL;
+using Epam.Task01.Library.DBDAL;
 using Epam.Task01.Library.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Epam.Task01.Library.IntegrationTests
 {
@@ -16,12 +18,13 @@ namespace Epam.Task01.Library.IntegrationTests
         private Book _defaultBookItem;
         private IBookDao _bookDao;
         private ICommonDao _commonDao;
+        private TransactionScope scope;
 
         [TestInitialize]
         public void Initialize()
         {
-            _bookDao = new BookDao();
-            _commonDao = new CommonDao();
+            _bookDao = new BookDBDao();
+            _commonDao = new CommonDBDao();
 
              Book defaultBookItem = new Book
             ( id: 1,
@@ -36,6 +39,13 @@ namespace Epam.Task01.Library.IntegrationTests
             );
 
             _defaultBookItem = defaultBookItem;
+            scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            scope.Dispose();
         }
 
         [TestMethod]

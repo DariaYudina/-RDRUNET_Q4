@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace CollectionValidation
 {
-    public class NewspaperValidation : INewspaperValidation
+    public class NewspaperValidation : IIssueValidation
     {
         public List<ValidationObject> ValidationResult { get; set; }
 
@@ -14,19 +14,19 @@ namespace CollectionValidation
 
         private ICommonValidation CommonValidation { get; set; }
 
-        private IIssueValidation IssueValidation { get; set; }
+        private INewspaperValidation IssueValidation { get; set; }
 
         private const int BottomLineYear = 1400;
         private const int BottomLineCountOfPublishing = 1;
 
-        public NewspaperValidation(ICommonValidation commonValidation, IIssueValidation issueValidation)
+        public NewspaperValidation(ICommonValidation commonValidation, INewspaperValidation issueValidation)
         {
             ValidationResult = new List<ValidationObject>();
             CommonValidation = commonValidation;
             IssueValidation = issueValidation;
         }
 
-        public INewspaperValidation CheckByCommonValidation(Issue newspaper)
+        public IIssueValidation CheckByCommonValidation(Issue newspaper)
         {
             CommonValidation.CheckPagesCount(newspaper);
             foreach (var item in CommonValidation.ValidationResult)
@@ -38,7 +38,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckByIssueValidation(Issue newspaper)
+        public IIssueValidation CheckByNewspaperValidation(Issue newspaper)
         {
             IssueValidation.CheckTitle(newspaper.Newspaper).CheckISSN(newspaper.Newspaper).CheckNewspaperCity(newspaper.Newspaper).CheckPublishingCompany(newspaper.Newspaper);
             foreach (var item in IssueValidation.ValidationResult)
@@ -50,7 +50,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckCountOfPublishing(Issue newspaper)
+        public IIssueValidation CheckCountOfPublishing(Issue newspaper)
         {
             bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.CountOfPublishing, null, BottomLineCountOfPublishing);
             IsValid &= !notvalid;
@@ -66,7 +66,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckDateOfPublishing(Issue newspaper)
+        public IIssueValidation CheckDateOfPublishing(Issue newspaper)
         {
             bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.DateOfPublishing.Year, null, BottomLineYear)
                             || newspaper.DateOfPublishing > DateTime.Now
@@ -86,7 +86,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public INewspaperValidation CheckYearOfPublishing(Issue newspaper)
+        public IIssueValidation CheckYearOfPublishing(Issue newspaper)
         {
             bool notvalid = !CommonValidation.CheckNumericalInRange(newspaper.YearOfPublishing, DateTime.Now.Year, BottomLineYear);
             IsValid &= !notvalid;

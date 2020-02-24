@@ -1,6 +1,6 @@
 ﻿using AbstractValidation;
-using CollectionValidation;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
+using Epam.Task01.Library.CollectionBLL.Validators;
 using Epam.Task01.Library.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -15,49 +15,37 @@ namespace UnitTest
     [TestClass]
     public class NewspaperValidationTests
     {
-        private INewspaperValidation _newspaperValidation;
-        private Issue _defaultNewspaperItem;
+        private INewspaperValidation _issueValidation;
+        private Newspaper _defaultIssueItem;
         private Mock<ICommonValidation> _commonValidationMock;
-        private Mock<IIssueValidation> _issueValidationMock;
 
         [TestInitialize]
         public void Initialize()
         {
             _commonValidationMock = new Mock<ICommonValidation>();
-            _issueValidationMock = new Mock<IIssueValidation>();
-            _newspaperValidation = new NewspaperValidation(_commonValidationMock.Object, _issueValidationMock.Object);
+            _issueValidation = new IssueValidation(_commonValidationMock.Object);
 
-            Issue defaultNewspaperItem = new Issue
-            (newspaper: new Newspaper
-              (title: "",
-               city: "",
-               publishingCompany: "",
-               issn: ""
-              ),
-              yearOfPublishing: 2000,
-              countOfPublishing: 0,
-              dateOfPublishing: DateTime.Now,
-              pageCount: 0,
-              commentary: ""
+            Newspaper defaultIssueItem = new Newspaper
+            ( title: "",
+              city: "",
+              publishingCompany:"",
+              issn: ""
             );
 
-            _defaultNewspaperItem = defaultNewspaperItem;
+            _defaultIssueItem = defaultIssueItem;
         }
-
+        
         [TestMethod]
-        public void CheckByCommonValidation_ValidData_ReturnTrue()
+        public void CheckISSN_ISSNAnd8Number_ReturnTrue()
         {
             // Arrange
 
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
-            _commonValidationMock.Setup(s => s.IsValid).Returns(true);
-            _commonValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
-            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
+            _defaultIssueItem.Issn = "ISSN 1234-1234";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
 
             // Act
 
-            _defaultNewspaperItem.PagesCount = 10;
-            var validation = _newspaperValidation.CheckByCommonValidation(_defaultNewspaperItem);
+            var validation = _issueValidation.CheckISSN(_defaultIssueItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -68,28 +56,379 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void CheckByCommonValidation_NotValidData_ReturnFalse()
+        public void CheckISSN_ISSNAndNot8Number_ReturnFalse()
         {
             // Arrange
 
-            _commonValidationMock.Setup(s => s.IsValid).Returns(false);
-            List<ValidationObject> validationObjects = new List<ValidationObject>() { new ValidationObject("", ""), new ValidationObject("", "") };
-            int expectedValidationResuilCount = validationObjects.Count;
-            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _commonValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
-            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
+            _defaultIssueItem.Issn = "ISSN 1234-123";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            var validation = _issueValidation.CheckISSN(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+        
+        [TestMethod]
+        public void CheckNewspaperCity_ISSNAnd8Number_ReturnTrue()
+        {
+            // Arrange
+
+            _defaultIssueItem.City = "City";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            // Act
+
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnRus_ReturnTrue()
+        {
+            // Arrange
+
+            string city = "Саратов";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEng_ReturnTrue()
+        {
+            // Arrange
+
+            string city = "Saratov";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnRusWithHyphen_ReturnTrue()
+        {
+            // Arrange
+
+            string city = "Ростов-Ростов";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEngWithHyphen_ReturnTrue()
+        {
+            // Arrange
+
+            string city = "Rostov-Rostov";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnRusWithTwoHyphen_ReturnFalse()
+        {
+            // Arrange
+
+            string city = "Ростов-на-Дону";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEngWithTwoHyphens_ReturnTrue()
+        {
+            // Arrange
+
+            string city = "Rostov-na-Donu";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnRusWithWhiteSpaces_ReturnTrue()
+        {
+            // Arrange
+
+            string city = "Ростов на Дону";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEngWithWhiteSpaces_ReturnTrue()
+        {
+            // Arrange
+
+            string city = "Rostov na Donu";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithULowerCaseLetterLengthLessWhen200OnEng_ReturnFalse()
+        {
+            // Arrange
+
+            string city = "city";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithULowerCaseLetterLengtManyWordshLessWhen200OnEng_ReturnFalse()
+        {
+            // Arrange
+
+            string city = "city city";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityStartWithEngAndRusWordsLessWhen200OnEng_ReturnFalse()
+        {
+            // Arrange
+
+            string city = "Рус Eng";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityWithManyHyphensLessWhen200OnEng_ReturnFalse()
+        {
+            // Arrange
+
+            string city = "Test-test-test-Test";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckBookCity_CityWithManyHyphensLessWhen200OnRus_ReturnFalse()
+        {
+            // Arrange
+
+            string city = "Тест-тест-тест-Тест";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+        
+        [TestMethod]
+        public void CheckPublishingCompany_n_ReturnFalse()
+        {
+            // Arrange
+
+            string city = "Тест-тест-тест-Тест";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+
+            // Act
+
+            _defaultIssueItem.City = city;
+            var validation = _issueValidation.CheckNewspaperCity(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckPublishingCompany_AnyStringLessThan300InRus_ReturnTrue()
+        {
+            // Arrange
+
+            string company = "Моя книга";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+            _commonValidationMock.Setup(m => m.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
+
+            // Act
+
+            _defaultIssueItem.PublishingCompany = company;
+            var validation = _issueValidation.CheckPublishingCompany(_defaultIssueItem);
+            bool result = validation.IsValid;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckPublishingCompany_AnyStringMoreThan300InRus_ReturnFalse()
+        {
+            // Arrange
+
             int inputlength = 301;
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < inputlength; i++)
             {
                 stringBuilder.Append("*");
             }
-            string Text = stringBuilder.ToString();
+            string text = stringBuilder.ToString();
+            int currentValidationResultCount = _issueValidation.ValidationResult.Count;
+            int expectedValidationResuilCount = currentValidationResultCount + 1;
+
             // Act
 
-            _defaultNewspaperItem.Title = Text;
-            _defaultNewspaperItem.PagesCount = 300;
-            var validation = _newspaperValidation.CheckByCommonValidation(_defaultNewspaperItem);
+            _defaultIssueItem.PublishingCompany = text;
+            var validation = _issueValidation.CheckPublishingCompany(_defaultIssueItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -100,51 +439,38 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void CheckByCommonValidation_TitleIsNull_ReturnFalse()
+        public void CheckPublishingCompany_IsNull_ReturnFalse()
         {
             // Arrange
 
-            _commonValidationMock.Setup(s => s.IsValid).Returns(false);
-            List<ValidationObject> validationObjects = new List<ValidationObject>() { new ValidationObject("", ""), new ValidationObject("", "") };
-            int expectedValidationResuilCount = validationObjects.Count;
-            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-            _commonValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
-            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
-
+            _defaultIssueItem.PublishingCompany = null;
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+            
             // Act
-
-            _defaultNewspaperItem.Title = null;
-            _defaultNewspaperItem.PagesCount = 300;
-            var validation = _newspaperValidation.CheckByCommonValidation(_defaultNewspaperItem);
+            
+            var validation = _issueValidation.CheckPublishingCompany(_defaultIssueItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
-
+            
             //Assert
-
+            
             Assert.IsFalse(result);
             Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
         }
 
         [TestMethod]
-        public void CheckByIssueValidation_ValidData_ReturnTrue()
+        public void CheckTitle_Titleis10Length_ReturnTrue()
         {
-            // Arrange
+            // Arrange 
 
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
-            _issueValidationMock.Setup(s => s.IsValid).Returns(true);
-            _issueValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
-            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            string title = "0123456789";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+            _commonValidationMock.Setup(m => m.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
 
-            // Act
+            //Act
 
-            _defaultNewspaperItem.Title = "Title";
-            _defaultNewspaperItem.Newspaper.Issn = "Title";
-            _defaultNewspaperItem.Newspaper.City = "City";
-            _defaultNewspaperItem.Newspaper.PublishingCompany = "PublishingCompany";
-            var validation = _newspaperValidation.CheckByIssueValidation(_defaultNewspaperItem);
+            _defaultIssueItem.Title = title;
+            var validation = _issueValidation.CheckTitle(_defaultIssueItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
 
@@ -155,48 +481,67 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void CheckByIssueValidation_NotValidData_ReturnFalse()
+        public void CheckTitle_TitleisLengthMore300_ReturnFalse()
         {
-            // Arrange
+            // Arrange 
 
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 4;
-            _issueValidationMock.Setup(s => s.IsValid).Returns(false);
-            _issueValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
-            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
-            _issueValidationMock.Setup(s => s.CheckPublishingCompany(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+            int titleLength = 301;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < titleLength; i++)
+            {
+                stringBuilder.Append("*");
+            }
+            string titleText = stringBuilder.ToString();
 
-            // Act
 
-            _defaultNewspaperItem.Title = "";
-            _defaultNewspaperItem.Newspaper.Issn = "";
-            _defaultNewspaperItem.Newspaper.City = "";
-            _defaultNewspaperItem.Newspaper.PublishingCompany = "";
-            var validation = _newspaperValidation.CheckByIssueValidation(_defaultNewspaperItem);
+            //Act
+
+            _defaultIssueItem.Title = titleText;
+            var validation = _issueValidation.CheckTitle(_defaultIssueItem);
             bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count + 4;
+            int actualValidationResuilCount = validation.ValidationResult.Count;
 
             //Assert
 
             Assert.IsFalse(result);
             Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
         }
-        
+
         [TestMethod]
-        public void CheckCountOfPublishing_NotNegativeNaturalNumber_ReturnTrue()
+        public void CheckTitle_TitleisNull_ReturnFalse()
         {
-            // Arrange
+            // Arrange 
 
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
+            string title = null;
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
+            _commonValidationMock.Setup(m => m.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
+            //Act
 
-            // Act
-
-            _defaultNewspaperItem.CountOfPublishing = 1;
-            var validation = _newspaperValidation.CheckCountOfPublishing(_defaultNewspaperItem);
+            _defaultIssueItem.Title = title;
+            var validation = _issueValidation.CheckTitle(_defaultIssueItem);
             bool result = validation.IsValid;
             int actualValidationResuilCount = validation.ValidationResult.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckStringIsNotNullorEmpty_StringisNotNull_ReturnTrue()
+        {
+            // Arrange 
+
+            string text = "test";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count;
+
+            //Act
+
+            _issueValidation.CheckStringIsNullorEmpty(text);
+            bool result = _issueValidation.IsValid;
+            int actualValidationResuilCount = _issueValidation.ValidationResult.Count;
 
             //Assert
 
@@ -205,19 +550,18 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void CheckCountOfPublishing_isZero_ReturnFalse()
+        public void CheckStringIsNotNullorEmpty_StringisNull_ReturnFalse()
         {
-            // Arrange
+            // Arrange 
 
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
+            string text = null;
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
 
-            // Act
+            //Act
 
-            _defaultNewspaperItem.CountOfPublishing = 0;
-            var validation = _newspaperValidation.CheckCountOfPublishing(_defaultNewspaperItem);
-            bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count ;
+            _issueValidation.CheckStringIsNullorEmpty(text);
+            bool result = _issueValidation.IsValid;
+            int actualValidationResuilCount = _issueValidation.ValidationResult.Count;
 
             //Assert
 
@@ -226,126 +570,18 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void CheckCountOfPublishing_isNegativeNumber_ReturnFalse()
+        public void CheckStringIsNotNullorEmpty_StringisEmpty_ReturnFalse()
         {
-            // Arrange
+            // Arrange 
 
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
+            string text = "   ";
+            int expectedValidationResuilCount = _issueValidation.ValidationResult.Count + 1;
 
-            // Act
+            //Act
 
-            _defaultNewspaperItem.CountOfPublishing = -2;
-            var validation = _newspaperValidation.CheckCountOfPublishing(_defaultNewspaperItem);
-            bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count;
-
-            //Assert
-
-            Assert.IsFalse(result);
-            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-        }
-        
-        [TestMethod]
-        public void CheckDateOfPublishing_DateOfPublishingYearEqualYear_ReturnTrue()
-        {
-            // Arrange
-
-            _defaultNewspaperItem.DateOfPublishing = new DateTime(2000, 1, 1);
-            _defaultNewspaperItem.YearOfPublishing = _defaultNewspaperItem.DateOfPublishing.Year;
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
-
-            // Act
-
-            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-            bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count;
-
-            //Assert
-
-            Assert.IsTrue(result);
-            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-        }
-
-        [TestMethod]
-        public void CheckDateOfPublishing_DateOfPublishingYearNotEqualYear_ReturnFalse()
-        {
-            // Arrange
-
-            _defaultNewspaperItem.DateOfPublishing = new DateTime(2000, 1, 1);
-            _defaultNewspaperItem.YearOfPublishing = _defaultNewspaperItem.DateOfPublishing.Year + 1;
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
-
-            // Act
-
-            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-            bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count;
-
-            //Assert
-
-            Assert.IsFalse(result);
-            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-        }
-
-        [TestMethod]
-        public void CheckYearOfPublishing_YearMoreThan1400AndNotMoreCurrentYear_ReturnTrue()
-        {
-            // Arrange
-
-            _defaultNewspaperItem.YearOfPublishing = DateTime.Now.Year;
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
-
-            // Act
-
-            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-            bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count;
-
-            //Assert
-
-            Assert.IsTrue(result);
-            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-        }
-
-        [TestMethod]
-        public void CheckYearOfPublishing_YearLessThan1400_ReturnFalse()
-        {
-            // Arrange
-
-            _defaultNewspaperItem.YearOfPublishing = 1399;
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
-
-            // Act
-
-            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-            bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count;
-
-            //Assert
-
-            Assert.IsFalse(result);
-            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-        }
-
-        [TestMethod]
-        public void CheckYearOfPublishing_YearMoreThanCurrentYear_ReturnFalse()
-        {
-            // Arrange
-
-            _defaultNewspaperItem.YearOfPublishing = DateTime.Now.Year + 1;
-            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
-            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
-
-            // Act
-
-            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-            bool result = validation.IsValid;
-            int actualValidationResuilCount = validation.ValidationResult.Count;
+            _issueValidation.CheckStringIsNullorEmpty(text);
+            bool result = _issueValidation.IsValid;
+            int actualValidationResuilCount = _issueValidation.ValidationResult.Count;
 
             //Assert
 
@@ -353,5 +589,4 @@ namespace UnitTest
             Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
         }
     }
-
 }

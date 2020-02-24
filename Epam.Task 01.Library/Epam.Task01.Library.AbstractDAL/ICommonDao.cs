@@ -18,9 +18,7 @@ namespace Epam.Task01.Library.AbstractDAL
 
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByYearOfPublishing();
 
-        IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem;
-
-        IEnumerable<AbstractLibraryItem> GetTwoTypesByAuthor<T, G>() where T : AbstractLibraryItem where G : AbstractLibraryItem;
+        IEnumerable<AbstractLibraryItem> GetBookAndPatentByAuthorId(int id);
 
     }
 }

@@ -7,9 +7,9 @@ namespace Epam.Task01.Library.CollectionDAL
 {
     public class BookDao : IBookDao
     {
-        public void AddBook(Book item)
+        public int AddBook(Book item)
         {
-            MemoryStorage.AddLibraryItem(item);
+            return MemoryStorage.AddLibraryItem(item);
         }
 
         public IEnumerable<Book> GetBookItems()
@@ -69,5 +69,11 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             throw new System.NotImplementedException();
         }
+
+        public IEnumerable<Book> GetBooksByAuthor(Author author)
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().OfType<Book>().Where(p => p.Authors.Any(item => item.Id == author.Id));
+        }
+
     }
 }

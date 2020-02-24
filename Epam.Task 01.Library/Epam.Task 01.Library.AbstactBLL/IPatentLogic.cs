@@ -9,5 +9,6 @@ namespace Epam.Task_01.Library.AbstactBLL
         bool AddPatent(List<ValidationObject> validationResult, Patent patent);
 
         IEnumerable<Patent> GetPatentItems();
+        IEnumerable<Patent> GetPatentsByAuthor(Author author);
     }
 }

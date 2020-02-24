@@ -33,22 +33,9 @@ namespace Epam.Task01.Library.CollectionBLL
             return _commonDao.DeleteLibraryItemById(id);
         }
 
-
-
         public IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author)
         {
-            return _commonDao.GetTwoTypesByAuthor<Book, Patent>().Where( i => (i is Patent && ((Patent)i).Authors.Contains(author) ) || (i is Book && ((Book)i).Authors.Contains(author)));
-        }
-
-        public IEnumerable<Book> GetBooksByAuthor(Author author)
-        {
-            return _commonDao.GetTypeByAuthor<Book>().Where(item => item.Authors.Contains(author)).ToList(); // как метод Contains определяет, содержится ли элемент в коллекции?
-        }
-
-        public IEnumerable<Patent> GetPatentsByAuthor(Author author)
-        {
-
-            return _commonDao.GetTypeByAuthor<Patent>().Where(item => item.Authors.Contains(author));   // чтобы получить один патент из 1000000 ты сначала их все вытащишь на уровень логики, а потом переберешь
+            return _commonDao.GetBookAndPatentByAuthorId(author.Id);
         }
 
         public IEnumerable<AbstractLibraryItem> SortByYear()
@@ -63,8 +50,7 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
         {
-            //return _commonDao.GetLibraryItemsByYearOfPublishing();
-            throw new System.NotImplementedException();
+            return _commonDao.GetLibraryItemsByYearOfPublishing().GroupBy(i => i.YearOfPublishing);
         }
 
     }

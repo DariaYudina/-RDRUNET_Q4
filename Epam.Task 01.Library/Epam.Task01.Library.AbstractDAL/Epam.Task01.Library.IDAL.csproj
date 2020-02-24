@@ -56,8 +56,8 @@
   <ItemGroup>
     <Compile Include="IBookDao.cs" />
     <Compile Include="ICommonDao.cs" />
-    <Compile Include="IIssueDao.cs" />
     <Compile Include="INewspaperDao.cs" />
+    <Compile Include="IIssueDao.cs" />
     <Compile Include="IPatentDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

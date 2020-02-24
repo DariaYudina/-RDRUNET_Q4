@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionBLL.Validators
 {
-    public class IssueValidation : IIssueValidation
+    public class IssueValidation : INewspaperValidation
     {
         public bool IsValid { get; set; } = true;
 
@@ -27,7 +27,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
             CommonValidation = commonValidation;
         }
 
-        public IIssueValidation CheckISSN(Newspaper issue)
+        public INewspaperValidation CheckISSN(Newspaper issue)
         {
             if (issue.Issn != null)
             {
@@ -46,7 +46,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
             return this;
         }
 
-        public IIssueValidation CheckNewspaperCity(Newspaper issue)
+        public INewspaperValidation CheckNewspaperCity(Newspaper issue)
         {
             string NewspaperCityPattern = @"^((([A-Z][a-z]+)(\s(([A-Z]|[a-z])[a-z]+))*(-([A-Z][a-z]+))?)|(([А-Я][а-я]+)(\s(([А-Я]|[а-я])[а-я]+))*(-([А-Я][а-я]+))?))$";
             bool notvalid = !Regex.IsMatch(issue.City, NewspaperCityPattern);
@@ -63,7 +63,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
             return this;
         }
 
-        public IIssueValidation CheckPublishingCompany(Newspaper issue)
+        public INewspaperValidation CheckPublishingCompany(Newspaper issue)
         {
             if (issue.PublishingCompany != null)
             {
@@ -91,7 +91,7 @@ namespace Epam.Task01.Library.CollectionBLL.Validators
             return this;
         }
 
-        public IIssueValidation CheckTitle(Newspaper issue)
+        public INewspaperValidation CheckTitle(Newspaper issue)
         {
             if (issue.Title != null)
             {

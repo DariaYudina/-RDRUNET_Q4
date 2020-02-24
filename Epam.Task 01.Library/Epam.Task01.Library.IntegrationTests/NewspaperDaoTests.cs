@@ -1,5 +1,6 @@
 ﻿using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.CollectionDAL;
+using Epam.Task01.Library.DBDAL;
 using Epam.Task01.Library.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -7,72 +8,106 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Epam.Task01.Library.IntegrationTests
 {
-    class NewspaperDaoTests
+    [TestClass]
+    public class NewspaperDaoTests
     {
-        private Issue _defaultNewspaperItem;
-        private INewspaperDao _newspaperDao;
+        private Newspaper _defaultIssueItem;
+        private IIssueDao _issueDao;
         private ICommonDao _commonDao;
+        private TransactionScope scope;
 
         [TestInitialize]
         public void Initialize()
         {
-            _newspaperDao = new NewspaperDao();
-            _commonDao = new CommonDao();
+            _issueDao = new IssueDBDao();
+            _commonDao = new CommonDBDao();
 
-            Issue defaultNewspaperItem = new Issue
+            Newspaper defaultIssueItem = new Newspaper
             (
-                id: 2,
-                newspaper: new Newspaper("", "", "", ""),
-                yearOfPublishing: 2000,
-                countOfPublishing: 0,
-                dateOfPublishing: DateTime.Now,
-                pageCount: 1,
-                commentary: ""
+              title: "",
+              city: "",
+              publishingCompany: "",
+              issn: ""
             );
 
-            _defaultNewspaperItem = defaultNewspaperItem;
+            _defaultIssueItem = defaultIssueItem;
+            scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         }
 
-        [TestMethod]
-        public void AddNewspaper_AddingValidItem_Successfully()
+        [TestCleanup]
+        public void TestCleanup()
         {
-            // Arrange
-
-            var expectedCount = _newspaperDao.GetNewspaperItems().Count() + 1;
-
-            // Act
-            _newspaperDao.AddNewspaper(_defaultNewspaperItem);
-            var actualValidationResuilCount = _newspaperDao.GetNewspaperItems().Count();
-
-            //Assert
-
-            Assert.AreEqual(expectedCount, actualValidationResuilCount);
-            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.Id);
+            scope.Dispose();
         }
 
-        [TestMethod]
-        public void GetNewspaperItems_ToNotEmptyDao_ReturnItems()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void AddIssue_AddingValidItem_Successfully()
+        //{
+        //    Arrange
 
-            _newspaperDao.AddNewspaper(_defaultNewspaperItem);
-            int expectedCount = 1;
+        //   var expectedCount = _issueDao.GetIssueItems().Count() + 1;
 
-            // Act
+        //    Act
+        //    _issueDao.AddIssue(_defaultIssueItem);
+        //    var actualValidationResuilCount = _issueDao.GetIssueItems().Count();
 
-            var result = _newspaperDao.GetNewspaperItems().Count();
+        //    Assert
 
-            //Assert
+        //    Assert.AreEqual(expectedCount, actualValidationResuilCount);
+        //    _commonDao.DeleteIssueItemById(_defaultIssueItem.IssueId);
+        //}
 
-            Assert.AreEqual(expectedCount, result);
-            _commonDao.DeleteLibraryItemById(_defaultNewspaperItem.Id);
-        }
+        //[TestMethod]
+        //public void GetIssueById_FoundExistingId_ReturnIssue()
+        //{
+        //    // Arrange
+        //    var expectedCount = _issueDao.GetIssueItems().Count() + 1;
+        //    // Act
+        //    _issueDao.AddIssue(_defaultIssueItem);
+        //    var actualValidationResuilCount = _issueDao.GetIssueItems().Count();
 
-        [TestMethod]
-        public void GetNewspaperItems_ToEmptyDao_ReturnEmptyCollection()
+        //    //Assert
+
+        //    Assert.AreEqual(expectedCount, actualValidationResuilCount);
+        //    _commonDao.DeleteIssueItemById(_defaultIssueItem.IssueId);
+        //}
+
+        //[TestMethod]
+        //public void GetIssueById_FoundNotExistingI_ReturnNull()
+        //{
+        //    // Act
+
+        //    Newspaper item = _issueDao.GetNewspaperItemById(_defaultIssueItem.Id);
+
+        //    //Assert
+
+        //    Assert.IsNull(item);
+        //}
+
+        // [TestMethod]
+        //public void GetIssueItems_ToNotEmptyDao_ReturnItems()
+        //{
+        //    // Arrange
+
+        //    _issueDao.AddIssue(_defaultIssueItem);
+        //    int expectedCount = 1;
+
+        //    // Act
+
+        //    var result = _issueDao.GetIssueItems().Count();
+
+        //    //Assert
+
+        //    Assert.AreEqual(expectedCount, result);
+        //    _commonDao.DeleteIssueItemById(_defaultIssueItem.IssueId);
+        //}
+
+
+        public void GetIssueItems_ToEmptyDao_ReturnEmptyCollection()
         {
             // Arrange
 
@@ -80,7 +115,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             // Act
 
-            var result = _newspaperDao.GetNewspaperItems().Count();
+            var result = _issueDao.GetIssueItems().Count();
 
             //Assert
             Assert.AreEqual(expectedCount, result);

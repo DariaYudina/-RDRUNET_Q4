@@ -7,9 +7,9 @@ namespace Epam.Task01.Library.CollectionDAL
 {
     public class PatentDao : IPatentDao
     {
-        public void AddPatent(Patent item)
+        public int AddPatent(Patent item)
         {
-            MemoryStorage.AddLibraryItem(item);
+            return MemoryStorage.AddLibraryItem(item);
         }
 
         public bool CheckPatentUniqueness(Patent patent)
@@ -30,5 +30,11 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.GetLibraryItemByType<Patent>();
         }
+
+        public IEnumerable<Patent> GetPatentsByAuthorId(int id)
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().OfType<Patent>().Where(p => p.Authors.Any(item => item.Id == id));
+        }
+
     }
 }

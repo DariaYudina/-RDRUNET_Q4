@@ -58,8 +58,8 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="CommonLogic.cs" />
-    <Compile Include="IssueLogic.cs" />
     <Compile Include="NewspaperLogic.cs" />
+    <Compile Include="IssueLogic.cs" />
     <Compile Include="PatentLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\BookValidation.cs" />

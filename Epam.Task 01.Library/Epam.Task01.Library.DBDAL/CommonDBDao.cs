@@ -278,19 +278,7 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
-        public IEnumerable<AbstractLibraryItem> GetTwoTypesByAuthor<T, G>()
-            where T : AbstractLibraryItem
-            where G : AbstractLibraryItem
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> GetTypeByAuthor<T>() where T : AbstractLibraryItem
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<AbstractLibraryItem> GetBookAndPatentByAuthor(int id)
+        public IEnumerable<AbstractLibraryItem> GetBookAndPatentByAuthorId(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {

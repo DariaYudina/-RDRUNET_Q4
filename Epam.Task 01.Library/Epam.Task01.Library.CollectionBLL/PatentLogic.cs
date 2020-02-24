@@ -53,5 +53,10 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _patentDao.GetPatentItems();
         }
+
+        public IEnumerable<Patent> GetPatentsByAuthor(Author author)
+        {
+            return _patentDao.GetPatentsByAuthorId(author.Id);
+        }
     }
 }

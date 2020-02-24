@@ -65,7 +65,7 @@ namespace CollectionValidation
                 bool notvalid = !Regex.IsMatch(book.isbn, ISBNPattern);
                 if (!notvalid)
                 {
-                    notvalid |= CheckISBNLengthIsNotTimberLineISBNLength(book.isbn);
+                    notvalid |= CheckISBNLessThanBottomBorderISBNLength(book.isbn);
                 }
 
                 IsValid &= !notvalid;
@@ -168,7 +168,7 @@ namespace CollectionValidation
             return this;
         }
 
-        public bool CheckISBNLengthIsNotTimberLineISBNLength(string isbn)
+        public bool CheckISBNLessThanBottomBorderISBNLength(string isbn)
         {
             // WTF???
             string wishoutISBN = isbn.Substring(5, isbn.Length - 5);

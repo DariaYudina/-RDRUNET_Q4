@@ -30,25 +30,25 @@ namespace Epam.Task01.Library.Common
 
         public static IPatentValidation PatentValidation => new PatentValidation(CommonValidation);
 
-        public static INewspaperLogic NewspaperLogic => new NewspaperLogic(NewspaperDao, NewspaperValidation);
+        public static IIssueLogic NewspaperLogic => new IssueLogic(NewspaperDao, NewspaperValidation);
 
-        public static INewspaperDao NewspaperDao { get; }
+        public static IIssueDao NewspaperDao { get; }
 
-        public static INewspaperValidation NewspaperValidation => new NewspaperValidation(CommonValidation, IssueValidation);
+        public static IIssueValidation NewspaperValidation => new NewspaperValidation(CommonValidation, IssueValidation);
 
-        public static IIssueLogic IssueLogic => new IssueLogic(IssueDao, IssueValidation);
+        public static INewspaperLogic IssueLogic => new NewspaperLogic(IssueDao, IssueValidation);
 
-        public static IIssueDao IssueDao { get; }
+        public static INewspaperDao IssueDao { get; }
 
-        public static IIssueValidation IssueValidation => new IssueValidation(CommonValidation);
+        public static INewspaperValidation IssueValidation => new IssueValidation(CommonValidation);
 
         static DependencyResolver()
         {
             CommonDao = new CommonDBDao();
             BookDao = new BookDBDao();
             PatentDao = new PatentDBDao();
-            NewspaperDao = new NewspaperDBDao();
-            IssueDao = new IssueDBDao();
+            NewspaperDao = new IssueDBDao();
+            IssueDao = new NewspaperDBDao();
         }
     }
 }

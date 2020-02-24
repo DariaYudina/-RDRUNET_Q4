@@ -20,8 +20,5 @@ namespace Epam.Task_01.Library.AbstactBLL
 
         IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author);
 
-        IEnumerable<Book> GetBooksByAuthor(Author author);
-
-        IEnumerable<Patent> GetPatentsByAuthor(Author author);
     }
 }

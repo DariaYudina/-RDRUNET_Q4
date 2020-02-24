@@ -1,13 +1,18 @@
 ﻿using Epam.Task01.Library.Entity;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.AbstractDAL
 {
     public interface INewspaperDao
     {
-        void AddNewspaper(Issue item);
+        int AddNewspaper(Newspaper newspaper);
 
-        IEnumerable<Issue> GetNewspaperItems();
+        IEnumerable<Newspaper> GetNewspaperItems();
 
+        Newspaper GetNewspaperItemById(int id);
     }
 }
