@@ -22,9 +22,10 @@ namespace Epam.Task01.Library.CollectionDAL
             return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.Id == id);  // а может быть другая сущность с тем же Id?
         }
 
-        public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishing_Company)
+        public IEnumerable<Book> GetBooksByPublishingCompany(string publishingCompany)
         {
-            return MemoryStorage.GetLibraryItemByType<Book>().Where(publishingCompany => publishingCompany.PublishingCompany.StartsWith(publishing_Company)).GroupBy(publishingCompany => publishingCompany.PublishingCompany).ToList();
+            return MemoryStorage.GetLibraryItemByType<Book>()
+                                .Where(item => item.PublishingCompany.StartsWith(publishingCompany)).ToList();
         }
 
         public bool CheckBookUniqueness(Book book)
@@ -63,11 +64,6 @@ namespace Epam.Task01.Library.CollectionDAL
             }
 
             return true;
-        }
-
-        public IEnumerable<Book> GetBooksByPublishingCompany2(string publishingCompany)
-        {
-            throw new System.NotImplementedException();
         }
 
         public IEnumerable<Book> GetBooksByAuthor(Author author)

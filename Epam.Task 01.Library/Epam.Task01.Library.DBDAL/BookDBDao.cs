@@ -187,12 +187,7 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
-        public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Book> GetBooksByPublishingCompany2(string publishingCompany)
+        public IEnumerable<Book> GetBooksByPublishingCompany(string publishingCompany)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {

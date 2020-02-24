@@ -34,7 +34,6 @@ namespace Epam.Task01.Library.CollectionBLL
                                                                     CheckISBN(book).
                                                                     CheckYearOfPublishing(book).
                                                                     CheckAuthors(book);
-
             if ( bookvalidationObject.IsValid)
             {
                 _bookDao.AddBook(book);
@@ -61,8 +60,7 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany)
         {
-            return _bookDao.GetBooksByPublishingCompany(publishingCompany);
+            return _bookDao.GetBooksByPublishingCompany(publishingCompany).GroupBy(item => item.PublishingCompany).ToList();
         }
-
     }
 }
