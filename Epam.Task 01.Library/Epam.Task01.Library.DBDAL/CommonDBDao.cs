@@ -14,8 +14,11 @@ namespace Epam.Task01.Library.DBDAL
 {
     public class CommonDBDao : ICommonDao
     {
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-
+        private static readonly string ConnectionString;
+        static CommonDBDao()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+        }
         public bool DeleteLibraryItemById(int id)
         {
             using (var connection = new SqlConnection(ConnectionString))

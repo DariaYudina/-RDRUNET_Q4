@@ -14,8 +14,11 @@ namespace Epam.Task01.Library.DBDAL
 {
     public class PatentDBDao : IPatentDao
     {
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-
+        private static readonly string ConnectionString;
+        static PatentDBDao()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+        }
         public int AddPatent(Patent item)
         {
             using (var connection = new SqlConnection(ConnectionString))

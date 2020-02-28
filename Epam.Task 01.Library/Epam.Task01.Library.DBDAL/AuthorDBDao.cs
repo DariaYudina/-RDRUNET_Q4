@@ -12,8 +12,11 @@ namespace Epam.Task01.Library.DBDAL
 {
     public class AuthorDBDao
     {
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-
+        private static readonly string ConnectionString;
+        static AuthorDBDao()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+        }
         public void AddAuthor(Author author)
         {
             using (var connection = new SqlConnection(ConnectionString))

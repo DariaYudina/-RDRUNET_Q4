@@ -14,8 +14,11 @@ namespace Epam.Task01.Library.DBDAL
 {
     public class BookDBDao : IBookDao
     {
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-
+        private static readonly string ConnectionString;
+       static BookDBDao()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+        }
         public int AddBook(Book item)
         {
             using (var connection = new SqlConnection(ConnectionString))

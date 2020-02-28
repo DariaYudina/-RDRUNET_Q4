@@ -14,8 +14,11 @@ namespace Epam.Task01.Library.DBDAL
 {
     public class IssueDBDao : IIssueDao
     {
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-
+        private static readonly string ConnectionString;
+        static IssueDBDao()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+        }
         public int AddIssue(Issue issue)
         {
             using (var connection = new SqlConnection(ConnectionString))

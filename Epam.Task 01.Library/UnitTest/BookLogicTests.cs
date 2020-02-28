@@ -197,41 +197,41 @@ namespace UnitTest
         //}
 
         
-        [TestMethod]
-        public void GetBooksByPublishingCompany_FoundedInDaoByPublishingCompany_ReturnIGroupingBooks()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void GetBooksByPublishingCompany_FoundedInDaoByPublishingCompany_ReturnIGroupingBooks()
+        //{
+        //    // Arrange
 
-            List<IGrouping<string, Book>> books = new List<IGrouping<string, Book>>();
+        //    List<IGrouping<string, Book>> books = new List<IGrouping<string, Book>>();
            
-            _bookDaoMock.Setup(b => b.GetBooksByPublishingCompany(It.IsAny<string>())).Returns(books);
+        //    _bookDaoMock.Setup(b => b.GetBooksByPublishingCompany(It.IsAny<string>())).Returns(books);
 
-            // Act
+        //    // Act
 
-            IEnumerable<IGrouping<string, Book>> result = _bookLogic.GetBooksByPublishingCompany( "foundedCompany" );
+        //    IEnumerable<IGrouping<string, Book>> result = _bookLogic.GetBooksByPublishingCompany( "foundedCompany" );
 
-            //Assert
+        //    //Assert
 
-            Assert.AreEqual(books, result);
-        }
+        //    Assert.AreEqual(books, result);
+        //}
 
-        [TestMethod]
-        public void GetBooksByPublishingCompany_NotFoundedInDaoByPublishingCompany_ReturnEmptyIgroupingBooks()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void GetBooksByPublishingCompany_NotFoundedInDaoByPublishingCompany_ReturnEmptyIgroupingBooks()
+        //{
+        //    // Arrange
 
-            List<IGrouping<string, Book>> books = null;
+        //    List<IGrouping<string, Book>> books = null;
 
-            _bookDaoMock.Setup(b => b.GetBooksByPublishingCompany(It.IsAny<string>())).Returns(books);
+        //    _bookDaoMock.Setup(b => b.GetBooksByPublishingCompany(It.IsAny<string>())).Returns(books);
 
-            // Act
+        //    // Act
 
-            IEnumerable<IGrouping<string, Book>> result = _bookLogic.GetBooksByPublishingCompany("NotFoundedCompany");
+        //    IEnumerable<IGrouping<string, Book>> result = _bookLogic.GetBooksByPublishingCompany("NotFoundedCompany");
 
-            //Assert
+        //    //Assert
 
-            Assert.AreEqual(books, result);
-        }
+        //    Assert.AreEqual(books, result);
+        //}
 
     }
 }

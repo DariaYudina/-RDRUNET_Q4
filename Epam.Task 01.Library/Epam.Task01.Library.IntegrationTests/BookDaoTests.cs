@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Configuration;
 
 namespace Epam.Task01.Library.IntegrationTests
 {
@@ -27,27 +28,26 @@ namespace Epam.Task01.Library.IntegrationTests
             _commonDao = new CommonDBDao();
 
              Book defaultBookItem = new Book
-            ( id: 1,
-              authors: new List<Author>() { new Author("", "") },
-              city: "",
-              publishingCompany: "",
-              yearOfPublishing: 0,
-              isbn: "",
-              title: "",
-              pagesCount: 0,
-              commentary: ""
+            ( 
+              authors: new List<Author>() {},
+              city: "Test1",
+              publishingCompany: "Test1",
+              yearOfPublishing: 2020,
+              isbn: "ISBN ‎978-3-16-148410-0",
+              title: "Test",
+              pagesCount: 100,
+              commentary: "Test1"
             );
 
             _defaultBookItem = defaultBookItem;
             scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         }
 
-        [TestCleanup]
-        public void TestCleanup()
+        [TestCleanup()]
+        public void Cleanup()
         {
             scope.Dispose();
         }
-
         [TestMethod]
         public void AddBook_AddingValidItem_Successfully()
         {
@@ -63,6 +63,7 @@ namespace Epam.Task01.Library.IntegrationTests
 
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
             _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
+            
         }
 
         [TestMethod]
@@ -93,30 +94,30 @@ namespace Epam.Task01.Library.IntegrationTests
             Assert.IsNull(item);
         }
 
-        [TestMethod]
-        public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnIGroupingItems()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnIGroupingItems()
+        //{
+        //    // Arrange
 
-            _bookDao.AddBook(_defaultBookItem);
-            string foundCompany = _defaultBookItem.PublishingCompany;
-            bool actualResult = false;
+        //    _bookDao.AddBook(_defaultBookItem);
+        //    string foundCompany = _defaultBookItem.PublishingCompany;
+        //    bool actualResult = false;
 
-            // Act
+        //    // Act
 
-            var result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
-            foreach (var item in result)
-            {
-                foreach (var i in item)
-                {
-                    actualResult |= i.PublishingCompany == _defaultBookItem.PublishingCompany;
-                }
-            }
+        //    var result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
+        //    foreach (var item in result)
+        //    {
+        //        foreach (var i in item)
+        //        {
+        //            actualResult |= i.PublishingCompany == _defaultBookItem.PublishingCompany;
+        //        }
+        //    }
 
-            //Assert
-            Assert.IsTrue(actualResult);
-            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-        }
+        //    //Assert
+        //    Assert.IsTrue(actualResult);
+        //    _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
+        //}
 
         [TestMethod]
         public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnEmptyIGroupingItems()

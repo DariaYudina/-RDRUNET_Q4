@@ -159,24 +159,24 @@ namespace UnitTest
         //    Assert.AreEqual(items, result);
         //}
 
-        [TestMethod]
-        public void GetBooksAndPatentsByAuthor__AuthorsFounded_ReturnFoundedItems()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void GetBooksAndPatentsByAuthor__AuthorsFounded_ReturnFoundedItems()
+        //{
+        //    // Arrange
 
-            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem};
-            int authorId = 1;
+        //    List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem};
+        //    int authorId = 1;
 
-            _commonDaoMock.Setup(b => b.GetBookAndPatentByAuthorId(authorId)).Returns(founded);
+        //    _commonDaoMock.Setup(b => b.GetBookAndPatentByAuthorId(authorId)).Returns(founded);
 
-            // Act
+        //    // Act
 
-            var result = _commonLogic.GetBooksAndPatentsByAuthor(author);
+        //    var result = _commonLogic.GetBooksAndPatentsByAuthor(author);
 
-            //Assert
+        //    //Assert
 
-            Assert.AreEqual(founded.Count, result.Count());
-        }
+        //    Assert.AreEqual(founded.Count, result.Count());
+        //}
 
         [TestMethod]
         public void GetBooksAndPatentsByAuthor__AuthorsNotFounded_ReturnFoundedItems1()

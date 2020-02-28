@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ namespace UnitTest
     public class IssueLogicTests
     {
         private Issue _defaultNewspaperItem;
-
         private IssueLogic _newspaperLogic;
         private Mock<IIssueDao> _newspaperDaoMock;
         private Mock<IIssueValidation> _newspaperValidationMock;

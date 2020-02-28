@@ -13,8 +13,11 @@ namespace Epam.Task01.Library.DBDAL
 {
     public class NewspaperDBDao : INewspaperDao
     {
-        private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
-
+        private static readonly string ConnectionString;
+        static NewspaperDBDao()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+        }
         public int AddNewspaper(Newspaper newspaper)
         {
             using (var connection = new SqlConnection(ConnectionString))
