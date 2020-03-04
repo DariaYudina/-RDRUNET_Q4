@@ -1,4 +1,5 @@
 ﻿using AbstractValidation;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace CollectionValidation
 {
     public class PatentValidation : IPatentValidation
     {
-        public List<ValidationObject> ValidationResult { get; set; }
+        public ValidationObject ValidationObject { get; set; }
 
         public bool IsValid { get; set; } = true;
 
@@ -21,138 +22,93 @@ namespace CollectionValidation
 
         public PatentValidation(ICommonValidation commonValidation)
         {
-            ValidationResult = new List<ValidationObject>();
+            ValidationObject = new ValidationObject();
             CommonValidation = commonValidation;
+        }
+
+        private void VerificationMethod<T>(Predicate<T> predicateMethod, T checkedValue, string paramsName, string errormassage = "is not valid")
+        {
+            if (checkedValue != null)
+            {
+                if (predicateMethod(checkedValue))
+                {
+                    ValidationException e = new ValidationException($"{paramsName} {errormassage}", paramsName);
+                    ValidationObject.ValidationExceptions.Add(e);
+                }
+            }
+            else
+            {
+                ValidationException e = new ValidationException($"{paramsName} must bu not null or empty", paramsName);
+                ValidationObject.ValidationExceptions.Add(e);
+            }
         }
 
         public IPatentValidation CheckApplicationDate(Patent patent)
         {
-            if (patent.ApplicationDate != null)
-            {
-                var data = (DateTime)patent.ApplicationDate;
-                bool notvalid = !CommonValidation.CheckNumericalInRange(data.Year, BottomLineYear, null) || patent.ApplicationDate > DateTime.Now;
-                IsValid &= !notvalid;
-                if (notvalid)       // ты можешь сама глядя на свой код сказать, что тут будет?
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("ApplicationDate must be more than 1474 and less than current year", "ApplicationDate");
-                        ValidationResult.Add(e);
-                    }
-                }
-            }
-
+            if (patent.ApplicationDate == null) return this;
+            VerificationMethod(i => i.Year > BottomLineYear || i > DateTime.Now,
+                (DateTime)patent?.ApplicationDate,
+                nameof(patent.ApplicationDate),
+                " must be more than 1474 and less than current year");
             return this;
         }
 
         public IPatentValidation CheckCountry(Patent patent)
         {
-            bool notvalid = false;
-            if (patent.Country != null)
-            {
-                notvalid = !Regex.IsMatch(patent.Country, CountryPattern);
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Country is not valid", "Country");
-                        ValidationResult.Add(e);
-                    }
-                }
-            }
-            else
-            {
-                notvalid = true;
-                ValidationObject e = new ValidationObject("Country must be not null or empty", "Country");
-                ValidationResult.Add(e);
-            }
-
-            IsValid &= !notvalid;
+            VerificationMethod(i => !Regex.IsMatch(i, CountryPattern),
+            patent.Country,
+            nameof(patent.Country));
             return this;
         }
 
         public IPatentValidation CheckPublicationDate(Patent patent)
         {
-            bool notvalid = patent.PublicationDate.Year < 1474 || patent.PublicationDate > DateTime.Now || patent.PublicationDate < patent.ApplicationDate;
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("PublicationDate must be more than 1474, less than current year and more than Application date", "PublicationDate");
-                    ValidationResult.Add(e);
-                }
-            }
-
+            VerificationMethod(
+                i => !(i.Year < 1474
+                || i > DateTime.Now
+                || i < patent.ApplicationDate),
+                patent.PublicationDate,
+                nameof(patent.PublicationDate),
+                "PublicationDate must be more than 1474, less than current year and more than Application date");
             return this;
-
         }
 
         public IPatentValidation CheckRegistrationNumber(Patent patent)
         {
-            bool notvalid = false;
-            if (patent.RegistrationNumber != null)
-            {
-                notvalid = !Regex.IsMatch(patent.RegistrationNumber, RegistrationNumberPattern);
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("RegistrationNumber is not valid", "RegistrationNumber");
-                        ValidationResult.Add(e);
-                    }
-                }
-            }
-            else
-            {
-                notvalid = true;
-                ValidationObject e = new ValidationObject("RegistrationNumber must be not null or empty", "RegistrationNumber");
-                ValidationResult.Add(e);
-            }
-
-            IsValid &= !notvalid;
+            VerificationMethod(i => !Regex.IsMatch(i, RegistrationNumberPattern),
+            patent.RegistrationNumber,
+            nameof(patent.RegistrationNumber));
             return this;
         }
 
         public IPatentValidation CheckAuthors(Patent patent)
         {
-            bool notvalid = false;
             string fullname;
             if (patent.Authors != null)
             {
                 foreach (Author item in patent.Authors)
                 {
                     fullname = item.FirstName + " " + item.LastName;
-                    if (!Regex.IsMatch(fullname, AuthorPattern))
-                    {
-                        notvalid = true;
-                        ValidationObject e = new ValidationObject("Author full name is not valid", "Author");
-                        ValidationResult.Add(e);
-                        break;
-                    }
+                    VerificationMethod(i => !Regex.IsMatch(i, AuthorPattern), fullname, nameof(item));
                 }
             }
             else
             {
-                notvalid = true;
-                ValidationObject e = new ValidationObject("Author must be not null or empty", "Author");
-                ValidationResult.Add(e);
+                ValidationException e = new ValidationException($"{nameof(patent.Authors)} must bu not null or empty", nameof(patent.Authors));
+                ValidationObject.ValidationExceptions.Add(e);
             }
 
-            IsValid &= !notvalid;
             return this;
         }
 
         public IPatentValidation CheckByCommonValidation(Patent patent)
         {
             CommonValidation.CheckTitle(patent).CheckPagesCount(patent);
-            foreach (var item in CommonValidation.ValidationResult)
+            foreach (var item in CommonValidation.ValidationObject.ValidationExceptions)
             {
-                ValidationResult.Add(item);
+                ValidationObject.ValidationExceptions.Add(item);
             }
 
-            IsValid &= CommonValidation.IsValid;
             return this;
         }
     }

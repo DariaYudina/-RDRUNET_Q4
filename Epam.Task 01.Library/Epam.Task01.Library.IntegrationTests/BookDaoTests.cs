@@ -33,7 +33,7 @@ namespace Epam.Task01.Library.IntegrationTests
               city: "Test1",
               publishingCompany: "Test1",
               yearOfPublishing: 2020,
-              isbn: "ISBN ‎978-3-16-148410-0",
+              isbn: "ISBN",
               title: "Test",
               pagesCount: 100,
               commentary: "Test1"
@@ -46,7 +46,7 @@ namespace Epam.Task01.Library.IntegrationTests
         [TestCleanup()]
         public void Cleanup()
         {
-            scope.Dispose();
+           // scope.Dispose();
         }
         [TestMethod]
         public void AddBook_AddingValidItem_Successfully()

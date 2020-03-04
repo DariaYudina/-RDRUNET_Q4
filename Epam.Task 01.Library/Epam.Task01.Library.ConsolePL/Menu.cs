@@ -1,4 +1,5 @@
 ﻿using AbstractValidation;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Common;
 using Epam.Task01.Library.Entity;
 using System;
@@ -10,7 +11,7 @@ namespace Epam.Task01.Library.ConsolePL
 {
     public class Menu
     {
-        private static List<ValidationObject> _validationResult;
+        private static ValidationObject _validationObject;
 
         private static IEnumerable<AbstractLibraryItem> _library;
 
@@ -222,7 +223,7 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddBook()
         {
             bool repeat = true;
-            _validationResult = new List<ValidationObject>();
+            _validationObject = new ValidationObject();
             var authors = new List<Author>();
             Console.WriteLine("Adding a author: ");
             Console.WriteLine("Enter author name: ");
@@ -298,10 +299,10 @@ namespace Epam.Task01.Library.ConsolePL
             string commentary = Console.ReadLine();
 
             Book book = new Book(authors, city, publishingCompany, year, isbn, title, pagecount, commentary);
-            bool validationRes = DependencyResolver.BookLogic.AddBook(_validationResult, book);
+            bool validationRes = DependencyResolver.BookLogic.AddBook(out _validationObject, book);
 
             Console.WriteLine("Result of validation: " + validationRes);
-            foreach (ValidationObject error in _validationResult)
+            foreach (ValidationException error in _validationObject.ValidationExceptions)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
@@ -311,7 +312,7 @@ namespace Epam.Task01.Library.ConsolePL
         private void AddPatent()
         {
             bool repeat = true;
-            _validationResult = new List<ValidationObject>();
+            _validationObject = new ValidationObject();
             var authors = new List<Author>();
             Console.WriteLine("Adding a author: ");
             Console.WriteLine("Enter author name: ");
@@ -395,8 +396,8 @@ namespace Epam.Task01.Library.ConsolePL
 
             string commentary = Console.ReadLine();
             Patent patent = new Patent(1, authors, counry, registrationNumber, applicationDate, publicationDate, title, pagecount, commentary);
-            bool res = DependencyResolver.PatentLogic.AddPatent(_validationResult, patent);
-            foreach (ValidationObject error in _validationResult)
+            bool res = DependencyResolver.PatentLogic.AddPatent(out _validationObject, patent);
+            foreach (ValidationException error in _validationObject.ValidationExceptions)
             {
                 Console.WriteLine(error.Property + ": " + error.Message);
             }
@@ -441,7 +442,7 @@ namespace Epam.Task01.Library.ConsolePL
 
             if (_issue != null)
             {
-                _validationResult = new List<ValidationObject>();
+                _validationObject = new ValidationObject();
                 var datexample = DateTime.Now.ToString(CultureInfo.CurrentCulture);
 
                 int yearOfPublishing;
@@ -489,9 +490,9 @@ namespace Epam.Task01.Library.ConsolePL
                 string commentary = Console.ReadLine();
 
                 Issue newspaper = new Issue(1, _issue, yearOfPublishing, countOfPublishing, dateOfPublishing, pagecount, commentary);
-                bool res = DependencyResolver.NewspaperLogic.AddIssue(_validationResult, newspaper);
+                bool res = DependencyResolver.NewspaperLogic.AddIssue(out _validationObject, newspaper);
                 Console.WriteLine(res);
-                foreach (ValidationObject error in _validationResult)
+                foreach (ValidationException error in _validationObject.ValidationExceptions)
                 {
                     Console.WriteLine(error.Property + ": " + error.Message);
                 }
@@ -504,7 +505,7 @@ namespace Epam.Task01.Library.ConsolePL
 
         private bool CteateNewIssue(out Newspaper issue)
         {
-            _validationResult = new List<ValidationObject>();
+            _validationObject = new ValidationObject();
             Console.WriteLine("Enter patent title: ");
             string title = Console.ReadLine();
             Console.WriteLine("Enter patent city: ");
@@ -514,9 +515,9 @@ namespace Epam.Task01.Library.ConsolePL
             Console.WriteLine("Enter patent issn:");
             string issn = Console.ReadLine();
             issue = new Newspaper(title, city, publishingcompany, issn);
-            if (!DependencyResolver.IssueLogic.AddNewspaper(_validationResult, issue))
+            if (!DependencyResolver.IssueLogic.AddNewspaper(out _validationObject, issue))
             {
-                foreach (ValidationObject error in _validationResult)
+                foreach (ValidationException error in _validationObject.ValidationExceptions)
                 {
                     Console.WriteLine(error.Property + ": " + error.Message);
                 }
@@ -560,16 +561,16 @@ namespace Epam.Task01.Library.ConsolePL
 
         private void SearchPatentsByAutors()
         {
-            //Console.WriteLine("Enter author name and lastname");
-            //string search = Console.ReadLine();
-            //string[] author = search.Split(' ');
-            //var res = DependencyResolver.CommonLogic.GetPatentsByAuthor(new Author(author[0], author[1]));
-            //Console.WriteLine("----------------------------------------------------------------");
-            //foreach (AbstractLibraryItem item in res)
-            //{
-            //    Console.WriteLine(item.Id + " " + item.Title);
-            //}
-            //Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("Enter author name and lastname");
+            string search = Console.ReadLine();
+            string[] author = search.Split(' ');
+            var res = DependencyResolver.PatentLogic.GetPatentsByAuthor(new Author(author[0], author[1]));
+            Console.WriteLine("----------------------------------------------------------------");
+            foreach (AbstractLibraryItem item in res)
+            {
+                Console.WriteLine(item.Id + " " + item.Title);
+            }
+            Console.WriteLine("----------------------------------------------------------------");
         }
 
         private void SearchBooksAndPatentsByAutors()

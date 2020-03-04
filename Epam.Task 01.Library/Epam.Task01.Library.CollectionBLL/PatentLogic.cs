@@ -1,5 +1,6 @@
 ﻿using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
 using System;
@@ -18,18 +19,20 @@ namespace Epam.Task01.Library.CollectionBLL
             _patentValidation = validator;
         }
 
-        public bool AddPatent(List<ValidationObject> validationResult, Patent patent)
+        public bool AddPatent(out ValidationObject validationObject, Patent patent)
         {
-            _patentValidation.ValidationResult = validationResult;
+            validationObject = _patentValidation.ValidationObject;
+
             if (patent == null)
             {
-                _patentValidation.ValidationResult.Add(new ValidationObject("Patent must be not null and not empty", "Patent"));
+                _patentValidation.ValidationObject.ValidationExceptions.Add(new ValidationException($"{nameof(patent)} must be not null and not empty", nameof(patent)));
                 return false;
             }
 
             if (patent.Authors == null || patent.Authors.Count == 0)
             {
-                _patentValidation.ValidationResult.Add(new ValidationObject("Authors list must be not null and not empty", "Authors"));  
+                _patentValidation.ValidationObject.ValidationExceptions.Add(new ValidationException($"{nameof(patent.Authors)} list must be not null and not empty", 
+                    nameof(patent.Authors)));  
                 return false;
             }
 
@@ -40,12 +43,10 @@ namespace Epam.Task01.Library.CollectionBLL
                 .CheckPublicationDate(patent)
                 .CheckAuthors(patent);
 
-            if (patentvalidationObject.IsValid)
+            if (_patentValidation.ValidationObject.IsValid)
             {
-                _patentDao.AddPatent(patent);
-                return true;
+                return _patentDao.AddPatent(patent) > 0;
             }
-
             return false;
         }
 

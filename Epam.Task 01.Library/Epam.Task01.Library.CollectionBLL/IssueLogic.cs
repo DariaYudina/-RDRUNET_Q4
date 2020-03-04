@@ -1,5 +1,6 @@
 ﻿using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
 using System;
@@ -18,19 +19,19 @@ namespace Epam.Task01.Library.CollectionBLL
             _issueValidation = validator;
         }
 
-        public bool AddIssue(List<ValidationObject> validationResult, Issue issue)
+        public bool AddIssue(out ValidationObject validationObject, Issue issue)
         {
-            _issueValidation.ValidationResult = validationResult;
+            validationObject = _issueValidation.ValidationObject;
 
             if (issue == null)
             {
-                _issueValidation.ValidationResult.Add(new ValidationObject("Issue must be not null and not empty", "Newspaper"));
+                _issueValidation.ValidationObject.ValidationExceptions.Add(new ValidationException("Issue must be not null and not empty", "Newspaper"));
                 return false;
             }
 
             if(issue.Newspaper == null)
             {
-                _issueValidation.ValidationResult.Add(new ValidationObject("Object reference not set to an instance of an object", "Issue"));
+                _issueValidation.ValidationObject.ValidationExceptions.Add(new ValidationException("Object reference not set to an instance of an object", "Issue"));
                 return false;
             }
 
@@ -41,7 +42,7 @@ namespace Epam.Task01.Library.CollectionBLL
                 .CheckYearOfPublishing(issue)
                 .CheckDateOfPublishing(issue);
 
-            if (newspapervalidationObject.IsValid)
+            if (newspapervalidationObject.ValidationObject.IsValid)
             {
                 _issueDao.AddIssue(issue);
                 return true;

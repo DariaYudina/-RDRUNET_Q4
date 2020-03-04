@@ -18,7 +18,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public static int AddLibraryItem(AbstractLibraryItem item)
         {
-            var lastid = MemoryStorage._libraryCatalog.Any() ? _libraryCatalog.Keys.Max()+1 : 1;
+            var lastid =_libraryCatalog.Any() ? _libraryCatalog.Keys.Max()+1 : 1;
             item.Id = lastid;
             _libraryCatalog.Add(item.Id, item);
             return item.Id;
@@ -29,9 +29,11 @@ namespace Epam.Task01.Library.CollectionDAL
             return _libraryCatalog.Values;
         }
 
-        public static bool GetLibraryItemById(int id, out AbstractLibraryItem result)
+        public static AbstractLibraryItem GetLibraryItemById(int id)
         {
-            return _libraryCatalog.TryGetValue(id, out result); //зачем возвращать bool если можно вернуть сущность?
+            AbstractLibraryItem result;
+            _libraryCatalog.TryGetValue(id, out result); 
+            return result;
         }
 
         public static bool DeleteLibraryItemById(int id)
@@ -51,7 +53,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public static int AddIssue(Newspaper issue)
         {
-            var lastid = MemoryStorage._newspapers.Any() ? _newspapers.Keys.Max() + 1 : 1;
+            var lastid = _newspapers.Any() ? _newspapers.Keys.Max() + 1 : 1;
             issue.Id = lastid;
             _newspapers.Add(issue.Id, issue);
             return issue.Id;

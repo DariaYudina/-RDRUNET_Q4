@@ -1,6 +1,8 @@
 ﻿using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.CollectionBLL.Validators;
 using Epam.Task01.Library.Entity;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,26 +20,25 @@ namespace Epam.Task01.Library.CollectionBLL
             _bookValidation = bookValidation;
         }
 
-        public bool AddBook(List<ValidationObject> validationResult, Book book)
+        public bool AddBook(out ValidationObject validationObject, Book book)
         {
-            _bookValidation.ValidationResult = validationResult; // для чего это?
+            validationObject = _bookValidation.ValidationObject;
 
             if (book == null)
             {
-                _bookValidation.ValidationResult.Add(new ValidationObject("Book must be not null and not empty", "Book"));
+                validationObject.ValidationExceptions.Add(new ValidationException($"{nameof(book)} must be not null and not empty", nameof(book)));
                 return false;
             }
 
-            IBookValidation bookvalidationObject = _bookValidation.CheckByCommonValidation(book)
-                                                                    .CheckBookCity(book).
-                                                                    CheckPublishingCompany(book).
-                                                                    CheckISBN(book).
-                                                                    CheckYearOfPublishing(book).
-                                                                    CheckAuthors(book);
-            if ( bookvalidationObject.IsValid)
+            IBookValidation bookvalidation = _bookValidation.CheckByCommonValidation(book)
+                                                                    .CheckBookCity(book)
+                                                                    .CheckPublishingCompany(book)
+                                                                    .CheckISBN(book)
+                                                                    .CheckYearOfPublishing(book)
+                                                                    .CheckAuthors(book);
+            if (bookvalidation.ValidationObject.IsValid)
             {
-                _bookDao.AddBook(book);
-                return true;
+                return _bookDao.AddBook(book) > 0;
             }
 
             return false;

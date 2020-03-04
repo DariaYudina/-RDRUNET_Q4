@@ -1,4 +1,5 @@
 ﻿using AbstractValidation;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace Epam.Task_01.Library.AbstactBLL
 {
     public interface IIssueLogic
     {
-        bool AddIssue(List<ValidationObject> validationResult, Issue issue);
+        bool AddIssue(out ValidationObject validationObject, Issue issue);
         IEnumerable<Issue> GetIssueItems();
     }
 }

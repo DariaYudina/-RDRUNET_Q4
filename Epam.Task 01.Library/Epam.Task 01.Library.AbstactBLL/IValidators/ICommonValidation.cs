@@ -1,4 +1,5 @@
-﻿using Epam.Task01.Library.Entity;
+﻿using Epam.Task_01.Library.AbstactBLL.IValidators;
+using Epam.Task01.Library.Entity;
 using System.Collections.Generic;
 
 // кодестайл 
@@ -7,12 +8,10 @@ namespace AbstractValidation
 {
     public interface ICommonValidation
     {
-        List<ValidationObject> ValidationResult { get; set; }
-        bool IsValid { get;  }
+        ValidationObject ValidationObject { get; set; }
         ICommonValidation CheckTitle(AbstractLibraryItem item);
         ICommonValidation CheckPagesCount(AbstractLibraryItem item);
         ICommonValidation CheckCommentary(AbstractLibraryItem item);
-        bool CheckNumericalInRange(int number, int? timberLine, int? bottomLine);
-        bool CheckStringIsNotNullorEmpty(string str);
+        bool CheckNumericalInRange(int number, int bottomline, int underline);
     }
 }

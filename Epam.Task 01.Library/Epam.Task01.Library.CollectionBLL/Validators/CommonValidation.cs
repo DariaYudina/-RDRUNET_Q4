@@ -1,5 +1,8 @@
 ﻿using AbstractValidation;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -7,127 +10,73 @@ namespace CollectionValidation
 {
     public class CommonValidation : ICommonValidation
     {
-        public List<ValidationObject> ValidationResult { get; set; }
-
-        private const int TimberlineCommentaryLength = 2000;
+        private const int UnderlineCommentaryLength = 2000;
         private const int BottomlinePagesCountLength = 0;
-        private const int TimberlineTitle = 300;
+        private const int UnderlineTitle = 300;
 
-        public bool IsValid { get; private set; } = true;
+        public ValidationObject ValidationObject { get; set; }
 
         public CommonValidation()
         {
-            ValidationResult = new List<ValidationObject>();
+             ValidationObject = new ValidationObject();
+        }
+
+        private void VerificationMethod<T>(Predicate<T> predicateMethod, T checkedValue, string paramsName, string errormassage = "is not valid")
+        {
+            if (checkedValue != null)
+            {
+                if (predicateMethod(checkedValue))
+                {
+                    ValidationException e = new ValidationException($"{paramsName} {errormassage}", paramsName);
+                    ValidationObject.ValidationExceptions.Add(e);
+                }
+            }
+            else
+            {
+                ValidationException e = new ValidationException($"{paramsName} must bu not null or empty", paramsName);
+                ValidationObject.ValidationExceptions.Add(e);
+            }
         }
 
         public ICommonValidation CheckCommentary(AbstractLibraryItem item)
         {
-            if (item.Commentary != null)
-            {
-                bool notvalid = !CheckNumericalInRange(item.Commentary.Length, TimberlineCommentaryLength, null);
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Commentary", "Commentary must be less than 2000 characters");
-                        ValidationResult.Add(e);
-                    }
-                }
-            }
-
+            VerificationMethod(i => !(i< UnderlineCommentaryLength),
+            item.Commentary?.Length,
+            nameof(item.Commentary),
+            "must be less than 2000 characters");
             return this;
         }
 
         public ICommonValidation CheckPagesCount(AbstractLibraryItem item)
         {
-            bool notvalid = !CheckNumericalInRange(item.PagesCount, null, BottomlinePagesCountLength);
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("PagesCount must be more then 0", "PagesCount");
-                    ValidationResult.Add(e);
-                }
-            }
+            VerificationMethod(i => !(i > BottomlinePagesCountLength),
+            item.PagesCount,
+            nameof(item.PagesCount),
+            "must be more then 0");
             return this;
         }
 
         public ICommonValidation CheckTitle(AbstractLibraryItem item)
         {
-            bool notvalid = false;
-            if (CheckStringIsNotNullorEmpty(item.Title))
+            if (!string.IsNullOrEmpty(item.Title))
             {
-                notvalid = !CheckNumericalInRange(item.Title.Length, TimberlineTitle, null);
+                VerificationMethod(i => !(i < UnderlineTitle),
+                item.Title?.Length,
+                nameof(item.Title),
+                "must be less than 300 characters and must be not null or empty");
             }
             else
             {
-                notvalid = true;
-                return this;
-            }
-
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("Title must be less than 300 characters and must be not null or empty", "Title");
-                    ValidationResult.Add(e);
-                }
+                ValidationException e = new ValidationException($"{nameof(item.Title)} must bu not null or empty", nameof(item.Title));
+                ValidationObject.ValidationExceptions.Add(e);
             }
 
             return this;
         }
 
-        public bool CheckStringIsNotNullorEmpty(string str)
+        public bool CheckNumericalInRange(int number, int bottomline, int underline)
         {
-            bool notvalid = string.IsNullOrWhiteSpace(str);
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("Is null or white space string", "str");
-                    ValidationResult.Add(e);
-                }
-
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool CheckNumericalInRange(int number, int? timberLine, int? bottomline )
-        {
-
-            if (bottomline == null)
-            {
-                if (number <= timberLine)
-                {
-                    return true;
-                }
-            }
-
-            if (timberLine == null)
-            {
-                if (number >= bottomline)
-                {
-                    return true;
-                }
-            }
-
-            if ( number <= timberLine && number >= bottomline)
-            {
-                return true;
-            }
-
-            if ( number >= timberLine && number <= bottomline)
-            {
-                return true;
-            }
-
-            if (timberLine == null && bottomline == null)
+            if ( number >= bottomline && number <= underline)
             {
                 return true;
             }

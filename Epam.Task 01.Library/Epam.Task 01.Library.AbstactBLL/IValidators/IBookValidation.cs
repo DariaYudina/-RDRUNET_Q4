@@ -1,13 +1,12 @@
-﻿using Epam.Task01.Library.Entity;
+﻿using Epam.Task_01.Library.AbstactBLL.IValidators;
+using Epam.Task01.Library.Entity;
 using System.Collections.Generic;
 
 namespace AbstractValidation
 {
     public interface IBookValidation
     {
-        List<ValidationObject> ValidationResult { get; set; }
-
-        bool IsValid { get; set; }
+        ValidationObject ValidationObject { get; set; }
 
         IBookValidation CheckBookCity(Book book);
 
@@ -20,7 +19,5 @@ namespace AbstractValidation
         IBookValidation CheckByCommonValidation(Book book);
 
         IBookValidation CheckAuthors(Book book);
-
-        bool CheckISBNLessThanBottomBorderISBNLength(string isbn);     // при чем тут граница леса?
     }
 }

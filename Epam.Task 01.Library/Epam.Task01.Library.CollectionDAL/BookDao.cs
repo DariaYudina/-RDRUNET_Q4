@@ -9,7 +9,12 @@ namespace Epam.Task01.Library.CollectionDAL
     {
         public int AddBook(Book item)
         {
-            return MemoryStorage.AddLibraryItem(item);
+            if (BookIsUnique(item))
+            {
+                return MemoryStorage.AddLibraryItem(item);
+            }
+
+            return -1;
         }
 
         public IEnumerable<Book> GetBookItems()
@@ -19,7 +24,7 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public Book GetBookById(int id)
         {
-            return MemoryStorage.GetLibraryItemByType<Book>().FirstOrDefault(item => item.Id == id);  // а может быть другая сущность с тем же Id?
+            return MemoryStorage.GetLibraryItemById(id) as Book;
         }
 
         public IEnumerable<Book> GetBooksByPublishingCompany(string publishingCompany)
@@ -28,42 +33,23 @@ namespace Epam.Task01.Library.CollectionDAL
                                 .Where(item => item.PublishingCompany.StartsWith(publishingCompany)).ToList();
         }
 
-        public bool CheckBookUniqueness(Book book)
+        private bool BookIsUnique(Book book)
         {
             var books = MemoryStorage.GetLibraryItemByType<Book>();
-            if (book.isbn != "" && book.isbn != null)
+            if (string.IsNullOrEmpty(book.isbn) && book.isbn != null)
             {
-                foreach (Book item in books)
-                {
-                    if (item.isbn == book.isbn) // а если нет, то ты начнешь проверять остальное?
-                    {
-                        return false;
-                    }
-                }
+                return !books.Any(i => i.isbn == book.isbn);
             }
             else
             {
-                bool res = true;
-                foreach (var item in books)
+                bool res = !books.Any( b => b.Title == book.Title && b.YearOfPublishing == book.YearOfPublishing);
+                foreach (var item in book.Authors)
                 {
-                    for (int i = 0; i < item.Authors.Count(); i++)
-                    {
-                        // есть книга с авторами { Иван Петров, Петр Иванов} добавляю книгу с авторами { Петр Иванов, Иван Петров} что получу при проверке авторов?
-                        if (item.Authors[i].FirstName == book.Authors[i].FirstName && item.Authors[i].LastName == book.Authors[i].LastName)
-                        {
-                            res &= false;   // имею книгу с автором {Иван Петров}, добавляю с авторами { Иван Петров, Петр Иванов}. Пройдет валидация на уникальность?
-                        }
-                    }
-                    if (item.Title == book.Title && item.YearOfPublishing == book.YearOfPublishing && !res)
-                    {
-                        res &= false;
-                    }
+                    res &= !(book.Authors.Any(a => a.Id == item.Id));
                 }
 
                 return res;
             }
-
-            return true;
         }
 
         public IEnumerable<Book> GetBooksByAuthor(Author author)

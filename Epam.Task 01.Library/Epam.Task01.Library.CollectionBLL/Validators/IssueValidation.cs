@@ -3,138 +3,94 @@ using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace Epam.Task01.Library.CollectionBLL.Validators
+namespace CollectionValidation
 {
-    public class IssueValidation : INewspaperValidation
+    public class IssueValidation : IIssueValidation
     {
-        public bool IsValid { get; set; } = true;
-
-        public List<ValidationObject> ValidationResult { get; set; }
+        public ValidationObject ValidationObject { get; set; }
 
         private ICommonValidation CommonValidation { get; set; }
 
-        private const int TimberLinePublishingCompany = 300;
-        private const int TimberLineTitle = 300;
+        private INewspaperValidation NewspaperValidation { get; set; }
 
-        public IssueValidation(ICommonValidation commonValidation)
+        private const int BottomLineYear = 1400;
+        private const int BottomLineCountOfPublishing = 1;
+
+        public IssueValidation(ICommonValidation commonValidation, INewspaperValidation newspaperValidation)
         {
-            ValidationResult = new List<ValidationObject>();
+            ValidationObject = new ValidationObject();
             CommonValidation = commonValidation;
+            NewspaperValidation = newspaperValidation;
         }
 
-        public INewspaperValidation CheckISSN(Newspaper issue)
+        private void VerificationMethod<T>(Predicate<T> predicateMethod, T checkedValue, string paramsName, string errormassage = "is not valid")
         {
-            if (issue.Issn != null)
+            if (checkedValue != null)
             {
-                string IssnPattern = @"^(ISSN\s\d{4}-\d{4})$";
-                bool notvalid = !Regex.IsMatch(issue.Issn, IssnPattern);
-                IsValid &= !notvalid;
-                if (notvalid)
+                if (predicateMethod(checkedValue))
                 {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Issn is not valid", "Issn");
-                        ValidationResult.Add(e);
-                    }
-                }
-            }
-            return this;
-        }
-
-        public INewspaperValidation CheckNewspaperCity(Newspaper issue)
-        {
-            string NewspaperCityPattern = @"^((([A-Z][a-z]+)(\s(([A-Z]|[a-z])[a-z]+))*(-([A-Z][a-z]+))?)|(([А-Я][а-я]+)(\s(([А-Я]|[а-я])[а-я]+))*(-([А-Я][а-я]+))?))$";
-            bool notvalid = !Regex.IsMatch(issue.City, NewspaperCityPattern);
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("NewspaperCity is not valid", "NewspaperCity");
-                    ValidationResult.Add(e);
-                }
-            }
-
-            return this;
-        }
-
-        public INewspaperValidation CheckPublishingCompany(Newspaper issue)
-        {
-            if (issue.PublishingCompany != null)
-            {
-                bool notvalid = !CommonValidation.CheckNumericalInRange(issue.PublishingCompany.Length, TimberLinePublishingCompany, null);
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("PublishingCompany must be less than 300 characters", "PublishingCompany");
-                        ValidationResult.Add(e);
-                    }
+                    ValidationException e = new ValidationException($"{paramsName} {errormassage}", paramsName);
+                    ValidationObject.ValidationExceptions.Add(e);
                 }
             }
             else
             {
-                IsValid &= false;
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("PublishingCompany must be not null or empty", "PublishingCompany");
-                    ValidationResult.Add(e);
-                }
+                ValidationException e = new ValidationException($"{paramsName} must bu not null or empty", paramsName);
+                ValidationObject.ValidationExceptions.Add(e);
+            }
+        }
+
+        public IIssueValidation CheckByCommonValidation(Issue newspaper)
+        {
+            CommonValidation.CheckPagesCount(newspaper);
+            foreach (var item in CommonValidation.ValidationObject.ValidationExceptions)
+            {
+                ValidationObject.ValidationExceptions.Add(item);
             }
 
             return this;
         }
 
-        public INewspaperValidation CheckTitle(Newspaper issue)
+        public IIssueValidation CheckByNewspaperValidation(Issue newspaper)
         {
-            if (issue.Title != null)
+            NewspaperValidation.CheckTitle(newspaper.Newspaper).CheckISSN(newspaper.Newspaper).CheckNewspaperCity(newspaper.Newspaper).CheckPublishingCompany(newspaper.Newspaper);
+            foreach (var item in NewspaperValidation.ValidationObject.ValidationExceptions)
             {
-                bool notvalid = !CommonValidation.CheckNumericalInRange(issue.Title.Length, TimberLineTitle, null) || CheckStringIsNullorEmpty(issue.Title);
-                IsValid &= !notvalid;
-                if (notvalid)
-                {
-                    if (ValidationResult != null)
-                    {
-                        ValidationObject e = new ValidationObject("Title must be less than 300 characters", "Title");
-                        ValidationResult.Add(e);
-                    }
-                }
-            }
-            else
-            {
-                IsValid &= false;
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("Title must not null or empty", "Title");
-                    ValidationResult.Add(e);
-                }
+                ValidationObject.ValidationExceptions.Add(item);
             }
 
             return this;
         }
 
-        public bool CheckStringIsNullorEmpty(string str)
+        public IIssueValidation CheckCountOfPublishing(Issue newspaper)
         {
-            bool notvalid = string.IsNullOrWhiteSpace(str);
-            IsValid &= !notvalid;
-            if (notvalid)
-            {
-                if (ValidationResult != null)
-                {
-                    ValidationObject e = new ValidationObject("Is null or white space string", "str");
-                    ValidationResult.Add(e);
-                }
+            VerificationMethod(i => !(newspaper.CountOfPublishing > BottomLineCountOfPublishing),
+                newspaper.CountOfPublishing, 
+                nameof(newspaper.CountOfPublishing),
+                "CountOfPublishing must be more than 0");
+            return this;
+        }
 
-                return true;
-            }
+        public IIssueValidation CheckDateOfPublishing(Issue newspaper)
+        {
+            VerificationMethod(i => !(newspaper.DateOfPublishing.Year >= BottomLineYear
+                || newspaper.DateOfPublishing > DateTime.Now
+                || newspaper.DateOfPublishing.Year != newspaper.YearOfPublishing),
+            newspaper.DateOfPublishing,
+            nameof(newspaper.DateOfPublishing),
+           "DateOfPublishing must be more than 1400 year, less than now date and year of DateOfPublishing must be equal Year");
+            return this;
+        }
 
-            return false;
+        public IIssueValidation CheckYearOfPublishing(Issue newspaper)
+        {
+            VerificationMethod(i => !CommonValidation.CheckNumericalInRange(newspaper.YearOfPublishing, DateTime.Now.Year, BottomLineYear),
+            newspaper.YearOfPublishing,
+            nameof(newspaper.YearOfPublishing),
+            "YearOfPublishing must be more than 1400 year and no more then year of now");
+            return this;
         }
     }
 }

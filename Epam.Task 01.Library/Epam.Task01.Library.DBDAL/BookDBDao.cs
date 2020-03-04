@@ -230,7 +230,7 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
-        public IEnumerable<Book> GetBookByAuthor(int id)
+        public IEnumerable<Book> GetBooksByAuthor(Author author)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -241,7 +241,7 @@ namespace Epam.Task01.Library.DBDAL
                 var Id = new SqlParameter
                 {
                     ParameterName = "@Id",
-                    Value = id,
+                    Value = author.Id,
                     SqlDbType = SqlDbType.Int,
                     Direction = ParameterDirection.Input
                 };
@@ -268,11 +268,6 @@ namespace Epam.Task01.Library.DBDAL
                     };
                 }
             }
-        }
-
-        public IEnumerable<Book> GetBooksByAuthor(Author author)
-        {
-            throw new NotImplementedException();
         }
     }
 }

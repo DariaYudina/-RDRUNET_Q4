@@ -22,23 +22,23 @@ namespace Epam.Task01.Library.CollectionBLL
             _newspaperValidation = newspaperValidation;
         }
 
-        public bool AddNewspaper(List<ValidationObject> validationResult, Newspaper newspaper)
+        public bool AddNewspaper(out ValidationObject validationObject, Newspaper newspaper)
         {
-            _newspaperValidation.ValidationResult = validationResult;
+            validationObject = _newspaperValidation.ValidationObject;
             if (newspaper == null)
             {
-                _newspaperValidation.ValidationResult.Add(new ValidationObject("Newspaper must be not null and not empty", "Issue"));
+                _newspaperValidation.ValidationObject.ValidationExceptions.Add(new ValidationException($"{nameof(newspaper)} must be not null and not empty", nameof(newspaper)));
                 return false;
             }
             INewspaperValidation issueValidationObject = _newspaperValidation.CheckISSN(newspaper)
                                                                          .CheckNewspaperCity(newspaper)
                                                                          .CheckPublishingCompany(newspaper)
                                                                          .CheckTitle(newspaper);
-            if (issueValidationObject.IsValid)
+            if (_newspaperValidation.ValidationObject.IsValid)
             {
-                _newspaperDao.AddNewspaper(newspaper);
-                return true;
+                return _newspaperDao.AddNewspaper(newspaper) > 0;
             }
+
             return false;
         }
 
@@ -51,6 +51,5 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _newspaperDao.GetNewspaperItems();
         }
-
     }
 }
