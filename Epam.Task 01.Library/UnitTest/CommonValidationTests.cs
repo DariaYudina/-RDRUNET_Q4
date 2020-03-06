@@ -24,15 +24,15 @@
 //        {
 //            _commonValidation = new CommonValidation();
 
-//            AbstractLibraryItem defaultAbstractLibraryItem = new Book 
-//            ( authors: new List<Author>() { new Author("", "") },
-//              city : "",
-//              publishingCompany :"",
-//              yearOfPublishing : 0,
-//              isbn : "",
-//              title : "",
-//              pagesCount : 0, 
-//              commentary : ""
+//            AbstractLibraryItem defaultAbstractLibraryItem = new Book
+//            (authors: new List<Author>() { new Author("", "") },
+//              city: "",
+//              publishingCompany: "",
+//              yearOfPublishing: 0,
+//              isbn: "",
+//              title: "",
+//              pagesCount: 0,
+//              commentary: ""
 //            );
 
 //            _defaultAbstractLibraryItem = defaultAbstractLibraryItem;
@@ -168,14 +168,14 @@
 //            // Arrange
 
 //            string commentaryText = "0123456789";
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultAbstractLibraryItem.Commentary = commentaryText;
 //            var validation = _commonValidation.CheckCommentary(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -195,20 +195,20 @@
 //                stringBuilder.Append("*");
 //            }
 //            string commentaryText = stringBuilder.ToString();
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultAbstractLibraryItem.Commentary = commentaryText;
 //            var validation = _commonValidation.CheckCommentary(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-           
+
 //        }
 
 //        [TestMethod]
@@ -217,14 +217,14 @@
 //            // Arrange
 
 //            string commentaryText = null;
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultAbstractLibraryItem.Commentary = commentaryText;
 //            var validation = _commonValidation.CheckCommentary(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -238,14 +238,14 @@
 //            // Arrange
 
 //            int pagesCount = 100;
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultAbstractLibraryItem.PagesCount = pagesCount;
 //            var validation = _commonValidation.CheckPagesCount(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -259,14 +259,14 @@
 //            // Arrange
 
 //            int pagesCount = 0;
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultAbstractLibraryItem.PagesCount = pagesCount;
 //            var validation = _commonValidation.CheckPagesCount(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -280,14 +280,14 @@
 //            // Arrange
 
 //            int pagesCount = -1;
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultAbstractLibraryItem.PagesCount = pagesCount;
 //            var validation = _commonValidation.CheckPagesCount(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -301,14 +301,14 @@
 //            // Arrange 
 
 //            string title = "0123456789";
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            //Act
 
 //            _defaultAbstractLibraryItem.Title = title;
 //            var validation = _commonValidation.CheckTitle(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -321,7 +321,7 @@
 //        {
 //            // Arrange 
 
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count + 1;
 //            int titleLength = 301;
 //            StringBuilder stringBuilder = new StringBuilder();
 //            for (int i = 0; i < titleLength; i++)
@@ -334,8 +334,8 @@
 
 //            _defaultAbstractLibraryItem.Title = titleText;
 //            var validation = _commonValidation.CheckTitle(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -349,14 +349,14 @@
 //            // Arrange 
 
 //            string title = null;
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            //Act
 
 //            _defaultAbstractLibraryItem.Title = title;
 //            var validation = _commonValidation.CheckTitle(_defaultAbstractLibraryItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -370,13 +370,13 @@
 //            // Arrange 
 
 //            string text = "test";
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            //Act
 
 //            _commonValidation.CheckStringIsNotNullorEmpty(text);
-//            bool result = _commonValidation.IsValid;
-//            int actualValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            bool result = _commonValidation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -390,13 +390,13 @@
 //            // Arrange 
 
 //            string text = null;
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            //Act
 
 //            _commonValidation.CheckStringIsNotNullorEmpty(text);
-//            bool result = _commonValidation.IsValid;
-//            int actualValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            bool result = _commonValidation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -410,13 +410,13 @@
 //            // Arrange 
 
 //            string text = "   ";
-//            int expectedValidationResuilCount = _commonValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            //Act
 
 //            _commonValidation.CheckStringIsNotNullorEmpty(text);
-//            bool result = _commonValidation.IsValid;
-//            int actualValidationResuilCount = _commonValidation.ValidationResult.Count;
+//            bool result = _commonValidation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = _commonValidation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 

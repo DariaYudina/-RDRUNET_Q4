@@ -32,7 +32,7 @@
 
 //            Issue defaultNewspaperItem = new Issue
 //            (
-//                newspaper: new Newspaper("","","",""),
+//                newspaper: new Newspaper("", "", "", ""),
 //                yearOfPublishing: 2000,
 //                countOfPublishing: 0,
 //                dateOfPublishing: DateTime.Now,
@@ -47,15 +47,15 @@
 //        public void AddNewspaper_AddingValidNewspaper_ReturnTrue()
 //        {
 //            // Arrange
-//            List<ValidationException> validationObjects = new List<ValidationException>();
+//            ValidationObject validationObjects = new ValidationObject();
 //            List<Issue> newspapers = new List<Issue>();
 
 //            _newspaperDaoMock.Setup(b => b.AddIssue(It.IsAny<Issue>()))
 //                .Callback<Issue>(n => newspapers.Add(n));
 //            _newspaperDaoMock.Setup(b => b.GetIssueItems()).Returns(newspapers);
 
-//            _newspaperValidationMock.Setup(s => s.IsValid).Returns(true);
-//            _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _newspaperValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(true);
+//            _newspaperValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 //            _newspaperValidationMock.Setup(s => s.CheckByNewspaperValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 //            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
@@ -76,13 +76,13 @@
 //        public void AddNewspaper_AddingNotValidNewspaper_ReturnFalse()
 //        {
 //            // Arrange
-//            List<ValidationException> validationObjects = new List<ValidationException>();
+//            ValidationObject validationObjects = new ValidationObject();
 //            List<Issue> newspapers = new List<Issue>();
 
 //            _newspaperDaoMock.Setup(b => b.GetIssueItems()).Returns(newspapers);
 
-//            _newspaperValidationMock.Setup(s => s.IsValid).Returns(false);
-//            _newspaperValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _newspaperValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
+//            _newspaperValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _newspaperValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 //            _newspaperValidationMock.Setup(s => s.CheckByNewspaperValidation(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);
 //            _newspaperValidationMock.Setup(s => s.CheckCountOfPublishing(It.IsAny<Issue>())).Returns(_newspaperValidationMock.Object);

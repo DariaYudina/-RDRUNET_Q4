@@ -29,25 +29,23 @@ namespace Epam.Task01.Library.CollectionBLL
                 return false;
             }
 
-            if(issue.Newspaper == null)
+            if (issue.Newspaper != null)
             {
-                _issueValidation.ValidationObject.ValidationExceptions.Add(new ValidationException("Object reference not set to an instance of an object", "Issue"));
+                IIssueValidation newspapervalidationObject = _issueValidation
+                    .CheckByCommonValidation(issue)
+                    .CheckByNewspaperValidation(issue)
+                    .CheckCountOfPublishing(issue)
+                    .CheckYearOfPublishing(issue)
+                    .CheckDateOfPublishing(issue);
+
+                if (newspapervalidationObject.ValidationObject.IsValid)
+                {
+                    return _issueDao.AddIssue(issue) > 0;
+                }
+
                 return false;
             }
-
-            IIssueValidation newspapervalidationObject = _issueValidation
-                .CheckByCommonValidation(issue)
-                .CheckByNewspaperValidation(issue)
-                .CheckCountOfPublishing(issue)
-                .CheckYearOfPublishing(issue)
-                .CheckDateOfPublishing(issue);
-
-            if (newspapervalidationObject.ValidationObject.IsValid)
-            {
-                _issueDao.AddIssue(issue);
-                return true;
-            }
-
+            _issueValidation.ValidationObject.ValidationExceptions.Add(new ValidationException("Object reference not set to an instance of an object", "Issue"));
             return false;
         }
 

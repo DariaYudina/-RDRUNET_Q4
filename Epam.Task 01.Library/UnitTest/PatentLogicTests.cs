@@ -47,15 +47,15 @@
 //        public void AddPatent_AddingValidPatent_ReturnTrue()
 //        {
 //            // Arrange
-//            List<ValidationException> validationObjects = new List<ValidationException>();
+//            ValidationObject validationObjects = new ValidationObject();
 //            List<Patent> patents = new List<Patent>();
 
 //            _patentDaoMock.Setup(b => b.AddPatent(It.IsAny<Patent>()))
 //                .Callback<Patent>(n => patents.Add(n));
 //            _patentDaoMock.Setup(b => b.GetPatentItems()).Returns(patents);
 
-//            _patentValidationMock.Setup(s => s.IsValid).Returns(true);
-//            _patentValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _patentValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(true);
+//            _patentValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _patentValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Patent>())).Returns(_patentValidationMock.Object);
 //            _patentValidationMock.Setup(s => s.CheckCountry(It.IsAny<Patent>())).Returns(_patentValidationMock.Object);
 //            _patentValidationMock.Setup(s => s.CheckRegistrationNumber(It.IsAny<Patent>())).Returns(_patentValidationMock.Object);
@@ -76,13 +76,13 @@
 //        public void AddPatent_AddingNotValidPatent_ReturnFalse()
 //        {
 //            // Arrange
-//            List<ValidationException> validationObjects = new List<ValidationException>();
+//            ValidationObject validationObjects = new ValidationObject();
 //            List<Patent> patents = new List<Patent>();
 
 //            _patentDaoMock.Setup(b => b.GetPatentItems()).Returns(patents);
 
-//            _patentValidationMock.Setup(s => s.IsValid).Returns(false);
-//            _patentValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _patentValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
+//            _patentValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _patentValidationMock.Setup(s => s.CheckByCommonValidation(It.IsAny<Patent>())).Returns(_patentValidationMock.Object);
 //            _patentValidationMock.Setup(s => s.CheckCountry(It.IsAny<Patent>())).Returns(_patentValidationMock.Object);
 //            _patentValidationMock.Setup(s => s.CheckRegistrationNumber(It.IsAny<Patent>())).Returns(_patentValidationMock.Object);

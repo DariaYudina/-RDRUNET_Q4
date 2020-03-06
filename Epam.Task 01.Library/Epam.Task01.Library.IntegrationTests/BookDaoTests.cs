@@ -94,30 +94,27 @@ namespace Epam.Task01.Library.IntegrationTests
             Assert.IsNull(item);
         }
 
-        //[TestMethod]
-        //public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnIGroupingItems()
-        //{
-        //    // Arrange
+        [TestMethod]
+        public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnIGroupingItems()
+        {
+            // Arrange
 
-        //    _bookDao.AddBook(_defaultBookItem);
-        //    string foundCompany = _defaultBookItem.PublishingCompany;
-        //    bool actualResult = false;
+            _bookDao.AddBook(_defaultBookItem);
+            string foundCompany = _defaultBookItem.PublishingCompany;
+            bool actualResult = false;
 
-        //    // Act
+            // Act
 
-        //    var result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
-        //    foreach (var item in result)
-        //    {
-        //        foreach (var i in item)
-        //        {
-        //            actualResult |= i.PublishingCompany == _defaultBookItem.PublishingCompany;
-        //        }
-        //    }
+            var result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
+            foreach (var item in result)
+            {
+                actualResult |= item.PublishingCompany == _defaultBookItem.PublishingCompany;
+            }
 
-        //    //Assert
-        //    Assert.IsTrue(actualResult);
-        //    _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-        //}
+            //Assert
+            Assert.IsTrue(actualResult);
+            _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
+        }
 
         [TestMethod]
         public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnEmptyIGroupingItems()

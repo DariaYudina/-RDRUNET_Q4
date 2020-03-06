@@ -49,17 +49,17 @@
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
-//            _commonValidationMock.Setup(s => s.IsValid).Returns(true);
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count;
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(true);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(_newspaperValidation.ValidationObject.ValidationExceptions);
 //            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
 
 //            // Act
 
 //            _defaultNewspaperItem.PagesCount = 10;
 //            var validation = _newspaperValidation.CheckByCommonValidation(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -72,10 +72,10 @@
 //        {
 //            // Arrange
 
-//            _commonValidationMock.Setup(s => s.IsValid).Returns(false);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
 //            List<ValidationException> validationObjects = new List<ValidationException>() { new ValidationException("", ""), new ValidationException("", "") };
 //            int expectedValidationResuilCount = validationObjects.Count;
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _commonValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
 //            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
 //            int inputlength = 301;
@@ -90,8 +90,8 @@
 //            _defaultNewspaperItem.Title = Text;
 //            _defaultNewspaperItem.PagesCount = 300;
 //            var validation = _newspaperValidation.CheckByCommonValidation(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -104,10 +104,10 @@
 //        {
 //            // Arrange
 
-//            _commonValidationMock.Setup(s => s.IsValid).Returns(false);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
 //            List<ValidationException> validationObjects = new List<ValidationException>() { new ValidationException("", ""), new ValidationException("", "") };
 //            int expectedValidationResuilCount = validationObjects.Count;
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _commonValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
 //            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultNewspaperItem)).Returns(_commonValidationMock.Object);
 
@@ -116,8 +116,8 @@
 //            _defaultNewspaperItem.Title = null;
 //            _defaultNewspaperItem.PagesCount = 300;
 //            var validation = _newspaperValidation.CheckByCommonValidation(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -130,9 +130,9 @@
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
-//            _issueValidationMock.Setup(s => s.IsValid).Returns(true);
-//            _issueValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count;
+//            _issueValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(true);
+//            _issueValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(_newspaperValidation.ValidationObject.ValidationExceptions);
 //            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
 //            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
 //            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
@@ -145,8 +145,8 @@
 //            _defaultNewspaperItem.Newspaper.City = "City";
 //            _defaultNewspaperItem.Newspaper.PublishingCompany = "PublishingCompany";
 //            var validation = _newspaperValidation.CheckByNewspaperValidation(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -159,9 +159,9 @@
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 4;
-//            _issueValidationMock.Setup(s => s.IsValid).Returns(false);
-//            _issueValidationMock.Setup(s => s.ValidationResult).Returns(_newspaperValidation.ValidationResult);
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count + 4;
+//            _issueValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
+//            _issueValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(_newspaperValidation.ValidationObject.ValidationExceptions);
 //            _issueValidationMock.Setup(s => s.CheckTitle(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
 //            _issueValidationMock.Setup(s => s.CheckISSN(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
 //            _issueValidationMock.Setup(s => s.CheckNewspaperCity(_defaultNewspaperItem.Newspaper)).Returns(_issueValidationMock.Object);
@@ -174,29 +174,29 @@
 //            _defaultNewspaperItem.Newspaper.City = "";
 //            _defaultNewspaperItem.Newspaper.PublishingCompany = "";
 //            var validation = _newspaperValidation.CheckByNewspaperValidation(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count + 4;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count + 4;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckCountOfPublishing_NotNegativeNaturalNumber_ReturnTrue()
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
 
 //            // Act
 
 //            _defaultNewspaperItem.CountOfPublishing = 1;
 //            var validation = _newspaperValidation.CheckCountOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -209,15 +209,15 @@
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count + 1;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
 
 //            // Act
 
 //            _defaultNewspaperItem.CountOfPublishing = 0;
 //            var validation = _newspaperValidation.CheckCountOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count ;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -230,22 +230,22 @@
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count + 1;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
 
 //            // Act
 
 //            _defaultNewspaperItem.CountOfPublishing = -2;
 //            var validation = _newspaperValidation.CheckCountOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckDateOfPublishing_DateOfPublishingYearEqualYear_ReturnTrue()
 //        {
@@ -253,14 +253,14 @@
 
 //            _defaultNewspaperItem.DateOfPublishing = new DateTime(2000, 1, 1);
 //            _defaultNewspaperItem.YearOfPublishing = _defaultNewspaperItem.DateOfPublishing.Year;
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
 
 //            // Act
 
 //            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -275,14 +275,14 @@
 
 //            _defaultNewspaperItem.DateOfPublishing = new DateTime(2000, 1, 1);
 //            _defaultNewspaperItem.YearOfPublishing = _defaultNewspaperItem.DateOfPublishing.Year + 1;
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count + 1;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
 
 //            // Act
 
 //            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -296,14 +296,14 @@
 //            // Arrange
 
 //            _defaultNewspaperItem.YearOfPublishing = DateTime.Now.Year;
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
 
 //            // Act
 
 //            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -317,14 +317,14 @@
 //            // Arrange
 
 //            _defaultNewspaperItem.YearOfPublishing = 1399;
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count + 1;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
 
 //            // Act
 
 //            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -338,14 +338,14 @@
 //            // Arrange
 
 //            _defaultNewspaperItem.YearOfPublishing = DateTime.Now.Year + 1;
-//            int expectedValidationResuilCount = _newspaperValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _newspaperValidation.ValidationObject.ValidationExceptions.Count + 1;
 //            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
 
 //            // Act
 
 //            var validation = _newspaperValidation.CheckDateOfPublishing(_defaultNewspaperItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 

@@ -44,266 +44,266 @@
 //            // Arrange
 
 //            string city = "Саратов";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count; // и сколько ты ожидаешь получить?
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count; // и сколько ты ожидаешь получить?
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEng_ReturnTrue()
 //        {
 //            // Arrange
 
 //            string city = "Saratov";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnRusWithHyphen_ReturnTrue()
 //        {
 //            // Arrange
 
 //            string city = "Ростов-Ростов";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEngWithHyphen_ReturnTrue()
 //        {
 //            // Arrange
 
 //            string city = "Rostov-Rostov";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnRusWithTwoHyphen_ReturnTrue()
 //        {
 //            // Arrange
 
 //            string city = "Ростов-на-Дону";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEngWithTwoHyphens_ReturnTrue()
 //        {
 //            // Arrange
 
 //            string city = "Rostov-na-Donu";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnRusWithWhiteSpaces_ReturnTrue()
 //        {
 //            // Arrange
 
 //            string city = "Ростов на Дону";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithUpperCaseLetterLengthLessWhen200OnEngWithWhiteSpaces_ReturnTrue()
 //        {
 //            // Arrange
 
 //            string city = "Rostov na Donu";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithULowerCaseLetterLengthLessWhen200OnEng_ReturnFalse()
 //        {
 //            // Arrange
 
 //            string city = "city";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1 ;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithULowerCaseLetterLengtManyWordshLessWhen200OnEng_ReturnFalse()
 //        {
 //            // Arrange
 
 //            string city = "city city";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityStartWithEngAndRusWordsLessWhen200OnEng_ReturnFalse()
 //        {
 //            // Arrange
 
 //            string city = "Рус Eng";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityWithManyHyphensLessWhen200OnEng_ReturnFalse()
 //        {
 //            // Arrange
 
 //            string city = "Test-test-test-Test";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckBookCity_CityWithManyHyphensLessWhen200OnRus_ReturnFalse()
 //        {
 //            // Arrange
 
 //            string city = "Тест-тест-тест-Тест";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.City = city;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -317,13 +317,13 @@
 //            // Arrange
 
 //            _defaultBookItem.City = null;
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            var validation = _bookValidation.CheckPublishingCompany(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -343,35 +343,35 @@
 //                stringBuilder.Append("*");
 //            }
 //            string commentaryText = stringBuilder.ToString();
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.Commentary = commentaryText;
 //            var validation = _bookValidation.CheckBookCity(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckISBN_AnyStringsStartWithISBNWhiteSpaceAndWith10Number_Returntrue()
 //        {
 //            // Arrange
 
 //            string isbn = "ISBN 0-1-1234567-3";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.isbn = isbn;
 //            var validation = _bookValidation.CheckISBN(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -385,14 +385,14 @@
 //            // Arrange
 
 //            string isbn = "ISBN 80-1-123457-3";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.isbn = isbn;
 //            var validation = _bookValidation.CheckISBN(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -406,14 +406,14 @@
 //            // Arrange
 
 //            string isbn = "ISBN 950-1-12347-3";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.isbn = isbn;
 //            var validation = _bookValidation.CheckISBN(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -427,14 +427,14 @@
 //            // Arrange
 
 //            string isbn = "ISBN 9940-1-1237-3";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.isbn = isbn;
 //            var validation = _bookValidation.CheckISBN(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -448,14 +448,14 @@
 //            // Arrange
 
 //            string isbn = "ISBN 99900-1-123-3";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.isbn = isbn;
 //            var validation = _bookValidation.CheckISBN(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -469,35 +469,35 @@
 //            // Arrange
 
 //            string isbn = "ISBN 0-1-1234567-X";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.isbn = isbn;
 //            var validation = _bookValidation.CheckISBN(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckISBN_AnyStringsStartWithISBNWhiteSpaceAndWithMoreThan10Number_ReturnFalse()
 //        {
 //            // Arrange
 
 //            string isbn = "ISBN 0-1-123456-3";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.isbn = isbn;
 //            var validation = _bookValidation.CheckISBN(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -511,15 +511,15 @@
 //            // Arrange
 
 //            string company = "Моя книга";
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 //            _commonValidationMock.Setup(m => m.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
 
 //            // Act
 
 //            _defaultBookItem.PublishingCompany = company;
 //            var validation = _bookValidation.CheckPublishingCompany(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -538,13 +538,13 @@
 //                stringBuilder.Append("*");
 //            }
 //            string text = stringBuilder.ToString();
-//            int currentValidationResultCount = _bookValidation.ValidationResult.Count;
+//            int currentValidationResultCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 //            int expectedValidationResuilCount = currentValidationResultCount + 1;
 //            // Act
 //            _defaultBookItem.PublishingCompany = text;
 //            var validation = _bookValidation.CheckPublishingCompany(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 //            //Assert
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
@@ -555,11 +555,11 @@
 //        {
 //            // Arrange
 //            _defaultBookItem.PublishingCompany = null;
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 //            // Act
 //            var validation = _bookValidation.CheckPublishingCompany(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 //            //Assert
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
@@ -571,78 +571,78 @@
 //            // Arrange
 
 //            int year = 1500;
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 //            _commonValidationMock.Setup(m => m.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
-            
+
 //            // Act
 
 //            _defaultBookItem.YearOfPublishing = year;
 //            var validation = _bookValidation.CheckYearOfPublishing(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
-            
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+
 //            //Assert
 
 //            Assert.IsTrue(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckYearOfPublishing_YearMoreLess1400_ReturnFalse()
 //        {
 //            // Arrange
 
 //            int year = 1399;
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.YearOfPublishing = year;
 //            var validation = _bookValidation.CheckYearOfPublishing(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckYearOfPublishing_YearMoreCurrentYear_ReturnFalse()
 //        {
 //            // Arrange
 
 //            int year = DateTime.Now.Year + 1;
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.YearOfPublishing = year;
 //            var validation = _bookValidation.CheckYearOfPublishing(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
 //            Assert.IsFalse(result);
 //            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
 //        }
-        
+
 //        [TestMethod]
 //        public void CheckAuthor_NameAndLasNameStartWithUpperCaseEng_ReturnTrue()
 //        {
 //            // Arrange
 
 //            Author author = new Author("Name", "Lastname");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -657,14 +657,14 @@
 //            // Arrange
 
 //            Author author = new Author("Name-Name", "Lastname");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -678,14 +678,14 @@
 //            // Arrange
 
 //            Author author = new Author("Name-Name", "Lastname-Lastname");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -699,14 +699,14 @@
 //            // Arrange
 
 //            Author author = new Author("Name-Name", "lastname Lastname");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -720,14 +720,14 @@
 //            // Arrange
 
 //            Author author = new Author("Name-Name", "lastname'Lastname");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -741,14 +741,14 @@
 //            // Arrange
 
 //            Author author = new Author("Name-Name", "Lastname'Lastname");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -762,14 +762,14 @@
 //            // Arrange
 
 //            Author author = new Author("Тест", "Тест");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -784,14 +784,14 @@
 //            // Arrange
 
 //            Author author = new Author("Тест-Тест", "Тест");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -805,14 +805,14 @@
 //            // Arrange
 
 //            Author author = new Author("Тест-Тест", "Тест-Тест");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -826,14 +826,14 @@
 //            // Arrange
 
 //            Author author = new Author("Тест-Тест", "тест Тест");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -847,14 +847,14 @@
 //            // Arrange
 
 //            Author author = new Author("Тест-Тест", "тест'Тест");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -868,14 +868,14 @@
 //            // Arrange
 
 //            Author author = new Author("Тест-Тест", "Тест'Тест");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -889,14 +889,14 @@
 //            // Arrange
 
 //            Author author = new Author("name", "name");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count+1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -910,14 +910,14 @@
 //            // Arrange
 
 //            Author author = new Author("-Name-", "-Lame-");
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.Authors[0] = author;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -930,14 +930,14 @@
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count + 1;
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count + 1;
 
 //            // Act
 
 //            _defaultBookItem.Authors = null;
 //            var validation = _bookValidation.CheckAuthors(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -950,9 +950,9 @@
 //        {
 //            // Arrange
 
-//            int expectedValidationResuilCount = _bookValidation.ValidationResult.Count;
-//            _commonValidationMock.Setup(s => s.IsValid).Returns(true);
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(_bookValidation.ValidationResult);
+//            int expectedValidationResuilCount = _bookValidation.ValidationObject.ValidationExceptions.Count;
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(true);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(_bookValidation.ValidationObject.ValidationExceptions);
 //            _commonValidationMock.Setup(s => s.CheckTitle(_defaultBookItem)).Returns(_commonValidationMock.Object);
 //            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultBookItem)).Returns(_commonValidationMock.Object);
 
@@ -961,8 +961,8 @@
 //            _defaultBookItem.Title = "Validtitle";
 //            _defaultBookItem.PagesCount = 10;
 //            var validation = _bookValidation.CheckByCommonValidation(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -975,10 +975,10 @@
 //        {
 //            // Arrange
 
-//            _commonValidationMock.Setup(s => s.IsValid).Returns(false);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
 //            List<ValidationException> validationObjects = new List<ValidationException>() { new ValidationException("", ""), new ValidationException("", "") };
 //            int expectedValidationResuilCount = validationObjects.Count;
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _commonValidationMock.Setup(s => s.CheckTitle(_defaultBookItem)).Returns(_commonValidationMock.Object);
 //            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultBookItem)).Returns(_commonValidationMock.Object);
 //            int inputlength = 301;
@@ -993,8 +993,8 @@
 //            _defaultBookItem.Title = Text;
 //            _defaultBookItem.PagesCount = 300;
 //            var validation = _bookValidation.CheckByCommonValidation(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
@@ -1007,10 +1007,10 @@
 //        {
 //            // Arrange
 
-//            _commonValidationMock.Setup(s => s.IsValid).Returns(false);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
 //            List<ValidationException> validationObjects = new List<ValidationException>() { new ValidationException("", ""), new ValidationException("", "") };
 //            int expectedValidationResuilCount = validationObjects.Count;
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
+//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationExceptions).Returns(validationObjects);
 //            _commonValidationMock.Setup(s => s.CheckTitle(_defaultBookItem)).Returns(_commonValidationMock.Object);
 //            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultBookItem)).Returns(_commonValidationMock.Object);
 
@@ -1019,8 +1019,8 @@
 //            _defaultBookItem.Title = null;
 //            _defaultBookItem.PagesCount = 300;
 //            var validation = _bookValidation.CheckByCommonValidation(_defaultBookItem);
-//            bool result = validation.IsValid;
-//            int actualValidationResuilCount = validation.ValidationResult.Count;
+//            bool result = validation.ValidationObject.ValidationObject.IsValid;
+//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
 //            //Assert
 
