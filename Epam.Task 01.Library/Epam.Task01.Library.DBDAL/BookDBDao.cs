@@ -19,6 +19,7 @@ namespace Epam.Task01.Library.DBDAL
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
         }
+
         public int AddBook(Book item)
         {
             using (var connection = new SqlConnection(ConnectionString))

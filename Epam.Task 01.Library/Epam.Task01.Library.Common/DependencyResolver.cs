@@ -7,6 +7,7 @@ using Epam.Task01.Library.CollectionBLL;
 using Epam.Task01.Library.CollectionBLL.Validators;
 using Epam.Task01.Library.CollectionDAL;
 using Epam.Task01.Library.DBDAL;
+using Epam.Task01.Library.MVC_PL.Controllers;
 
 namespace Epam.Task01.Library.Common
 {
@@ -34,13 +35,13 @@ namespace Epam.Task01.Library.Common
 
         public static IIssueDao NewspaperDao { get; }
 
-        public static AbstractValidation.IIssueValidation NewspaperValidation => new CollectionValidation.IssueValidation(CommonValidation, IssueValidation);
+        public static IIssueValidation NewspaperValidation => new IssueValidation(CommonValidation, IssueValidation);
 
         public static INewspaperLogic IssueLogic => new NewspaperLogic(IssueDao, IssueValidation);
 
         public static INewspaperDao IssueDao { get; }
 
-        public static Task_01.Library.AbstactBLL.IValidators.INewspaperValidation IssueValidation => new CollectionBLL.Validators.NewspaperValidation(CommonValidation);
+        public static INewspaperValidation IssueValidation => new NewspaperValidation(CommonValidation);
 
         static DependencyResolver()
         {

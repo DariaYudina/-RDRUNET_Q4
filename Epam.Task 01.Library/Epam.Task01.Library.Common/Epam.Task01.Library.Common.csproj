@@ -79,6 +79,10 @@
       <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
       <Name>Epam.Task01.Library.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.MVC_PL\Epam.Task01.Library.MVC_PL.csproj">
+      <Project>{6102FF6E-3F55-4DBF-BAD5-49C49B0C60A9}</Project>
+      <Name>Epam.Task01.Library.MVC_PL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
