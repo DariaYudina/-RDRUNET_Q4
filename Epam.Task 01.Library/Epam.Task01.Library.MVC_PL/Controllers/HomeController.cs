@@ -14,8 +14,11 @@ namespace Epam.Task01.Library.MVC_PL.Controllers
 {
     public class HomeController : Controller
     {
-        private IBookLogic _bookLogic = new BookLogic(new BookDBDao(), new BookValidation(new CommonValidation()));
-        
+        private IBookLogic _bookLogic;
+        public HomeController(IBookLogic bookLogic)
+        {
+            _bookLogic = bookLogic;
+        }
         public ActionResult Index()
         {
             var model = _bookLogic.GetBookItems().Select( book => new DisplayBookModel() { Title = book.Title, City = book.City,

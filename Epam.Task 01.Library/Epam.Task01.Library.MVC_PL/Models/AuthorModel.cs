@@ -12,6 +12,5 @@ namespace Epam.Task01.Library.MVC_PL.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
     }
 }

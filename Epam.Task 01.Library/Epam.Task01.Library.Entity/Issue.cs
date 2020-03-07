@@ -32,7 +32,6 @@ namespace Epam.Task01.Library.Entity
                      DateTime dateOfPublishing, int pageCount, string commentary)
                         : base(id, newspaper.Title, pageCount, commentary, yearOfPublishing)
         {
-
             base.YearOfPublishing = yearOfPublishing;
             CountOfPublishing = countOfPublishing;
             DateOfPublishing = dateOfPublishing;
