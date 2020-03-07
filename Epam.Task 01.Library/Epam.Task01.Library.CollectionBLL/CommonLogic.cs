@@ -52,6 +52,5 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             return _commonDao.GetLibraryItemsByYearOfPublishing().GroupBy(i => i.YearOfPublishing);
         }
-
     }
 }

@@ -68,7 +68,7 @@
       <Name>Epam.Task01.Library.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.DAL.csproj">
-      <Project>{AD260801-E40C-4C6A-8B6A-B32E36C8904D}</Project>
+      <Project>{ad260801-e40c-4c6a-8b6a-b32e36c8904d}</Project>
       <Name>Epam.Task01.Library.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.DBDAL\Epam.Task01.Library.DBDAL.csproj">

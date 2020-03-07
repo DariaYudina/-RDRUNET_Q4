@@ -69,24 +69,16 @@
       <Project>{6de33863-b649-4215-8159-8b1361cb7d5c}</Project>
       <Name>Epam.Task 01.Library.IBLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.IDAL.csproj">
-      <Project>{AF2897BC-B0CF-4120-AF17-54DED2874D53}</Project>
-      <Name>Epam.Task01.Library.IDAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.CollectionBLL\Epam.Task01.Library.BLL.csproj">
-      <Project>{3006573F-D1AF-4FE6-8A27-700C128EA042}</Project>
+      <Project>{3006573f-d1af-4fe6-8a27-700c128ea042}</Project>
       <Name>Epam.Task01.Library.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.DAL.csproj">
-      <Project>{AD260801-E40C-4C6A-8B6A-B32E36C8904D}</Project>
-      <Name>Epam.Task01.Library.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.Common\Epam.Task01.Library.Common.csproj">
-      <Project>{EAABACBE-1B13-457C-B906-DE032155A2CD}</Project>
+      <Project>{eaabacbe-1b13-457c-b906-de032155a2cd}</Project>
       <Name>Epam.Task01.Library.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
-      <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
+      <Project>{551a846e-3895-4155-9be2-793fe9237402}</Project>
       <Name>Epam.Task01.Library.Entities</Name>
     </ProjectReference>
   </ItemGroup>

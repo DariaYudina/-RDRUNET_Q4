@@ -124,7 +124,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -136,7 +135,6 @@
     <Compile Include="Models\NewspaperModel.cs" />
     <Compile Include="Models\PatentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\BookModels\DisplayBookModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -163,34 +161,30 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\AuthorMoels\" />
-    <Folder Include="ViewModels\IssueModels\" />
-    <Folder Include="ViewModels\NewspaperModels\" />
-    <Folder Include="ViewModels\PatentModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Epam.Task 01.Library.AbstactBLL\Epam.Task 01.Library.IBLL.csproj">
-      <Project>{6DE33863-B649-4215-8159-8B1361CB7D5C}</Project>
+      <Project>{6de33863-b649-4215-8159-8b1361cb7d5c}</Project>
       <Name>Epam.Task 01.Library.IBLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.AbstractDAL\Epam.Task01.Library.IDAL.csproj">
-      <Project>{AF2897BC-B0CF-4120-AF17-54DED2874D53}</Project>
+      <Project>{af2897bc-b0cf-4120-af17-54ded2874d53}</Project>
       <Name>Epam.Task01.Library.IDAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.CollectionBLL\Epam.Task01.Library.BLL.csproj">
-      <Project>{3006573F-D1AF-4FE6-8A27-700C128EA042}</Project>
+      <Project>{3006573f-d1af-4fe6-8a27-700c128ea042}</Project>
       <Name>Epam.Task01.Library.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.DAL.csproj">
-      <Project>{AD260801-E40C-4C6A-8B6A-B32E36C8904D}</Project>
+      <Project>{ad260801-e40c-4c6a-8b6a-b32e36c8904d}</Project>
       <Name>Epam.Task01.Library.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.DBDAL\Epam.Task01.Library.DBDAL.csproj">
-      <Project>{D35770BF-636F-47B4-B664-FDB95742FD14}</Project>
+      <Project>{d35770bf-636f-47b4-b664-fdb95742fd14}</Project>
       <Name>Epam.Task01.Library.DBDAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
-      <Project>{551A846E-3895-4155-9BE2-793FE9237402}</Project>
+      <Project>{551a846e-3895-4155-9be2-793fe9237402}</Project>
       <Name>Epam.Task01.Library.Entities</Name>
     </ProjectReference>
   </ItemGroup>
