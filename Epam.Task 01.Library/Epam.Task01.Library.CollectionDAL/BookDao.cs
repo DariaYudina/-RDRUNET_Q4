@@ -1,7 +1,8 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.DBDAL;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
@@ -17,7 +18,7 @@ namespace Epam.Task01.Library.CollectionDAL
             return -1;
         }
 
-        public IEnumerable<Book> GetBookItems()
+        public IEnumerable<Book> GetBooks()
         {
             return MemoryStorage.GetLibraryItemByType<Book>();
         }
@@ -33,17 +34,22 @@ namespace Epam.Task01.Library.CollectionDAL
                                 .Where(item => item.PublishingCompany.StartsWith(publishingCompany)).ToList();
         }
 
+        public IEnumerable<Book> GetBooksByAuthor(Author author)
+        {
+            return MemoryStorage.GetAllAbstractLibraryItems().OfType<Book>().Where(p => p.Authors.Any(item => item.Id == author.Id));
+        }
+
         private bool BookIsUnique(Book book)
         {
-            var books = MemoryStorage.GetLibraryItemByType<Book>();
-            if (string.IsNullOrEmpty(book.isbn) && book.isbn != null)
+            IEnumerable<Book> books = MemoryStorage.GetLibraryItemByType<Book>();
+            if (string.IsNullOrEmpty(book.Isbn) && book.Isbn != null)
             {
-                return !books.Any(i => i.isbn == book.isbn);
+                return !books.Any(i => i.Isbn == book.Isbn);
             }
             else
             {
-                bool res = !books.Any( b => b.Title == book.Title && b.YearOfPublishing == book.YearOfPublishing);
-                foreach (var item in book.Authors)
+                bool res = !books.Any(b => b.Title == book.Title && b.YearOfPublishing == book.YearOfPublishing);
+                foreach (Author item in book.Authors)
                 {
                     res &= !(book.Authors.Any(a => a.Id == item.Id));
                 }
@@ -51,11 +57,5 @@ namespace Epam.Task01.Library.CollectionDAL
                 return res;
             }
         }
-
-        public IEnumerable<Book> GetBooksByAuthor(Author author)
-        {
-            return MemoryStorage.GetAllAbstractLibraryItems().OfType<Book>().Where(p => p.Authors.Any(item => item.Id == author.Id));
-        }
-
     }
 }

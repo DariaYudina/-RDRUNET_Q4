@@ -52,16 +52,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IAuthorLogic.cs" />
     <Compile Include="IBookLogic.cs" />
     <Compile Include="ICommonLogic.cs" />
     <Compile Include="INewspaperLogic.cs" />
     <Compile Include="IIssueLogic.cs" />
     <Compile Include="IPatentLogic.cs" />
+    <Compile Include="IUserLogic.cs" />
+    <Compile Include="IValidators\IAuthorValidation.cs" />
     <Compile Include="IValidators\IBookValidation.cs" />
     <Compile Include="IValidators\ICommonValidation.cs" />
     <Compile Include="IValidators\IIssueValidation.cs" />
     <Compile Include="IValidators\INewspaperValidation.cs" />
     <Compile Include="IValidators\IPatentValidation.cs" />
+    <Compile Include="IValidators\IUserValidation.cs" />
     <Compile Include="IValidators\ValidationException.cs" />
     <Compile Include="IValidators\ValidationObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -51,11 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAuthorDao.cs" />
     <Compile Include="IBookDao.cs" />
     <Compile Include="ICommonDao.cs" />
-    <Compile Include="INewspaperDao.cs" />
     <Compile Include="IIssueDao.cs" />
+    <Compile Include="ILoggerDao.cs" />
+    <Compile Include="INewspaperDao.cs" />
     <Compile Include="IPatentDao.cs" />
+    <Compile Include="IUserDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

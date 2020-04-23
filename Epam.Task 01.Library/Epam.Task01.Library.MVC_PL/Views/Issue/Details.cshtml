@@ -1,0 +1,92 @@
+﻿@model DisplayIssueModel
+
+@{
+    ViewBag.Title = "Issue Details";
+}
+
+<h2>@ViewBag.Title </h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Newspaper.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Newspaper.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PagesCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PagesCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Commentary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Commentary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YearOfPublishing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearOfPublishing)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Newspaper.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Newspaper.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Newspaper.Issn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Newspaper.Issn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Newspaper.PublishingCompany)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Newspaper.PublishingCompany)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountOfPublishing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountOfPublishing)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfPublishing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfPublishing)
+        </dd>
+    </dl>
+</div>
+<div>
+    <p>@Html.Action("GetIssuesByNewspaper", "Issue", new { newspaperId = Model.Newspaper.Id, currentIssueId = Model.Id })</p>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index", "Home", null, null)
+</p>

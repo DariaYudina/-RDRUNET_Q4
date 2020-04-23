@@ -1,10 +1,10 @@
-﻿using AbstractValidation;
+﻿using System;
+using System.Collections.Generic;
+using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
-using System;
-using System.Collections.Generic;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
@@ -21,37 +21,88 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public bool AddIssue(out ValidationObject validationObject, Issue issue)
         {
-            validationObject = _issueValidation.ValidationObject;
-
-            if (issue == null)
+            try
             {
-                _issueValidation.ValidationObject.ValidationExceptions.Add(new ValidationException("Issue must be not null and not empty", "Newspaper"));
-                return false;
-            }
+                validationObject = _issueValidation.ValidationObject;
 
-            if (issue.Newspaper != null)
-            {
-                IIssueValidation newspapervalidationObject = _issueValidation
-                    .CheckByCommonValidation(issue)
-                    .CheckByNewspaperValidation(issue)
-                    .CheckCountOfPublishing(issue)
-                    .CheckYearOfPublishing(issue)
+                if (issue == null)
+                {
+                    _issueValidation.ValidationObject.ValidationExceptions.Add
+                        (new ValidationException($"{nameof(Issue)} must be not null and not empty", $"{nameof(Issue)}"));
+                    return false;
+                }
+
+                    _issueValidation
+                    //.CheckByCommonValidation(issue)
+                    //.CheckByNewspaperValidation(issue)
+                    //.CheckCountOfPublishing(issue)
+                    //.CheckYearOfPublishing(issue)
                     .CheckDateOfPublishing(issue);
 
-                if (newspapervalidationObject.ValidationObject.IsValid)
+                    if (_issueValidation.ValidationObject.IsValid)
+                    {
+                        return _issueDao.AddIssue(issue) > 0;
+                    }
+
+                    return false;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public bool EditIssue(out ValidationObject validationObject, Issue issue)
+        {
+            try
+            {
+                validationObject = _issueValidation.ValidationObject;
+
+                if (issue == null)
                 {
-                    return _issueDao.AddIssue(issue) > 0;
+                    _issueValidation.ValidationObject.ValidationExceptions.Add
+                        (new ValidationException($"{nameof(Issue)} must be not null and not empty", $"{nameof(Issue)}"));
+                    return false;
+                }
+
+                _issueValidation
+                .CheckDateOfPublishing(issue);
+
+                if (_issueValidation.ValidationObject.IsValid)
+                {
+                    return _issueDao.EditIssue(issue) >= 0;
                 }
 
                 return false;
             }
-            _issueValidation.ValidationObject.ValidationExceptions.Add(new ValidationException("Object reference not set to an instance of an object", "Issue"));
-            return false;
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
-        public IEnumerable<Issue> GetIssueItems()
+        public IEnumerable<Issue> GetIssues()
         {
-            return _issueDao.GetIssueItems();
+            try
+            {
+                return _issueDao.GetIssues();
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId, int currentId)
+        {
+            try
+            {
+                return _issueDao.GetIssuesByNewspaperId(newspaperId, currentId);
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
     }
 }

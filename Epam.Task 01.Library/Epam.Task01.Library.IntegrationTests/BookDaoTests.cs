@@ -1,15 +1,11 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.CollectionDAL;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Transactions;
+using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.DBDAL;
 using Epam.Task01.Library.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using System.Configuration;
 
 namespace Epam.Task01.Library.IntegrationTests
 {
@@ -20,64 +16,63 @@ namespace Epam.Task01.Library.IntegrationTests
         private IBookDao _bookDao;
         private ICommonDao _commonDao;
         private TransactionScope scope;
+        private SqlConnectionConfig sqlConnectionConfig;
 
         [TestInitialize]
         public void Initialize()
         {
-            _bookDao = new BookDBDao();
-            _commonDao = new CommonDBDao();
+            sqlConnectionConfig = new SqlConnectionConfig(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
+            _bookDao = new BookDBDao(sqlConnectionConfig);
+            _commonDao = new CommonDBDao(sqlConnectionConfig);
 
-             Book defaultBookItem = new Book
-            ( 
-              authors: new List<Author>() {},
-              city: "Test1",
-              publishingCompany: "Test1",
-              yearOfPublishing: 2020,
-              isbn: "ISBN",
-              title: "Test",
-              pagesCount: 100,
-              commentary: "Test1"
-            );
+            Book defaultBookItem = new Book
+           (
+             authors: new List<Author>() { },
+             city: "Test1",
+             publishingCompany: "Test1",
+             yearOfPublishing: 2020,
+             isbn: "ISBN",
+             title: "Test",
+             pagesCount: 100,
+             commentary: "Test1"
+           );
 
             _defaultBookItem = defaultBookItem;
             scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         }
 
-        [TestCleanup()]
+        [TestCleanup]
         public void Cleanup()
         {
-           // scope.Dispose();
+            scope.Dispose();
         }
+
         [TestMethod]
         public void AddBook_AddingValidItem_Successfully()
         {
             // Arrange
-
-            var expectedCount = _bookDao.GetBookItems().Count() + 1;
+            int expectedCount = _bookDao.GetBooks().Count() + 1;
 
             // Act
             _bookDao.AddBook(_defaultBookItem);
-            var actualValidationResuilCount = _bookDao.GetBookItems().Count();
+            int actualValidationResuilCount = _bookDao.GetBooks().Count();
 
             //Assert
-
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
             _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
-            
         }
 
         [TestMethod]
         public void GetBookById_FoundExistingId_ReturnBook()
         {
             // Arrange
-
             _bookDao.AddBook(_defaultBookItem);
             int foundId = _defaultBookItem.Id;
+
             // Act
             Book item = _bookDao.GetBookById(_defaultBookItem.Id);
 
             //Assert
-
             Assert.AreEqual(foundId, item.Id);
             _commonDao.DeleteLibraryItemById(_defaultBookItem.Id);
         }
@@ -86,11 +81,9 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetBookById_FoundNotExistingI_ReturnNull()
         {
             // Act
-
             Book item = _bookDao.GetBookById(_defaultBookItem.Id);
 
             //Assert
-
             Assert.IsNull(item);
         }
 
@@ -98,15 +91,13 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetBooksByPublishingCompany_FoundExistingPublishingompany_ReturnIGroupingItems()
         {
             // Arrange
-
             _bookDao.AddBook(_defaultBookItem);
             string foundCompany = _defaultBookItem.PublishingCompany;
             bool actualResult = false;
 
             // Act
-
-            var result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
-            foreach (var item in result)
+            List<Book> result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
+            foreach (Book item in result)
             {
                 actualResult |= item.PublishingCompany == _defaultBookItem.PublishingCompany;
             }
@@ -121,14 +112,12 @@ namespace Epam.Task01.Library.IntegrationTests
         {
             // Arrange
             string foundCompany = _defaultBookItem.PublishingCompany;
+
             // Act
-            var result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
+            List<Book> result = _bookDao.GetBooksByPublishingCompany(foundCompany).ToList();
 
             //Assert
-
             Assert.AreEqual(0, result.Count);
         }
-
-        
     }
 }

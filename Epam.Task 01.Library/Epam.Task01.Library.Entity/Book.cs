@@ -10,9 +10,12 @@ namespace Epam.Task01.Library.Entity
 
         public string PublishingCompany { get; set; }
 
-        public string isbn { get; set; }
+        public string Isbn { get; set; }
 
-        public Book() { }
+
+        public Book() 
+        {
+        }
 
         public Book(List<Author> authors, string city, string publishingCompany, int yearOfPublishing, string isbn,
             string title, int pagesCount, string commentary)
@@ -22,7 +25,7 @@ namespace Epam.Task01.Library.Entity
             City = city;
             PublishingCompany = publishingCompany;
             base.YearOfPublishing = yearOfPublishing;
-            this.isbn = isbn;
+            this.Isbn = isbn;
         }
 
         public Book(int id, List<Author> authors, string city, string publishingCompany, int yearOfPublishing, string isbn,
@@ -33,8 +36,12 @@ namespace Epam.Task01.Library.Entity
             City = city;
             PublishingCompany = publishingCompany;
             base.YearOfPublishing = yearOfPublishing;
-            this.isbn = isbn;
+            this.Isbn = isbn;
         }
 
+        public override string ToString()
+        {
+            return string.Join(", ", Authors);
+        }
     }
 }

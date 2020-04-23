@@ -1,0 +1,40 @@
+﻿@model IEnumerable<UserDetailsModel>
+
+@{
+    ViewBag.Title = "Users";
+}
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Roles)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @foreach (var role in item.Roles)
+            {
+                @(role.RoleName)
+                if (item.Roles.IndexOf(role) != item.Roles.Count - 1)
+                {
+                    @(", ")
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit Roles", "EditRoles", new { userid = item.Id }) 
+        </td>
+    </tr>
+}
+
+</table>

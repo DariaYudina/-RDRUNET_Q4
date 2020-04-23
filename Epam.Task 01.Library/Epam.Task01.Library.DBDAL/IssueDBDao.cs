@@ -1,134 +1,314 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.Entity;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.Entity;
+using Newtonsoft.Json;
 
 namespace Epam.Task01.Library.DBDAL
 {
     public class IssueDBDao : IIssueDao
     {
-        private static readonly string ConnectionString;
-        static IssueDBDao()
+        private readonly string _connectionString;
+
+        public IssueDBDao(SqlConnectionConfig sqlConnectionConfig)
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+            _connectionString = sqlConnectionConfig.ConnectionString;
         }
+
         public int AddIssue(Issue issue)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            try
             {
-                var command = connection.CreateCommand();
-                command.CommandText = "AddNewspaper";
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "AddIssue";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                var Id = new SqlParameter
-                {
-                    ParameterName = "@Id",
-                    SqlDbType = SqlDbType.Int,
-                    Direction = ParameterDirection.Output
-                };
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Output
+                    };
 
-                var Title = new SqlParameter
-                {
-                    ParameterName = "@Title",
-                    Value = issue.Title,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var PagesCount = new SqlParameter
-                {
-                    ParameterName = "@PagesCount",
-                    Value = issue.PagesCount,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var Commentary = new SqlParameter
-                {
-                    ParameterName = "@Commentary",
-                    Value = issue.Commentary,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var LibraryType = new SqlParameter
-                {
-                    ParameterName = "@LibraryType",
-                    Value = issue.GetType().Name,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var NewspaperId = new SqlParameter
-                {
-                    ParameterName = "@Newspaper_Id",
-                    Value = issue.Newspaper.Id,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var CountOfPublishing = new SqlParameter
-                {
-                    ParameterName = "@CountOfPublishing",
-                    Value = issue.Newspaper.Id,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var DateOfPublishing = new SqlParameter
-                {
-                    ParameterName = "@DateOfPublishing",
-                    Value = issue.DateOfPublishing,
-                    SqlDbType = System.Data.SqlDbType.DateTime,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var YearOfPublishing = new SqlParameter
-                {
-                    ParameterName = "@YearOfPublishing",
-                    Value = issue.YearOfPublishing,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
+                    SqlParameter title = new SqlParameter
+                    {
+                        ParameterName = "@Title",
+                        Value = issue.Newspaper.Title,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
 
-                command.Parameters.Add(Id);
-                command.Parameters.Add(Title);
-                command.Parameters.Add(PagesCount);
-                command.Parameters.Add(Commentary);
-                command.Parameters.Add(LibraryType);
-                command.Parameters.Add(NewspaperId);
-                command.Parameters.Add(CountOfPublishing);
-                command.Parameters.Add(DateOfPublishing);
-                command.Parameters.Add(YearOfPublishing);
-                connection.Open();
-                command.ExecuteNonQuery();
+                    SqlParameter pagesCount = new SqlParameter
+                    {
+                        ParameterName = "@PagesCount",
+                        Value = issue.PagesCount,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
 
-                return (int)Id.Value;
+                    SqlParameter commentary = new SqlParameter
+                    {
+                        ParameterName = "@Commentary",
+                        Value = issue.Commentary,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter libraryType = new SqlParameter
+                    {
+                        ParameterName = "@LibraryType",
+                        Value = issue.GetType().Name,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter newspaperId = new SqlParameter
+                    {
+                        ParameterName = "@Newspaper_Id",
+                        Value = issue.Newspaper.Id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter countOfPublishing = new SqlParameter
+                    {
+                        ParameterName = "@CountOfPublishing",
+                        Value = issue.CountOfPublishing,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter dateOfPublishing = new SqlParameter
+                    {
+                        ParameterName = "@DateOfPublishing",
+                        Value = issue.DateOfPublishing,
+                        SqlDbType = SqlDbType.DateTime,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(title);
+                    command.Parameters.Add(pagesCount);
+                    command.Parameters.Add(commentary);
+                    command.Parameters.Add(libraryType);
+                    command.Parameters.Add(newspaperId);
+                    command.Parameters.Add(countOfPublishing);
+                    command.Parameters.Add(dateOfPublishing);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    return (int)id.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
             }
         }
 
-        public IEnumerable<Issue> GetIssueItems()
+        public int EditIssue(Issue issue)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            try
             {
-                var command = connection.CreateCommand();
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "UpdateIssue";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = issue.Id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter title = new SqlParameter
+                    {
+                        ParameterName = "@Title",
+                        Value = issue.Newspaper.Title,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter pagesCount = new SqlParameter
+                    {
+                        ParameterName = "@PagesCount",
+                        Value = issue.PagesCount,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter commentary = new SqlParameter
+                    {
+                        ParameterName = "@Commentary",
+                        Value = issue.Commentary,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter libraryType = new SqlParameter
+                    {
+                        ParameterName = "@LibraryType",
+                        Value = issue.GetType().Name,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter newspaperId = new SqlParameter
+                    {
+                        ParameterName = "@Newspaper_Id",
+                        Value = issue.Newspaper.Id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter countOfPublishing = new SqlParameter
+                    {
+                        ParameterName = "@CountOfPublishing",
+                        Value = issue.CountOfPublishing,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter dateOfPublishing = new SqlParameter
+                    {
+                        ParameterName = "@DateOfPublishing",
+                        Value = issue.DateOfPublishing,
+                        SqlDbType = SqlDbType.DateTime,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter cntUpdateRow = new SqlParameter
+                    {
+                        ParameterName = "@CntUpdateRow",
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(title);
+                    command.Parameters.Add(pagesCount);
+                    command.Parameters.Add(commentary);
+                    command.Parameters.Add(libraryType);
+                    command.Parameters.Add(newspaperId);
+                    command.Parameters.Add(countOfPublishing);
+                    command.Parameters.Add(dateOfPublishing);
+                    command.Parameters.Add(cntUpdateRow);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)cntUpdateRow.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
+        }
+
+        public IEnumerable<Issue> GetIssues()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
 
                 command.CommandText = "GetIssues";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 connection.Open();
 
-                var reader = command.ExecuteReader();
+                SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var issue = (reader["Newspaper"]) is DBNull
+                    List<Newspaper> issue = (reader["Newspaper"]) is DBNull
                                               ? new List<Newspaper>()
                                               : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
+                    try
+                    {
+                        var Id = (int)(reader["Id"]);
+                        var Newspaper = issue[0];
+                        var YearOfPublishing = (int)(reader["YearOfPublishing"]);
+                        var CountOfPublishing = (int?)(reader["CountOfPublishing"]);
+                        var DateOfPublishing = (DateTime)(reader["DateOfPublishing"]);
+                        var PagesCount = (int)(reader["PagesCount"]);
+                        var Commentary = (string)reader["Commentary"];
+                    }
+                    catch (Exception e)
+                    {
+                        throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+                    }
                     yield return new Issue
                     {
                         Id = (int)(reader["Id"]),
                         Newspaper = issue[0],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
-                        CountOfPublishing = (int)(reader["CountOfPublishing"]),
+                        CountOfPublishing = (int?)(reader["CountOfPublishing"]),
+                        DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
+                        PagesCount = (int)(reader["PagesCount"]),
+                        Commentary = (string)reader["Commentary"]
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId, int currentId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
+
+                command.CommandText = "GetIssuesByNewspaperId";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter nid = new SqlParameter
+                {
+                    ParameterName = "@newspaperId",
+                    Value = newspaperId,
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Input
+                };
+
+                SqlParameter cid = new SqlParameter
+                {
+                    ParameterName = "@currentIssueId",
+                    Value = currentId,
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Input
+                };
+
+                command.Parameters.Add(nid);
+                command.Parameters.Add(cid);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    List<Newspaper> issue = (reader["Newspaper"]) is DBNull
+                                              ? new List<Newspaper>()
+                                              : JsonConvert.DeserializeObject<List<Newspaper>>((string)(reader["Newspaper"]));
+                    try
+                    {
+                        var Id = (int)(reader["Id"]);
+                        var Newspaper = issue[0];
+                        var YearOfPublishing = (int)(reader["YearOfPublishing"]);
+                        var CountOfPublishing = (int?)(reader["CountOfPublishing"]);
+                        var DateOfPublishing = (DateTime)(reader["DateOfPublishing"]);
+                        var PagesCount = (int)(reader["PagesCount"]);
+                        var Commentary = (string)reader["Commentary"];
+                    }
+                    catch (Exception e)
+                    {
+                        throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+                    }
+                    yield return new Issue
+                    {
+                        Id = (int)(reader["Id"]),
+                        Newspaper = issue[0],
+                        YearOfPublishing = (int)(reader["YearOfPublishing"]),
+                        CountOfPublishing = (int?)(reader["CountOfPublishing"]),
                         DateOfPublishing = (DateTime)(reader["DateOfPublishing"]),
                         PagesCount = (int)(reader["PagesCount"]),
                         Commentary = (string)reader["Commentary"]

@@ -1,29 +1,29 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.CollectionDAL;
+﻿using System;
+using System.Configuration;
+using System.Linq;
+using System.Transactions;
+using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.DBDAL;
 using Epam.Task01.Library.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Epam.Task01.Library.IntegrationTests
 {
-    class IssueDaoTests
+    internal class IssueDaoTests
     {
         private Issue _defaultIssueItem;
         private IIssueDao _issueDao;
         private ICommonDao _commonDao;
         private TransactionScope scope;
+        private SqlConnectionConfig sqlConnectionConfig;
 
         [TestInitialize]
         public void Initialize()
         {
-            _issueDao = new IssueDBDao();
-            _commonDao = new CommonDBDao();
+            sqlConnectionConfig = new SqlConnectionConfig(ConfigurationManager.ConnectionStrings["DB"]
+                .ConnectionString);
+            _issueDao = new IssueDBDao(sqlConnectionConfig);
+            _commonDao = new CommonDBDao(sqlConnectionConfig);
 
             Issue defaultNewspaperItem = new Issue
             (
@@ -50,15 +50,13 @@ namespace Epam.Task01.Library.IntegrationTests
         public void AddIssue_AddingValidItem_Successfully()
         {
             // Arrange
-
-            var expectedCount = _issueDao.GetIssueItems().Count() + 1;
+            int expectedCount = _issueDao.GetIssues().Count() + 1;
 
             // Act
             _issueDao.AddIssue(_defaultIssueItem);
-            var actualValidationResuilCount = _issueDao.GetIssueItems().Count();
+            int actualValidationResuilCount = _issueDao.GetIssues().Count();
 
             //Assert
-
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
             _commonDao.DeleteLibraryItemById(_defaultIssueItem.Id);
         }
@@ -67,16 +65,13 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetIssuetems_ToNotEmptyDao_ReturnItems()
         {
             // Arrange
-
             _issueDao.AddIssue(_defaultIssueItem);
             int expectedCount = 1;
 
             // Act
-
-            var result = _issueDao.GetIssueItems().Count();
+            int result = _issueDao.GetIssues().Count();
 
             //Assert
-
             Assert.AreEqual(expectedCount, result);
             _commonDao.DeleteLibraryItemById(_defaultIssueItem.Id);
         }
@@ -85,12 +80,10 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetNewspaperItems_ToEmptyDao_ReturnEmptyCollection()
         {
             // Arrange
-
             int expectedCount = 0;
 
             // Act
-
-            var result = _issueDao.GetIssueItems().Count();
+            int result = _issueDao.GetIssues().Count();
 
             //Assert
             Assert.AreEqual(expectedCount, result);

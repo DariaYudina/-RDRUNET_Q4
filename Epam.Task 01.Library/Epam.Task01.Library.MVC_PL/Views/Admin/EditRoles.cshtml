@@ -1,0 +1,86 @@
+﻿@model UserEditModel
+@{
+    ViewBag.Title = "Edit Roles";
+}
+<h4>User details</h4>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+        <dd>
+
+            @foreach (var role in Model.Roles)
+            {
+                @(role.RoleName)
+                if (Model.Roles.IndexOf(role) != Model.Roles.Count - 1)
+                {
+                    @(", ")
+                }
+            }
+        </dd>
+    </dl>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Login)
+
+    @if (Model.Roles != null)
+    {
+        for (int i = 0; i < Model.Roles.Count; i++)
+        {
+            @Html.HiddenFor(model => Model.Roles[i].Id)
+            @Html.HiddenFor(model => Model.Roles[i].RoleName)
+        }
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RolesId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.RolesId, (MultiSelectList)ViewBag.Roles,
+            new { @multiple = "true", @class = "form-control chosen-select", size = 3 })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Home", null, null)
+</div>
+
+@section Scripts
+    {
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/chosen.jquery.js"></script>
+    <script>
+        $(function () {
+            $(".chosen-select").chosen(
+                {
+                    disable_search_threshold: 10,
+                    no_results_text: "Oops, nothing found!",
+                    placeholder_text_multiple: "Select some roles..."
+                })
+        });
+    </script>
+}

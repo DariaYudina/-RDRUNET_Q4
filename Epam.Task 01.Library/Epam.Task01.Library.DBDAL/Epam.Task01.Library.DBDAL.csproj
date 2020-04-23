@@ -48,10 +48,13 @@
     <Compile Include="AuthorDBDao.cs" />
     <Compile Include="BookDBDao.cs" />
     <Compile Include="CommonDBDao.cs" />
+    <Compile Include="LoggerDBDao.cs" />
     <Compile Include="NewspaperDBDao.cs" />
     <Compile Include="IssueDBDao.cs" />
     <Compile Include="PatentDBDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlConnectionConfig.cs" />
+    <Compile Include="UserDBDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

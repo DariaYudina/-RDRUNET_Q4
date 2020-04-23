@@ -1,7 +1,8 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.DBDAL;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
@@ -12,7 +13,7 @@ namespace Epam.Task01.Library.CollectionDAL
             return MemoryStorage.DeleteLibraryItemById(id);
         }
 
-        public IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()
+        public IEnumerable<AbstractLibraryItem> GetLibraryItems()
         {
             return MemoryStorage.GetAllAbstractLibraryItems();
         }
@@ -54,8 +55,14 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public IEnumerable<AbstractLibraryItem> GetBookAndPatentByAuthorId(int id)
         {
-            return MemoryStorage.GetAllAbstractLibraryItems().Where(i => (i is Patent && ((Patent)i).Authors.Any(item => item.Id == id))
+            return MemoryStorage.GetAllAbstractLibraryItems()
+                .Where(i => (i is Patent && ((Patent)i).Authors.Any(item => item.Id == id))
             || (i is Book && ((Book)i).Authors.Any(item => item.Id == id)));
+        }
+
+        public AbstractLibraryItem GetLibraryItemById(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

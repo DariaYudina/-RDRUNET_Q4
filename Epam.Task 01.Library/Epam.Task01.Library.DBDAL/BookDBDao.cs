@@ -1,191 +1,348 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.Entity;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.Entity;
+using Newtonsoft.Json;
 
 namespace Epam.Task01.Library.DBDAL
 {
     public class BookDBDao : IBookDao
     {
-        private static readonly string ConnectionString;
-       static BookDBDao()
+        private readonly string _connectionString;
+
+        public BookDBDao(SqlConnectionConfig sqlConnectionConfig)
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["DB"].ConnectionString;
+            _connectionString = sqlConnectionConfig.ConnectionString;
         }
 
         public int AddBook(Book item)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            try
             {
-                var command = connection.CreateCommand();
-                command.CommandText = "AddBook";
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "AddBook";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                var Id = new SqlParameter
-                {
-                    ParameterName = "@Id",
-                    SqlDbType = SqlDbType.Int,
-                    Direction = ParameterDirection.Output
-                };
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Output
+                    };
 
-                var Title = new SqlParameter
-                {
-                    ParameterName = "@Title",
-                    Value = item.Title,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var PagesCount = new SqlParameter
-                {
-                    ParameterName = "@PagesCount",
-                    Value = item.PagesCount,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var Commentary = new SqlParameter
-                {
-                    ParameterName = "@Commentary",
-                    Value = item.Commentary,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var LibraryType = new SqlParameter
-                {
-                    ParameterName = "@LibraryType",
-                    Value = item.GetType().Name,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var City = new SqlParameter
-                {
-                    ParameterName = "@City",
-                    Value = item.City,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var PublishingCompany = new SqlParameter
-                {
-                    ParameterName = "@PublishingCompany",
-                    Value = item.PublishingCompany,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var ISBN = new SqlParameter
-                {
-                    ParameterName = "@ISBN",
-                    Value = item.isbn,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                var YearOfPublishing = new SqlParameter
-                {
-                    ParameterName = "@YearOfPublishing",
-                    Value = item.YearOfPublishing,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Input
-                };
+                    SqlParameter title = new SqlParameter
+                    {
+                        ParameterName = "@Title",
+                        Value = item.Title,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter pagesCount = new SqlParameter
+                    {
+                        ParameterName = "@PagesCount",
+                        Value = item.PagesCount,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter commentary = new SqlParameter
+                    {
+                        ParameterName = "@Commentary",
+                        IsNullable = true,
+                        Value = item.Commentary,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter libraryType = new SqlParameter
+                    {
+                        ParameterName = "@LibraryType",
+                        Value = item.GetType().Name,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter city = new SqlParameter
+                    {
+                        ParameterName = "@City",
+                        Value = item.City,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter publishingCompany = new SqlParameter
+                    {
+                        ParameterName = "@PublishingCompany",
+                        Value = item.PublishingCompany,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter isbn = new SqlParameter
+                    {
+                        ParameterName = "@ISBN",
+                        Value = item.Isbn,
+                        IsNullable = true,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter yearOfPublishing = new SqlParameter
+                    {
+                        ParameterName = "@YearOfPublishing",
+                        Value = item.YearOfPublishing,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
 
-                var authorsId =  from i in item.Authors
+                    var authorsId = from i in item.Authors
                                     select new { i.Id };
-                string json = JsonConvert.SerializeObject(authorsId, Formatting.Indented);
-                var listAuthorsId = new SqlParameter
-                {
-                    ParameterName = "@listAuthorsId",
-                    Value = json,
-                    SqlDbType = System.Data.SqlDbType.NVarChar,
-                    Direction = System.Data.ParameterDirection.Input
-                };
-                command.Parameters.Add(Id);
-                command.Parameters.Add(Title);
-                command.Parameters.Add(PagesCount);
-                command.Parameters.Add(Commentary);
-                command.Parameters.Add(LibraryType);
-                command.Parameters.Add(City);
-                command.Parameters.Add(PublishingCompany);
-                command.Parameters.Add(ISBN);
-                command.Parameters.Add(YearOfPublishing);
-                command.Parameters.Add(listAuthorsId);
-                connection.Open();
-                command.ExecuteNonQuery();
+                    string json = JsonConvert.SerializeObject(authorsId);
 
-                return (int)Id.Value;
+                    SqlParameter listAuthorsId = new SqlParameter
+                    {
+                        ParameterName = "@listAuthorsId",
+                        Value = json,
+                        IsNullable = true,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(title);
+                    command.Parameters.Add(pagesCount);
+                    command.Parameters.Add(commentary);
+                    command.Parameters.Add(libraryType);
+                    command.Parameters.Add(city);
+                    command.Parameters.Add(publishingCompany);
+                    command.Parameters.Add(isbn);
+                    command.Parameters.Add(yearOfPublishing);
+                    command.Parameters.Add(listAuthorsId);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)id.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
+        }
+        public int EditBook(Book item)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "UpdateBook";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = item.Id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter title = new SqlParameter
+                    {
+                        ParameterName = "@Title",
+                        Value = item.Title,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter pagesCount = new SqlParameter
+                    {
+                        ParameterName = "@PagesCount",
+                        Value = item.PagesCount,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter commentary = new SqlParameter
+                    {
+                        ParameterName = "@Commentary",
+                        IsNullable = true,
+                        Value = item.Commentary,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter libraryType = new SqlParameter
+                    {
+                        ParameterName = "@LibraryType",
+                        Value = item.GetType().Name,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter city = new SqlParameter
+                    {
+                        ParameterName = "@City",
+                        Value = item.City,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter publishingCompany = new SqlParameter
+                    {
+                        ParameterName = "@PublishingCompany",
+                        Value = item.PublishingCompany,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter isbn = new SqlParameter
+                    {
+                        ParameterName = "@ISBN",
+                        Value = item.Isbn,
+                        IsNullable = true,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+                    SqlParameter yearOfPublishing = new SqlParameter
+                    {
+                        ParameterName = "@YearOfPublishing",
+                        Value = item.YearOfPublishing,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    var authorsId = from i in item.Authors
+                                    select new { i.Id };
+                    string json = JsonConvert.SerializeObject(authorsId);
+
+                    SqlParameter listAuthorsId = new SqlParameter
+                    {
+                        ParameterName = "@AuthorsId",
+                        Value = json,
+                        IsNullable = true,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter cntUpdateRow = new SqlParameter
+                    {
+                        ParameterName = "@CntUpdateRow",
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(title);
+                    command.Parameters.Add(pagesCount);
+                    command.Parameters.Add(commentary);
+                    command.Parameters.Add(libraryType);
+                    command.Parameters.Add(city);
+                    command.Parameters.Add(publishingCompany);
+                    command.Parameters.Add(isbn);
+                    command.Parameters.Add(yearOfPublishing);
+                    command.Parameters.Add(listAuthorsId);
+                    command.Parameters.Add(cntUpdateRow);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)cntUpdateRow.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
             }
         }
 
         public Book GetBookById(int id)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            try
             {
-                var command = connection.CreateCommand();
-                command.CommandText = "GetBookById";
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                var Id = new SqlParameter
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    ParameterName = "@Id",
-                    Value = id,
-                    SqlDbType = SqlDbType.Int,
-                    Direction = ParameterDirection.Input
-                };
-                command.Parameters.Add(Id);
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "GetBookById";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    SqlParameter _id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+                    command.Parameters.Add(_id);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader(CommandBehavior.SingleRow);
+
+                    while (reader.Read())
+                    {
+                        List<Author> authorjson = (reader["Authors"]) is DBNull
+                                              ? new List<Author>()
+                                              : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+                        return new Book
+                        {
+                            Id = (int)(reader["Id"]),
+                            Authors = authorjson,
+                            City = (string)reader["City"],
+                            PublishingCompany = (string)reader["PublishingCompany"],
+                            YearOfPublishing = (int)(reader["YearOfPublishing"]),
+                            Isbn = (string)reader["ISBN"],
+                            Title = (string)reader["Title"],
+                            PagesCount = (int)(reader["PagesCount"]),
+                            Commentary = (string)reader["Commentary"]
+                        };
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
+        }
+
+        public IEnumerable<Book> GetBooks()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
+
+                command.CommandText = "GetBooks";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
                 connection.Open();
-                var reader = command.ExecuteReader(CommandBehavior.SingleRow);
-                
+
+                SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     List<Author> authorjson = (reader["Authors"]) is DBNull
-                                          ? new List<Author>()
-                                          : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
-                    return new Book
+                                               ? new List<Author>()
+                                               : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+                    try
+                    {
+                        var Id = (int)(reader["Id"]);
+                        var Authors = authorjson;
+                        var City = (string)reader["City"];
+                        var PublishingCompany = (string)reader["PublishingCompany"];
+                        var YearOfPublishing = (int)(reader["YearOfPublishing"]);
+                        var Isbn = reader["ISBN"] is DBNull ? null : (string)reader["ISBN"];
+                        var Title = (string)reader["Title"];
+                        var PagesCount = (int)(reader["PagesCount"]);
+                        var Commentary = (string)reader["Commentary"];
+                    }
+                    catch (Exception e)
+                    {
+                        throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+                    }
+                    yield return new Book
                     {
                         Id = (int)(reader["Id"]),
                         Authors = authorjson,
                         City = (string)reader["City"],
                         PublishingCompany = (string)reader["PublishingCompany"],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
-                        isbn = (string)reader["ISBN"],
+                        Isbn = reader["ISBN"] is DBNull ? null : (string)reader["ISBN"],
                         Title = (string)reader["Title"],
                         PagesCount = (int)(reader["PagesCount"]),
-                        Commentary = (string)reader["Commentary"]
-                    };
-                }
-                return null;
-            }
-        }
-
-        public IEnumerable<Book> GetBookItems()
-        {
-            using (var connection = new SqlConnection(ConnectionString))
-            {
-                var command = connection.CreateCommand();
-
-                command.CommandText = "GetBooks";
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    List<Author> authorjson = (reader["Authors"]) is DBNull 
-                                               ? new List<Author>() 
-                                               : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
-                    yield return new Book
-                    {
-                        Id = (int)(reader["Id"]),
-                        Authors = authorjson  ,
-                        City = (string)reader["City"],
-                        PublishingCompany = (string)reader["PublishingCompany"],
-                        YearOfPublishing = (int)(reader["YearOfPublishing"]),
-                        isbn = (string)reader["ISBN"],
-                        Title = (string)reader["Title"],
-                        PagesCount = (int)(reader["PagesCount"]),
-                        Commentary = (string)reader["Commentary"]
+                        Commentary = reader["Commentary"] is DBNull ? null : (string)reader["Commentary"]
                     };
                 }
             }
@@ -193,28 +350,44 @@ namespace Epam.Task01.Library.DBDAL
 
         public IEnumerable<Book> GetBooksByPublishingCompany(string publishingCompany)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var command = connection.CreateCommand();
+                SqlCommand command = connection.CreateCommand();
 
                 command.CommandText = "GetBooksByPublishingCompanyStartsWithInputText";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                var PublishingCompany = new SqlParameter
+                SqlParameter publishing_Company = new SqlParameter
                 {
                     ParameterName = "@PublishingCompany",
                     Value = publishingCompany,
                     SqlDbType = SqlDbType.NVarChar,
                     Direction = ParameterDirection.Input
                 };
-                command.Parameters.Add(PublishingCompany);
+                command.Parameters.Add(publishing_Company);
                 connection.Open();
 
-                var reader = command.ExecuteReader();
+                SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     List<Author> authorjson = (reader["Authors"]) is DBNull
                                                ? new List<Author>()
                                                : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+                    try
+                    {
+                        var Id = (int)(reader["Id"]);
+                        var Authors = authorjson;
+                        var City = (string)reader["City"];
+                        var PublishingCompany = (string)reader["PublishingCompany"];
+                        var YearOfPublishing = (int)(reader["YearOfPublishing"]);
+                        var Isbn = reader["ISBN"] is DBNull ? null : (string)reader["ISBN"];
+                        var Title = (string)reader["Title"];
+                        var PagesCount = (int)(reader["PagesCount"]);
+                        var Commentary = (string)reader["Commentary"];
+                    }
+                    catch (Exception e)
+                    {
+                        throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+                    }
                     yield return new Book
                     {
                         Id = (int)(reader["Id"]),
@@ -222,10 +395,10 @@ namespace Epam.Task01.Library.DBDAL
                         City = (string)reader["City"],
                         PublishingCompany = (string)reader["PublishingCompany"],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
-                        isbn = (string)reader["ISBN"],
+                        Isbn = reader["ISBN"] is DBNull ? null : (string)reader["ISBN"],
                         Title = (string)reader["Title"],
                         PagesCount = (int)(reader["PagesCount"]),
-                        Commentary = (string)reader["Commentary"]
+                        Commentary = reader["Commentary"] is DBNull ? null : (string)reader["Commentary"]
                     };
                 }
             }
@@ -233,28 +406,44 @@ namespace Epam.Task01.Library.DBDAL
 
         public IEnumerable<Book> GetBooksByAuthor(Author author)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var command = connection.CreateCommand();
+                SqlCommand command = connection.CreateCommand();
 
                 command.CommandText = "GetBooksByAuthor";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                var Id = new SqlParameter
+                SqlParameter idParam = new SqlParameter
                 {
                     ParameterName = "@Id",
                     Value = author.Id,
                     SqlDbType = SqlDbType.Int,
                     Direction = ParameterDirection.Input
                 };
-                command.Parameters.Add(Id);
+                command.Parameters.Add(idParam);
                 connection.Open();
 
-                var reader = command.ExecuteReader();
+                SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     List<Author> authorjson = (reader["Authors"]) is DBNull
                                                ? new List<Author>()
                                                : JsonConvert.DeserializeObject<List<Author>>((string)(reader["Authors"]));
+                    try
+                    {
+                        var Id = (int)(reader["Id"]);
+                        var Authors = authorjson;
+                        var City = (string)reader["City"];
+                        var PublishingCompany = (string)reader["PublishingCompany"];
+                        var YearOfPublishing = (int)(reader["YearOfPublishing"]);
+                        var Isbn = reader["ISBN"] is DBNull ? null : (string)reader["ISBN"];
+                        var Title = (string)reader["Title"];
+                        var PagesCount = (int)(reader["PagesCount"]);
+                        var Commentary = (string)reader["Commentary"];
+                    }
+                    catch (Exception e)
+                    {
+                        throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+                    }
                     yield return new Book
                     {
                         Id = (int)(reader["Id"]),
@@ -262,10 +451,10 @@ namespace Epam.Task01.Library.DBDAL
                         City = (string)reader["City"],
                         PublishingCompany = (string)reader["PublishingCompany"],
                         YearOfPublishing = (int)(reader["YearOfPublishing"]),
-                        isbn = (string)reader["ISBN"],
+                        Isbn = reader["ISBN"] is DBNull ? null : (string)reader["ISBN"],
                         Title = (string)reader["Title"],
                         PagesCount = (int)(reader["PagesCount"]),
-                        Commentary = (string)reader["Commentary"]
+                        Commentary = reader["Commentary"] is DBNull ? null : (string)reader["Commentary"]
                     };
                 }
             }

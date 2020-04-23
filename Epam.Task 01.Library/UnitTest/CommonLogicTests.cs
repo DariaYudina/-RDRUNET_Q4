@@ -1,302 +1,252 @@
-﻿//using AbstractValidation;
-//using Epam.Task01.Library.AbstractDAL;
-//using Epam.Task01.Library.CollectionBLL;
-//using Epam.Task01.Library.Entity;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace UnitTest
-//{
-//    [TestClass]
-//    public class CommonLogicTests
-//    {
-//        private AbstractLibraryItem _defaultAbstractLibraryItemItem;
-
-//        private CommonLogic _commonLogic;
-//        private Mock<ICommonDao> _commonDaoMock;
-//        private Mock<ICommonValidation> _commonValidationMock;
-//        private Author author;
-
-//        [TestInitialize]
-//        public void Initialize()
-//        {
-//            _commonValidationMock = new Mock<ICommonValidation>();
-//            _commonDaoMock = new Mock<ICommonDao>();
-//            _commonLogic = new CommonLogic(_commonDaoMock.Object, _commonValidationMock.Object);
-//            author = new Author("Name", "LastName");
-//            Book defaultAbstractItem = new Book
-//            (authors: new List<Author>() { author },
-//              city: "",
-//              publishingCompany: "",
-//              yearOfPublishing: 0,
-//              isbn: "",
-//              title: "",
-//              pagesCount: 0,
-//              commentary: ""
-//            );
-
-//            _defaultAbstractLibraryItemItem = defaultAbstractItem;
-//        }
+﻿using AbstractValidation;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.CollectionBLL;
+using Epam.Task01.Library.Entity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UnitTest
+{
+    [TestClass]
+    public class CommonLogicTests
+    {
+        private AbstractLibraryItem _defaultAbstractLibraryItemItem;
+
+        private CommonLogic _commonLogic;
+        private Mock<ICommonDao> _commonDaoMock;
+        private Mock<ICommonValidation> _commonValidationMock;
+        private Author author;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _commonValidationMock = new Mock<ICommonValidation>();
+            _commonDaoMock = new Mock<ICommonDao>();
+            _commonLogic = new CommonLogic(_commonDaoMock.Object);
+            author = new Author("Name", "LastName");
+            Book defaultAbstractItem = new Book
+            (authors: new List<Author>() { author },
+              city: "",
+              publishingCompany: "",
+              yearOfPublishing: 0,
+              isbn: "",
+              title: "",
+              pagesCount: 0,
+              commentary: ""
+            );
 
-//        [TestMethod]
-//        public void GetAllAbstractLibraryItems__GetAnyItemsInNotEmptyDao_ReturnListWithItems()
-//        {
-//            // Arrange
-
-//            List<AbstractLibraryItem> items = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
-//            _commonDaoMock.Setup(b => b.GetAllAbstractLibraryItems()).Returns(items);
+            _defaultAbstractLibraryItemItem = defaultAbstractItem;
+        }
 
-//            // Act
+        [TestMethod]
+        public void GetAllAbstractLibraryItems__GetAnyItemsInNotEmptyDao_ReturnListWithItems()
+        {
+            // Arrange
 
-//            List<AbstractLibraryItem> actualItems = _commonLogic.GetAllLibraryItems().ToList();
+            List<AbstractLibraryItem> items = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
+            _commonDaoMock.Setup(b => b.GetLibraryItems()).Returns(items);
 
-//            //Assert
+            // Act
 
-//            CollectionAssert.AreEqual(items, actualItems);
-//        }
+            List<AbstractLibraryItem> actualItems = _commonLogic.GetLibraryItems().ToList();
 
-//        [TestMethod]
-//        public void GetAllAbstractLibraryItems__GetAnyItemsInDao_ReturnEmptyListItems()
-//        {
-//            // Arrange
+            //Assert
 
-//            List<AbstractLibraryItem> items = new List<AbstractLibraryItem>();
-//            _commonDaoMock.Setup(b => b.GetAllAbstractLibraryItems()).Returns(items);
+            CollectionAssert.AreEqual(items, actualItems);
+        }
 
-//            // Act
+        [TestMethod]
+        public void GetAllAbstractLibraryItems__GetAnyItemsInDao_ReturnEmptyListItems()
+        {
+            // Arrange
 
-//            List<AbstractLibraryItem> actualItems = _commonLogic.GetAllLibraryItems().ToList();
+            List<AbstractLibraryItem> items = new List<AbstractLibraryItem>();
+            _commonDaoMock.Setup(b => b.GetLibraryItems()).Returns(items);
 
-//            //Assert
+            // Act
 
-//            CollectionAssert.AreEqual(items, actualItems);
-//        }
+            List<AbstractLibraryItem> actualItems = _commonLogic.GetLibraryItems().ToList();
 
-//        [TestMethod]
-//        public void GetLibraryItemsByTitle__FoundedTitle_ReturnIEnumerableAbstractItem()
-//        {
-//            // Arrange
-//            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem };
-//            _commonDaoMock.Setup(b => b.GetLibraryItemsByTitle(It.IsAny<string>())).Returns(founded);
+            //Assert
 
-//            // Act
+            CollectionAssert.AreEqual(items, actualItems);
+        }
 
-//            var result = _commonLogic.GetLibraryItemsByTitle("title").ToList();
+        [TestMethod]
+        public void GetLibraryItemsByTitle__FoundedTitle_ReturnIEnumerableAbstractItem()
+        {
+            // Arrange
+            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem };
+            _commonDaoMock.Setup(b => b.GetLibraryItemsByTitle(It.IsAny<string>())).Returns(founded);
 
-//            //Assert
+            // Act
 
-//            CollectionAssert.AreEqual(founded, result);
-//        }
+            var result = _commonLogic.GetLibraryItemsByTitle("title").ToList();
 
-//        [TestMethod]
-//        public void GetLibraryItemsByTitle__NotFoundedTitle_ReturnEmptyIEnumerableAbstractItem()
-//        {
-//            // Arrange
-//            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() {};
-//            _commonDaoMock.Setup(b => b.GetLibraryItemsByTitle(It.IsAny<string>())).Returns(founded);
+            //Assert
 
-//            // Act
+            CollectionAssert.AreEqual(founded, result);
+        }
 
-//            var result = _commonLogic.GetLibraryItemsByTitle("title").ToList();
+        [TestMethod]
+        public void GetLibraryItemsByTitle__NotFoundedTitle_ReturnEmptyIEnumerableAbstractItem()
+        {
+            // Arrange
+            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { };
+            _commonDaoMock.Setup(b => b.GetLibraryItemsByTitle(It.IsAny<string>())).Returns(founded);
 
-//            //Assert
+            // Act
 
-//            CollectionAssert.AreEqual(founded, result);
-//        }
-        
-//        [TestMethod]
-//        public void DeleteLibraryItemById__FoundedItemmById_ReturnTrue()
-//        {
-//            // Arrange
-//            int id = 1;
-//            _commonDaoMock.Setup(b => b.DeleteLibraryItemById(It.IsInRange(1, 10, Range.Inclusive))).Returns(true);
+            var result = _commonLogic.GetLibraryItemsByTitle("title").ToList();
 
-//            // Act
+            //Assert
 
-//            var result = _commonLogic.DeleteLibraryItemById(id);
+            CollectionAssert.AreEqual(founded, result);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void DeleteLibraryItemById__FoundedItemmById_ReturnTrue()
+        {
+            // Arrange
+            int id = 1;
+            _commonDaoMock.Setup(b => b.DeleteLibraryItemById(It.IsInRange(1, 10, Range.Inclusive))).Returns(true);
 
-//            Assert.IsTrue(result);
-//        }
+            // Act
 
-//        [TestMethod]
-//        public void DeleteLibraryItemById__NotFoundedItemmById_ReturnFalse()
-//        {
-//            // Arrange
-//            int id = 12;
-//            _commonDaoMock.Setup(b => b.DeleteLibraryItemById(It.IsInRange(1, 10, Range.Inclusive))).Returns(false);
+            var result = _commonLogic.DeleteLibraryItemById(id);
 
-//            // Act
+            //Assert
 
-//            var result = _commonLogic.DeleteLibraryItemById(id);
+            Assert.IsTrue(result);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void DeleteLibraryItemById__NotFoundedItemmById_ReturnFalse()
+        {
+            // Arrange
+            int id = 12;
+            _commonDaoMock.Setup(b => b.DeleteLibraryItemById(It.IsInRange(1, 10, Range.Inclusive))).Returns(false);
 
-//            Assert.IsFalse(result);
-//        }
+            // Act
 
-//        [TestMethod]
-//        public void GetLibraryItemsByYearOfPublishing__FoundedInDaoByYearOfPublishing_ReturnIGroupingItems()
-//        {
-//            // Arrange
+            var result = _commonLogic.DeleteLibraryItemById(id);
 
-//            List<IGrouping<int, AbstractLibraryItem>> items = new List<IGrouping<int, AbstractLibraryItem>>();
+            //Assert
 
-//            _commonDaoMock.Setup(b => b.GetLibraryItemsByYearOfPublishing()).Returns(items);
+            Assert.IsFalse(result);
+        }
 
-//            // Act
+        [TestMethod]
+        public void GetLibraryItemsByYearOfPublishing__FoundedInDaoByYearOfPublishing_ReturnIGroupingItems()
+        {
+            // Arrange
 
-//            var result = _commonLogic.GetLibraryItemsByYearOfPublishing();
+            IEnumerable<AbstractLibraryItem> items = new List<AbstractLibraryItem>();
 
-//            //Assert
+            _commonDaoMock.Setup(b => b.GetLibraryItemsByYearOfPublishing()).Returns(items);
 
-//            Assert.AreEqual(items, result);
-//        }
+            // Act
 
-//        [TestMethod]
-//        public void GetBooksAndPatentsByAuthor__AuthorsFounded_ReturnFoundedItems()
-//        {
-//            // Arrange
+            var result = _commonLogic.GetLibraryItemsByYearOfPublishing();
 
-//            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem };
-//            int authorId = 1;
+            //Assert
 
-//            _commonDaoMock.Setup(b => b.GetBookAndPatentByAuthorId(authorId)).Returns(founded);
+            Assert.AreEqual(items, result);
+        }
 
-//            // Act
+        [TestMethod]
+        public void GetBooksAndPatentsByAuthor__AuthorsFounded_ReturnFoundedItems()
+        {
+            // Arrange
 
-//            var result = _commonLogic.GetBooksAndPatentsByAuthor(author);
+            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem };
+            int authorId = 1;
 
-//            //Assert
+            _commonDaoMock.Setup(b => b.GetBookAndPatentByAuthorId(authorId)).Returns(founded);
 
-//            Assert.AreEqual(founded.Count, result.Count());
-//        }
+            // Act
 
-//        [TestMethod]
-//        public void GetBooksAndPatentsByAuthor__AuthorsNotFounded_ReturnFoundedItems1()
-//        {
-//            // Arrange
+            var result = _commonLogic.GetBooksAndPatentsByAuthor(author);
 
-//            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem };
-//            int authorId = 1;
+            //Assert
 
-//            _commonDaoMock.Setup(b => b.GetBookAndPatentByAuthorId(authorId)).Returns(founded);
+            Assert.AreEqual(founded.Count, result.Count());
+        }
 
-//            // Act
+        [TestMethod]
+        public void GetBooksAndPatentsByAuthor__AuthorsNotFounded_ReturnFoundedItems1()
+        {
+            // Arrange
 
-//            var result = _commonLogic.GetBooksAndPatentsByAuthor(new Author("", ""));
+            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem };
+            int authorId = 1;
 
-//            //Assert
+            _commonDaoMock.Setup(b => b.GetBookAndPatentByAuthorId(authorId)).Returns(founded);
 
-//            Assert.AreNotEqual(founded.Count, result.Count());
-//        }
+            // Act
 
-//        [TestMethod]
-//        public void GetBooksByAuthor__AuthorsFounded_ReturnFoundedItems()
-//        {
-//            // Arrange
+            var result = _commonLogic.GetBooksAndPatentsByAuthor(new Author("", ""));
 
-//            List<Book> founded = new List<Book>() { (Book)_defaultAbstractLibraryItemItem };
-//            _commonDaoMock.Setup(b => b.GetTypeByAuthor<Book>()).Returns(founded);
+            //Assert
 
-//            // Act
+            Assert.AreNotEqual(founded.Count, result.Count());
+        }
 
-//            var result = _commonLogic.GetBooksByAuthor(author);
+        [TestMethod]
+        public void GetBooksByAuthor__AuthorsFounded_ReturnFoundedItems()
+        {
+            // Arrange
+            Author author = new Author(1,"name", "lastname");
+            var id = author.Id;
+            List<AbstractLibraryItem> founded = new List<AbstractLibraryItem>() { (Book)_defaultAbstractLibraryItemItem };
+            _commonDaoMock.Setup(b => b.GetBookAndPatentByAuthorId(id)).Returns(founded);
 
-//            //Assert
+            // Act
 
-//            Assert.AreEqual(founded.Count, result.Count());
-//        }
+            var result = _commonLogic.GetBooksAndPatentsByAuthor(author);
 
-//        [TestMethod]
-//        public void GetBooksByAuthor__AuthorsNotFounded_ReturnFoundedItems1()
-//        {
-//            // Arrange
+            //Assert
 
-//            List<Book> founded = new List<Book>() { (Book)_defaultAbstractLibraryItemItem };
-//            _commonDaoMock.Setup(b => b.GetTypeByAuthor<Book>()).Returns(founded);
+            Assert.AreEqual(founded.Count, result.Count());
+        }
 
-//            // Act
+        [TestMethod]
+        public void SortByYear__AuthorsNotFounded_ReturnSortedItems()
+        {
+            // Arrange
 
-//            var result = _commonLogic.GetBooksByAuthor(new Author("", ""));
+            List<AbstractLibraryItem> forSort = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
+            _commonDaoMock.Setup(b => b.SortByYear()).Returns(forSort);
 
-//            //Assert
+            // Act
 
-//            Assert.AreNotEqual(founded.Count, result.Count());
-//        }
+            var result = _commonLogic.SortByYear().ToList();
 
-//        [TestMethod]
-//        public void GetPatentsByAuthor__AuthorsFounded_ReturnFoundedItems()
-//        {
-//            // Arrange
+            //Assert
 
-//            List<Patent> founded = new List<Patent>() { new Patent(new List<Author>() { author }, "", "", DateTime.Now, DateTime.Now, "", 1, "") };
-//            _commonDaoMock.Setup(b => b.GetTypeByAuthor<Patent>()).Returns(founded);
+            Assert.AreEqual(forSort.Count, result.Count());
+        }
 
-//            // Act
+        [TestMethod]
+        public void SortByYear__AuthorsNotFounded_ReturnSortedDescItems()
+        {
+            // Arrange
 
-//            var result = _commonLogic.GetPatentsByAuthor(author);
+            List<AbstractLibraryItem> forSort = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
+            _commonDaoMock.Setup(b => b.SortByYearDesc()).Returns(forSort);
 
-//            //Assert
+            // Act
 
-//            Assert.AreEqual(founded.Count, result.Count());
-//        }
+            var result = _commonLogic.SortByYearDesc().ToList();
 
-//        [TestMethod]
-//        public void GetPatentsByAuthor__AuthorsNotFounded_ReturnFoundedItems()
-//        {
-//            // Arrange
+            //Assert
 
-//            List<Patent> founded = new List<Patent>() { new Patent(new List<Author>(), "", "", DateTime.Now, DateTime.Now, "", 1, "") };
-//            _commonDaoMock.Setup(b => b.GetTypeByAuthor<Patent>()).Returns(founded);
-
-//            // Act
-
-//            var result = _commonLogic.GetPatentsByAuthor(author);
-
-//            //Assert
-
-//            Assert.AreNotEqual(founded.Count, result.Count());
-//        }
-
-//        [TestMethod]
-//        public void SortByYear__AuthorsNotFounded_ReturnSortedItems()
-//        {
-//            // Arrange
-
-//            List<AbstractLibraryItem> forSort = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
-//            _commonDaoMock.Setup(b => b.SortByYear()).Returns(forSort);
-
-//            // Act
-
-//            var result = _commonLogic.SortByYear().ToList();
-
-//            //Assert
-
-//            Assert.AreEqual(forSort.Count, result.Count());
-//        }
-
-//        [TestMethod]
-//        public void SortByYear__AuthorsNotFounded_ReturnSortedDescItems()
-//        {
-//            // Arrange
-
-//            List<AbstractLibraryItem> forSort = new List<AbstractLibraryItem>() { _defaultAbstractLibraryItemItem, _defaultAbstractLibraryItemItem };
-//            _commonDaoMock.Setup(b => b.SortByYearDesc()).Returns(forSort);
-
-//            // Act
-
-//            var result = _commonLogic.SortByYearDesc().ToList();
-
-//            //Assert
-
-//            Assert.AreEqual(forSort.Count, result.Count());
-//        }
-//    }
-//}
+            Assert.AreEqual(forSort.Count, result.Count());
+        }
+    }
+}

@@ -1,10 +1,7 @@
-﻿using Epam.Task01.Library.AbstractDAL;
+﻿using System.Collections.Generic;
+using Epam.Task01.Library.AbstractDAL.INewspaper;
+using Epam.Task01.Library.DBDAL;
 using Epam.Task01.Library.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
@@ -15,12 +12,12 @@ namespace Epam.Task01.Library.CollectionDAL
             return MemoryStorage.AddIssue(newspaper);
         }
 
-        public Newspaper GetNewspaperItemById(int id)
+        public Newspaper GetNewspaperById(int id)
         {
             return MemoryStorage.GetNewspaperItemById(id);
         }
 
-        public IEnumerable<Newspaper> GetNewspaperItems()
+        public IEnumerable<Newspaper> GetNewspapers()
         {
             return MemoryStorage.GetAllNewspapers();
         }

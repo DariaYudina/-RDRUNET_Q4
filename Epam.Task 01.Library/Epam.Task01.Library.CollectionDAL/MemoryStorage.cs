@@ -1,72 +1,71 @@
-﻿using Epam.Task01.Library.Entity;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
     internal static class MemoryStorage
     {
-        private static readonly Dictionary<int, AbstractLibraryItem> _libraryCatalog;
-        private static readonly Dictionary<int, Newspaper> _newspapers;
+        private static readonly Dictionary<int, AbstractLibraryItem> LibraryCatalog;
+
+        private static readonly Dictionary<int, Newspaper> Newspapers;
 
         static MemoryStorage()
         {
-            _libraryCatalog = new Dictionary<int, AbstractLibraryItem>();
-            _newspapers = new Dictionary<int, Newspaper>();
+            LibraryCatalog = new Dictionary<int, AbstractLibraryItem>();
+            Newspapers = new Dictionary<int, Newspaper>();
         }
 
         public static int AddLibraryItem(AbstractLibraryItem item)
         {
-            var lastid =_libraryCatalog.Any() ? _libraryCatalog.Keys.Max()+1 : 1;
+            int lastid = LibraryCatalog.Any() ? LibraryCatalog.Keys.Max() + 1 : 1;
             item.Id = lastid;
-            _libraryCatalog.Add(item.Id, item);
+            LibraryCatalog.Add(item.Id, item);
             return item.Id;
         }
 
         public static IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems()
         {
-            return _libraryCatalog.Values;
+            return LibraryCatalog.Values;
         }
 
         public static AbstractLibraryItem GetLibraryItemById(int id)
         {
-            AbstractLibraryItem result;
-            _libraryCatalog.TryGetValue(id, out result); 
+            LibraryCatalog.TryGetValue(id, out AbstractLibraryItem result);
             return result;
         }
 
         public static bool DeleteLibraryItemById(int id)
         {
-            return _libraryCatalog.Remove(id);
+            return LibraryCatalog.Remove(id);
         }
 
         public static bool DeleteIssueById(int id)
         {
-            return _newspapers.Remove(id);
+            return Newspapers.Remove(id);
         }
 
         public static IEnumerable<T> GetLibraryItemByType<T>()
         {
-            return _libraryCatalog.Values.OfType<T>().ToList();
+            return LibraryCatalog.Values.OfType<T>().ToList();
         }
 
         public static int AddIssue(Newspaper issue)
         {
-            var lastid = _newspapers.Any() ? _newspapers.Keys.Max() + 1 : 1;
+            int lastid = Newspapers.Any() ? Newspapers.Keys.Max() + 1 : 1;
             issue.Id = lastid;
-            _newspapers.Add(issue.Id, issue);
+            Newspapers.Add(issue.Id, issue);
             return issue.Id;
         }
 
         public static IEnumerable<Newspaper> GetAllNewspapers()
         {
-            return _newspapers.Values;
+            return Newspapers.Values;
         }
 
         public static Newspaper GetNewspaperItemById(int id)
         {
-            _newspapers.TryGetValue(id, out Newspaper issue);
+            Newspapers.TryGetValue(id, out Newspaper issue);
             return issue;
         }
     }

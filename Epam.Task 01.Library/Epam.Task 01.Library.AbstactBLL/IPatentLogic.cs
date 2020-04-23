@@ -1,7 +1,6 @@
-﻿using AbstractValidation;
+﻿using System.Collections.Generic;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
 
 namespace Epam.Task_01.Library.AbstactBLL
 {
@@ -9,7 +8,10 @@ namespace Epam.Task_01.Library.AbstactBLL
     {
         bool AddPatent(out ValidationObject validationObject, Patent patent);
 
-        IEnumerable<Patent> GetPatentItems();
+        bool EditPatent(out ValidationObject validationObject, Patent patent);
+
+        IEnumerable<Patent> GetPatents();
+
         IEnumerable<Patent> GetPatentsByAuthor(Author author);
     }
 }

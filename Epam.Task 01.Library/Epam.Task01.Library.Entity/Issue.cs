@@ -6,22 +6,22 @@ namespace Epam.Task01.Library.Entity
     {
         public Newspaper Newspaper { get; set; }
 
-        public int CountOfPublishing { get; set; }
+        public int? CountOfPublishing { get; set; }
 
         public DateTime DateOfPublishing { get; set; }
 
-        public override int YearOfPublishing
-        {
-            get => DateOfPublishing.Year;
+        public override int YearOfPublishing => DateOfPublishing.Year;
+
+        public override string Title => Newspaper.Title;
+
+        public Issue()
+        { 
         }
 
-        public Issue() { }
-
-        public Issue(Newspaper newspaper, int yearOfPublishing, int countOfPublishing, 
+        public Issue(Newspaper newspaper, int yearOfPublishing, int countOfPublishing,
                          DateTime dateOfPublishing, int pageCount, string commentary)
                 : base(newspaper.Title, pageCount, commentary, yearOfPublishing)
         {
-
             base.YearOfPublishing = yearOfPublishing;
             CountOfPublishing = countOfPublishing;
             DateOfPublishing = dateOfPublishing;
@@ -32,7 +32,6 @@ namespace Epam.Task01.Library.Entity
                      DateTime dateOfPublishing, int pageCount, string commentary)
                         : base(id, newspaper.Title, pageCount, commentary, yearOfPublishing)
         {
-
             base.YearOfPublishing = yearOfPublishing;
             CountOfPublishing = countOfPublishing;
             DateOfPublishing = dateOfPublishing;

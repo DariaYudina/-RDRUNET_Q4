@@ -1,7 +1,8 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.DBDAL;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
@@ -9,41 +10,51 @@ namespace Epam.Task01.Library.CollectionDAL
     {
         public int AddIssue(Issue issue)
         {
-            return MemoryStorage.AddLibraryItem(issue);
+            if (CheckIssueUniqueness(issue))
+            {
+                return MemoryStorage.AddLibraryItem(issue);
+            }
+
+            return -1;
         }
 
-        private bool CheckNewspaperUniqueness(Issue newspaper)
+        public IEnumerable<Issue> GetIssues()
         {
-            var newspapers = MemoryStorage.GetLibraryItemByType<Issue>();
+            return MemoryStorage.GetLibraryItemByType<Issue>();
+        }
 
-            if ( newspaper.Newspaper.Issn != "" && newspaper.Newspaper.Issn != null)
+        public IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId, int currentId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private bool CheckIssueUniqueness(Issue issue)
+        {
+            IEnumerable<Issue> issues = MemoryStorage.GetLibraryItemByType<Issue>();
+
+            if (issue.Newspaper.Issn != "" && issue.Newspaper.Issn != null)
             {
-                foreach (Issue item in newspapers)
+                if(issues.Any(i => i.Title == issue.Title && i.Newspaper.Issn == issue.Newspaper.Issn))
                 {
-                    if (item.Newspaper.Issn == newspaper.Newspaper.Issn && item.Title != newspaper.Title)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             else
             {
-                foreach (Issue item in newspapers)
+                if (issues.Any(i => i.Title == issue.Title
+                    && i.DateOfPublishing == issue.DateOfPublishing
+                    && i.Newspaper.PublishingCompany == issue.Newspaper.PublishingCompany))
                 {
-                    if (item.Title == newspaper.Title
-                        && item.DateOfPublishing == newspaper.DateOfPublishing 
-                        && item.Newspaper.PublishingCompany == newspaper.Newspaper.PublishingCompany)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
-            return true;
-        }
 
-        public IEnumerable<Issue> GetIssueItems()
-        {
-            return MemoryStorage.GetLibraryItemByType<Issue>();
+            return true;
         }
     }
 }

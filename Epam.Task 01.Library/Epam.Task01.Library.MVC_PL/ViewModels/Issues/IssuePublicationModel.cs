@@ -5,13 +5,10 @@ using System.Web;
 
 namespace Epam.Task01.Library.MVC_PL.Models
 {
-    public class AuthorModel
+    public class IssuePublicationModel
     {
         public int Id { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
+        public string Title { get; set; }
+        public int CountOfPublishing { get; set; }
     }
 }

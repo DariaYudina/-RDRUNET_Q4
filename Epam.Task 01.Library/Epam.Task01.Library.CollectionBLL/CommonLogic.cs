@@ -1,56 +1,121 @@
-﻿using AbstractValidation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Epam.Task_01.Library.AbstactBLL;
 using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
     public class CommonLogic : ICommonLogic
     {
-        private readonly ICommonValidation _commonValidator;
         private readonly ICommonDao _commonDao;
 
-        public CommonLogic(ICommonDao commonDao, ICommonValidation validator)
+        public CommonLogic(ICommonDao commonDao)
         {
             _commonDao = commonDao;
-            _commonValidator = validator;
         }
 
-        public IEnumerable<AbstractLibraryItem> GetAllLibraryItems()
+        public IEnumerable<AbstractLibraryItem> GetLibraryItems()
         {
-            return _commonDao.GetAllAbstractLibraryItems();
+            try
+            {
+                return _commonDao.GetLibraryItems();
+            }
+            catch (Exception e) when (!(e is AppLayerException))
+            {
+
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title)
         {
-            return _commonDao.GetLibraryItemsByTitle(title);
+            try
+            {
+                return _commonDao.GetLibraryItemsByTitle(title);
+            }
+            catch (Exception e)
+            {
+
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public bool DeleteLibraryItemById(int id)
         {
-            return _commonDao.DeleteLibraryItemById(id);
+            try
+            {
+                return _commonDao.DeleteLibraryItemById(id);
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author)
         {
-            return _commonDao.GetBookAndPatentByAuthorId(author.Id);
+            try
+            {
+                return _commonDao.GetBookAndPatentByAuthorId(author.Id);
+            }
+            catch (Exception e)
+            {
+
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public IEnumerable<AbstractLibraryItem> SortByYear()
         {
-            return _commonDao.SortByYear();
+            try
+            {
+                return _commonDao.SortByYear();
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public IEnumerable<AbstractLibraryItem> SortByYearDesc()
         {
-            return _commonDao.SortByYearDesc();
+            try
+            {
+                return _commonDao.SortByYearDesc();
+            }
+            catch (Exception e )
+            {
+
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public IEnumerable<IGrouping<int, AbstractLibraryItem>> GetLibraryItemsByYearOfPublishing()
         {
-            return _commonDao.GetLibraryItemsByYearOfPublishing().GroupBy(i => i.YearOfPublishing);
+            try
+            {
+                return _commonDao.GetLibraryItemsByYearOfPublishing().GroupBy(i => i.YearOfPublishing);
+            }
+            catch (Exception e)
+            {
+
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public AbstractLibraryItem GetLibraryItemById(int id)
+        {
+            try
+            {
+                return _commonDao.GetLibraryItemById(id);
+            }
+            catch (Exception e)
+            {
+
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
     }
 }

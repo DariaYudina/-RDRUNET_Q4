@@ -1,14 +1,14 @@
-﻿using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task_01.Library.AbstactBLL
 {
     public interface ICommonLogic
     {
-        IEnumerable<AbstractLibraryItem> GetAllLibraryItems(); 
+        IEnumerable<AbstractLibraryItem> GetLibraryItems();
 
-        IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title);  
+        IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string title);
 
         IEnumerable<AbstractLibraryItem> SortByYear();
 
@@ -20,5 +20,6 @@ namespace Epam.Task_01.Library.AbstactBLL
 
         IEnumerable<AbstractLibraryItem> GetBooksAndPatentsByAuthor(Author author);
 
+        AbstractLibraryItem GetLibraryItemById(int id);
     }
 }

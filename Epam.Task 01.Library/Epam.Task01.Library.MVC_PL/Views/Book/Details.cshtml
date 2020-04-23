@@ -1,0 +1,79 @@
+﻿@model DisplayBookModel
+
+@{
+    ViewBag.Title = "Book Details";
+    var authors = Model.ToString();
+}
+
+<h2>@ViewBag.Title</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PagesCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PagesCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Commentary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Commentary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YearOfPublishing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearOfPublishing)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublishingCompany)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublishingCompany)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Isbn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Isbn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Authors)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => authors)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index", "Home", null, null)
+</p>

@@ -1,0 +1,105 @@
+﻿@model AllLibraryItemsModel
+@{
+    Layout = null;
+    AjaxOptions ajaxOpts = new AjaxOptions
+    {
+        UpdateTargetId = "LibraryItems",
+        Url = Url.Action("Search", "Home")
+    };
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <nav class="navbar navbar-light bg-light">
+        @using (Ajax.BeginForm("Search", null, ajaxOpts, new { @class = "form-inline" }))
+        {
+            <input class="form-control mr-sm-2" type="search" name="title" placeholder="Search" aria-label="Search" />
+            <input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" />
+        }
+    </nav>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LibraryItems[0].Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LibraryItems[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LibraryItems[0].PagesCount)
+        </th>
+        @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Librarian")))
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.LibraryItems[0].Deleted)
+            </th>
+            <th>
+                @Html.DisplayName("Editing")
+            </th>
+        }
+    </tr>
+    <tbody>
+        @foreach (var item in Model.LibraryItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+
+                </td>
+                <td>
+                    @(User.Identity.IsAuthenticated
+                    ? Html.ActionLink(item.Title, "Details", item.Type, new { id = item.PrimaryKey }, null)
+                    : Html.DisplayFor(modelItem => item.Title))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PagesCount)
+                </td>
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Librarian")))
+                {
+                    <td>
+                        @item.Deleted
+                    </td>
+                }
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Details", "Details", item.Type, new { id = item.PrimaryKey }, null)
+                    }
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Librarian")))
+                    {
+                        @:|
+                        @Html.ActionLink("Edit", "Edit", item.Type, new { id = item.PrimaryKey }, null)
+                        @:|
+                        @Ajax.ActionLink("Delete", "Delete", "Home", new { id = item.PrimaryKey },
+                            new AjaxOptions
+                        {
+                            Confirm = "Are you sure you want to delete this?",
+                            HttpMethod = "Get",
+                            Url = Url.Action("Delete", "Home", new { id = item.PrimaryKey }),
+                            OnSuccess = "getData"
+                        },
+                        null)
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="pagination-flex-container">
+    <div class="btn-group pagination justify-content-center">
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", "Home", new { page = x }))
+    </div>
+</div>
+<script>
+    function getData() {
+        $.ajax({
+            url: "@Url.Action("GetData", "Home")",
+            method: "GET",
+        }).done(function(data) {
+            var target = $("#LibraryItems");
+            target.empty();
+            target.html(data);
+        })
+    }
+</script>
+

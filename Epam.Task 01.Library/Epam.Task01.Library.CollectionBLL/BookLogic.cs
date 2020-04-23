@@ -1,17 +1,18 @@
 ﻿using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL;
-using Epam.Task01.Library.AbstractDAL;
-using System.Collections.Generic;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
-using System.Linq;
+using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
     public class BookLogic : IBookLogic
     {
         private readonly IBookDao _bookDao;
-        private readonly IBookValidation _bookValidation;
+        private  IBookValidation _bookValidation;
 
         public BookLogic(IBookDao bookDao, IBookValidation bookValidation)
         {
@@ -21,46 +22,113 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public bool AddBook(out ValidationObject validationObject, Book book)
         {
-            validationObject = _bookValidation.ValidationObject;
-
-            if (book == null)
+            try
             {
-                validationObject.ValidationExceptions.Add(new ValidationException($"{nameof(book)} must be not null and not empty", nameof(book)));
+                validationObject = _bookValidation.ValidationObject;
+
+                if (book == null)
+                {
+                    validationObject.ValidationExceptions.Add(new ValidationException($"{nameof(book)} must be not null and not empty", nameof(book)));
+                    return false;
+                }
+
+                _bookValidation.CheckByCommonValidation(book)
+                               .CheckBookCity(book)
+                               .CheckPublishingCompany(book)
+                               .CheckISBN(book)
+                               .CheckYearOfPublishing(book);
+
+                if (_bookValidation.ValidationObject.IsValid)
+                {
+                    return _bookDao.AddBook(book) > 0;
+                }
+
                 return false;
             }
-
-            IBookValidation bookvalidation = _bookValidation.CheckByCommonValidation(book)
-                                                                    .CheckBookCity(book)
-                                                                    .CheckPublishingCompany(book)
-                                                                    .CheckISBN(book)
-                                                                    .CheckYearOfPublishing(book)
-                                                                    .CheckAuthors(book);
-            if (bookvalidation.ValidationObject.IsValid)
+            catch (Exception e)
             {
-                return _bookDao.AddBook(book) > 0;
-            }
 
-            return false;
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public bool EditBook(out ValidationObject validationObject, Book book)
+        {
+            try
+            {
+                validationObject = _bookValidation.ValidationObject;
+
+                if (book == null)
+                {
+                    validationObject.ValidationExceptions.Add(new ValidationException($"{nameof(book)} must be not null and not empty", nameof(book)));
+                    return false;
+                }
+
+                _bookValidation.CheckByCommonValidation(book)
+                               .CheckBookCity(book)
+                               .CheckPublishingCompany(book)
+                               .CheckISBN(book)
+                               .CheckYearOfPublishing(book);
+
+                if (_bookValidation.ValidationObject.IsValid)
+                {
+                    return _bookDao.EditBook(book) >= 0;
+                }
+
+                return false;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public Book GetBookById(int id)
         {
-            return _bookDao.GetBookById(id);
+            try
+            {
+                return _bookDao.GetBookById(id);
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
-        public IEnumerable<Book> GetBookItems()
+        public IEnumerable<Book> GetBooks()
         {
-            return _bookDao.GetBookItems();
+            try
+            {
+                return _bookDao.GetBooks();
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public IEnumerable<Book> GetBooksByAuthor(Author author)
         {
-            return _bookDao.GetBooksByAuthor(author);
+            try
+            {
+                return _bookDao.GetBooksByAuthor(author);
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
         public IEnumerable<IGrouping<string, Book>> GetBooksByPublishingCompany(string publishingCompany)
         {
-            return _bookDao.GetBooksByPublishingCompany(publishingCompany).GroupBy(item => item.PublishingCompany).ToList();
+            try
+            {
+                return _bookDao.GetBooksByPublishingCompany(publishingCompany).GroupBy(item => item.PublishingCompany).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
     }
 }

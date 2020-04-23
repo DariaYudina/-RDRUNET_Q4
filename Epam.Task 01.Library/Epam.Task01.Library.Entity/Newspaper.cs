@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Epam.Task01.Library.Entity
+﻿namespace Epam.Task01.Library.Entity
 {
     public class Newspaper
     {
-        public Newspaper() { }
+        public Newspaper() 
+        {
+        }
 
         public Newspaper(string title, string city, string publishingCompany, string issn)
         {

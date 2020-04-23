@@ -67,10 +67,6 @@
       <Project>{3006573F-D1AF-4FE6-8A27-700C128EA042}</Project>
       <Name>Epam.Task01.Library.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.DAL.csproj">
-      <Project>{ad260801-e40c-4c6a-8b6a-b32e36c8904d}</Project>
-      <Name>Epam.Task01.Library.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.DBDAL\Epam.Task01.Library.DBDAL.csproj">
       <Project>{D35770BF-636F-47B4-B664-FDB95742FD14}</Project>
       <Name>Epam.Task01.Library.DBDAL</Name>
@@ -85,6 +81,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
