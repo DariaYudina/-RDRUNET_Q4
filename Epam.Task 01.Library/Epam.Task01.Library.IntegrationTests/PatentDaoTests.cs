@@ -1,13 +1,12 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.CollectionDAL;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Transactions;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.DBDAL;
 using Epam.Task01.Library.Entity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Epam.Task01.Library.IntegrationTests
 {
@@ -18,12 +17,15 @@ namespace Epam.Task01.Library.IntegrationTests
         private IPatentDao _patentDao;
         private ICommonDao _commonDao;
         private TransactionScope scope;
+        private SqlConnectionConfig sqlConnectionConfig;
 
         [TestInitialize]
         public void Initialize()
         {
-            _patentDao = new PatentDao();
-            _commonDao = new CommonDao();
+            sqlConnectionConfig = new SqlConnectionConfig(ConfigurationManager.ConnectionStrings["DB"]
+                .ConnectionString);
+            _patentDao = new PatentDBDao(sqlConnectionConfig);
+            _commonDao = new CommonDBDao(sqlConnectionConfig);
 
             Patent defaultPatentItem = new Patent
             (
@@ -52,15 +54,13 @@ namespace Epam.Task01.Library.IntegrationTests
         public void AddPatent_AddingValidItem_Successfully()
         {
             // Arrange
-
-            var expectedCount = _patentDao.GetPatentItems().Count() + 1;
+            int expectedCount = _patentDao.GetPatents().Count() + 1;
 
             // Act
             _patentDao.AddPatent(_defaultPatentItem);
-            var actualValidationResuilCount = _patentDao.GetPatentItems().Count();
+            int actualValidationResuilCount = _patentDao.GetPatents().Count();
 
             //Assert
-
             Assert.AreEqual(expectedCount, actualValidationResuilCount);
             _commonDao.DeleteLibraryItemById(_defaultPatentItem.Id);
         }
@@ -69,16 +69,13 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetPatentItems_ToNotEmptyDao_ReturnItems()
         {
             // Arrange
-
             _patentDao.AddPatent(_defaultPatentItem);
             int expectedCount = 1;
 
             // Act
-
-            var result = _patentDao.GetPatentItems().Count();
+            int result = _patentDao.GetPatents().Count();
 
             //Assert
-
             Assert.AreEqual(expectedCount, result);
             _commonDao.DeleteLibraryItemById(_defaultPatentItem.Id);
         }
@@ -87,12 +84,10 @@ namespace Epam.Task01.Library.IntegrationTests
         public void GetPatentItems_ToEmptyDao_ReturnEmptyCollection()
         {
             // Arrange
-
             int expectedCount = 0;
 
             // Act
-
-            var result = _patentDao.GetPatentItems().Count();
+            int result = _patentDao.GetPatents().Count();
 
             //Assert
             Assert.AreEqual(expectedCount, result);

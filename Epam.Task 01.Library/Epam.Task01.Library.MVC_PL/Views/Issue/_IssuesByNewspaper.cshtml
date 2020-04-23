@@ -1,0 +1,9 @@
+﻿@model IEnumerable<IssuePublicationModel>
+<h3>Все выпуски:</h3>
+@foreach (var item in Model)
+{
+    <div>
+        @Html.ActionLink(item.Title + " Выпуск №" + @item.CountOfPublishing, "Details", "Issue",
+        new { id = item.Id }, null)
+    </div>
+}

@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorLogic.cs" />
     <Compile Include="BookLogic.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -59,11 +60,14 @@
     <Compile Include="IssueLogic.cs" />
     <Compile Include="PatentLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserLogic.cs" />
+    <Compile Include="Validators\AuthorValidation.cs" />
     <Compile Include="Validators\BookValidation.cs" />
     <Compile Include="Validators\CommonValidation.cs" />
     <Compile Include="Validators\IssueValidation.cs" />
     <Compile Include="Validators\NewspaperValidation.cs" />
     <Compile Include="Validators\PatentValidation.cs" />
+    <Compile Include="Validators\UserValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

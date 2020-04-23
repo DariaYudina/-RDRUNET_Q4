@@ -8,7 +8,9 @@
 
         public string LastName { get; set; }
 
-        public Author() { }
+        public Author() 
+        {
+        }
 
         public Author(string firstName, string lastName)
         {
@@ -21,6 +23,11 @@
             Id = id;
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        public override string ToString()
+        {
+            return $"{FirstName[0]}. {LastName}";
         }
     }
 }

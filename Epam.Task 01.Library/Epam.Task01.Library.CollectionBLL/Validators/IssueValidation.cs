@@ -1,22 +1,12 @@
-﻿using AbstractValidation;
+﻿using System;
+using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace CollectionValidation
 {
     public class IssueValidation : IIssueValidation
     {
-        public ValidationObject ValidationObject { get; set; }
-
-        private ICommonValidation CommonValidation { get; set; }
-
-        private INewspaperValidation NewspaperValidation { get; set; }
-
-        private const int BottomLineYear = 1400;
-        private const int BottomLineCountOfPublishing = 1;
 
         public IssueValidation(ICommonValidation commonValidation, INewspaperValidation newspaperValidation)
         {
@@ -25,38 +15,17 @@ namespace CollectionValidation
             NewspaperValidation = newspaperValidation;
         }
 
-        private void VerificationMethod<T>(Predicate<T> predicateMethod, T checkedValue, string paramsName, string errormassage = "is not valid")
-        {
-            if (checkedValue != null)
-            {
-                if (predicateMethod(checkedValue))
-                {
-                    ValidationException e = new ValidationException($"{paramsName} {errormassage}", paramsName);
-                    ValidationObject.ValidationExceptions.Add(e);
-                }
-            }
-            else
-            {
-                ValidationException e = new ValidationException($"{paramsName} must bu not null or empty", paramsName);
-                ValidationObject.ValidationExceptions.Add(e);
-            }
-        }
-
         public IIssueValidation CheckByCommonValidation(Issue newspaper)
         {
             CommonValidation.CheckPagesCount(newspaper);
-            foreach (var item in CommonValidation.ValidationObject.ValidationExceptions)
-            {
-                ValidationObject.ValidationExceptions.Add(item);
-            }
-
+            ValidationObject.ValidationExceptions.AddRange(CommonValidation.ValidationObject.ValidationExceptions);
             return this;
         }
 
         public IIssueValidation CheckByNewspaperValidation(Issue newspaper)
         {
             NewspaperValidation.CheckTitle(newspaper.Newspaper).CheckISSN(newspaper.Newspaper).CheckNewspaperCity(newspaper.Newspaper).CheckPublishingCompany(newspaper.Newspaper);
-            foreach (var item in NewspaperValidation.ValidationObject.ValidationExceptions)
+            foreach (ValidationException item in NewspaperValidation.ValidationObject.ValidationExceptions)
             {
                 ValidationObject.ValidationExceptions.Add(item);
             }
@@ -66,8 +35,8 @@ namespace CollectionValidation
 
         public IIssueValidation CheckCountOfPublishing(Issue newspaper)
         {
-            VerificationMethod(i => !(newspaper.CountOfPublishing > BottomLineCountOfPublishing),
-                newspaper.CountOfPublishing, 
+            VerificationMethod(i => !(newspaper.CountOfPublishing >= BottomLineCountOfPublishing),
+                newspaper.CountOfPublishing,
                 nameof(newspaper.CountOfPublishing),
                 "CountOfPublishing must be more than 0");
             return this;
@@ -91,6 +60,40 @@ namespace CollectionValidation
             nameof(newspaper.YearOfPublishing),
             "YearOfPublishing must be more than 1400 year and no more then year of now");
             return this;
+        }
+
+        public ValidationObject ValidationObject { get; set; }
+
+        private ICommonValidation CommonValidation { get; set; }
+
+        private INewspaperValidation NewspaperValidation { get; set; }
+
+        private const int BottomLineYear = 1400;
+
+        private const int BottomLineCountOfPublishing = 1;
+
+        private void VerificationMethod<T>(Predicate<T> predicateMethod, T checkedValue, string paramsName, string errormassage = "is not valid")
+        {
+            try
+            {
+                if (checkedValue != null)
+                {
+                    if (predicateMethod(checkedValue))
+                    {
+                        ValidationException e = new ValidationException($"{paramsName} {errormassage}", paramsName);
+                        ValidationObject.ValidationExceptions.Add(e);
+                    }
+                }
+                else
+                {
+                    ValidationException e = new ValidationException($"{paramsName} must bu not null or empty", paramsName);
+                    ValidationObject.ValidationExceptions.Add(e);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
         }
     }
 }

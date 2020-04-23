@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,10 +44,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -68,6 +75,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -77,6 +87,9 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -106,35 +119,84 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-chosen.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen-sprite.png" />
+    <Content Include="Content\chosen.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-chosen.scss" />
+    <Content Include="Content\bootstrap-chosen.less" />
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\custom-scripts.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IssueController.cs" />
+    <Compile Include="Controllers\NewspaperController.cs" />
+    <Compile Include="Controllers\PatentController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\LogLogInAttribute.cs" />
+    <Compile Include="Filters\LogRegistrationAttribute.cs" />
+    <Compile Include="Filters\LogUnauthorizedAccessAttemptAttribute.cs" />
+    <Compile Include="Filters\LogAdminAttribute.cs" />
+    <Compile Include="Filters\LogErrorAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AuthorModel.cs" />
-    <Compile Include="Models\BookModel.cs" />
-    <Compile Include="Models\IssueModel.cs" />
-    <Compile Include="Models\NewspaperModel.cs" />
-    <Compile Include="Models\PatentModel.cs" />
+    <Compile Include="Halpers\PagingHelpers.cs" />
+    <Compile Include="ViewModels\Authors\CreateAuthorModel.cs" />
+    <Compile Include="ViewModels\Books\CreateBookModel.cs" />
+    <Compile Include="ViewModels\Books\DisplayBookModel.cs" />
+    <Compile Include="Models\MyRoleProvider.cs" />
+    <Compile Include="Models\PageInfo.cs" />
+    <Compile Include="ViewModels\Books\EditBookModel.cs" />
+    <Compile Include="ViewModels\Issues\CreateIssueModel.cs" />
+    <Compile Include="ViewModels\Issues\EditIssueModel.cs" />
+    <Compile Include="ViewModels\Issues\IssuePublicationModel.cs" />
+    <Compile Include="ViewModels\LibraryItems\AllLibraryItemsModel.cs" />
+    <Compile Include="ViewModels\Authors\DisplayAuthorModel.cs" />
+    <Compile Include="ViewModels\Issues\DisplayIssueModel.cs" />
+    <Compile Include="ViewModels\Newspapers\CreateNewspaperModel.cs" />
+    <Compile Include="ViewModels\Newspapers\DisplayNewspaperModel.cs" />
+    <Compile Include="ViewModels\Patents\CreatePatentModel.cs" />
+    <Compile Include="ViewModels\Patents\DisplayPatentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\LibraryItems\DisplayLibraryItemModel.cs" />
+    <Compile Include="ViewModels\Patents\EditPatentModel.cs" />
+    <Compile Include="ViewModels\User\LogInModel.cs" />
+    <Compile Include="ViewModels\User\SignUpModel.cs" />
+    <Compile Include="ViewModels\User\UserDetailsModel.cs" />
+    <Compile Include="ViewModels\User\UserEditModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -151,7 +213,29 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\Book\Create.cshtml" />
+    <Content Include="Views\Book\Details.cshtml" />
+    <Content Include="Views\Issue\Details.cshtml" />
+    <Content Include="Views\Patent\Details.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Patent\Edit.cshtml" />
+    <Content Include="Views\Issue\Edit.cshtml" />
+    <Content Include="Views\Patent\Create.cshtml" />
+    <Content Include="Views\Issue\Create.cshtml" />
+    <Content Include="Views\Issue\_IssuesByNewspaper.cshtml" />
+    <Content Include="Views\User\LogIn.cshtml" />
+    <Content Include="Views\User\SignUp.cshtml" />
+    <Content Include="Views\User\_UserIsNotAuntificatedPartial.cshtml" />
+    <Content Include="Views\User\_UserIsAuntificatedPartial.cshtml" />
+    <Content Include="Views\Admin\UsersDetails.cshtml" />
+    <Content Include="Views\Home\_UsersReferencePartial.cshtml" />
+    <Content Include="Views\Admin\EditRoles.cshtml" />
+    <Content Include="Views\Home\_CreateReferences.cshtml" />
+    <Content Include="Views\Home\_IndexDataPartial.cshtml" />
+    <Content Include="Views\Book\Edit.cshtml" />
+    <Content Include="Views\Newspaper\Create.cshtml" />
+    <Content Include="Views\Author\_AddAuthorPartial.cshtml" />
+    <Content Include="Views\Author\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -175,10 +259,6 @@
       <Project>{3006573f-d1af-4fe6-8a27-700c128ea042}</Project>
       <Name>Epam.Task01.Library.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.DAL.csproj">
-      <Project>{ad260801-e40c-4c6a-8b6a-b32e36c8904d}</Project>
-      <Name>Epam.Task01.Library.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.DBDAL\Epam.Task01.Library.DBDAL.csproj">
       <Project>{d35770bf-636f-47b4-b664-fdb95742fd14}</Project>
       <Name>Epam.Task01.Library.DBDAL</Name>
@@ -186,6 +266,10 @@
     <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
       <Project>{551a846e-3895-4155-9be2-793fe9237402}</Project>
       <Name>Epam.Task01.Library.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Task01.Library.NinjectConfig\Epam.Task01.Library.NinjectConfig.csproj">
+      <Project>{1E636AC5-F5DB-49E4-A16F-A57F85325450}</Project>
+      <Name>Epam.Task01.Library.NinjectConfig</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

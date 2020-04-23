@@ -1,12 +1,11 @@
-﻿using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.AbstractDAL
 {
     public interface ICommonDao
     {
-        IEnumerable<AbstractLibraryItem> GetAllAbstractLibraryItems();
+        IEnumerable<AbstractLibraryItem> GetLibraryItems();
 
         IEnumerable<AbstractLibraryItem> GetLibraryItemsByTitle(string name);
 
@@ -20,5 +19,6 @@ namespace Epam.Task01.Library.AbstractDAL
 
         IEnumerable<AbstractLibraryItem> GetBookAndPatentByAuthorId(int id);
 
+        AbstractLibraryItem GetLibraryItemById(int id);
     }
 }

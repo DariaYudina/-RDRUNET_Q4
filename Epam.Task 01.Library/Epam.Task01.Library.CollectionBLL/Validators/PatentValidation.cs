@@ -1,9 +1,8 @@
-﻿using AbstractValidation;
+﻿using System;
+using System.Text.RegularExpressions;
+using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace CollectionValidation
 {
@@ -13,39 +12,19 @@ namespace CollectionValidation
 
         public bool IsValid { get; set; } = true;
 
-        private ICommonValidation CommonValidation { get; set; }
-
-        private const int BottomLineYear = 1474;
-        private const string AuthorPattern = @"^((([A-Z][a-z]+)|([A-Z][a-z]+-[A-Z][a-z]+))\s(([a-z]+)\s)?(([A-Z][a-z]+)|((([A-Z][a-z]*)|([a-z]*))(-|')[A-Z][a-z]+))|(([А-Я][а-я]+)|([А-Я][а-я]+-[А-Я][а-я]+))\s(([а-я]+)\s)?(([А-Я][а-я]+)|((([А-Я][а-я]*)|([а-я]*))(-|')[А-Я][а-я]+)))$";
-        private const string CountryPattern = @"^(([A-Z][a-z]+)|([А-Я][а-я]+)|([A-Z]+|[А-Я]+))$";
-        private const string RegistrationNumberPattern = @"^\d{1,9}$";
-
         public PatentValidation(ICommonValidation commonValidation)
         {
             ValidationObject = new ValidationObject();
             CommonValidation = commonValidation;
         }
 
-        private void VerificationMethod<T>(Predicate<T> predicateMethod, T checkedValue, string paramsName, string errormassage = "is not valid")
-        {
-            if (checkedValue != null)
-            {
-                if (predicateMethod(checkedValue))
-                {
-                    ValidationException e = new ValidationException($"{paramsName} {errormassage}", paramsName);
-                    ValidationObject.ValidationExceptions.Add(e);
-                }
-            }
-            else
-            {
-                ValidationException e = new ValidationException($"{paramsName} must bu not null or empty", paramsName);
-                ValidationObject.ValidationExceptions.Add(e);
-            }
-        }
-
         public IPatentValidation CheckApplicationDate(Patent patent)
         {
-            if (patent.ApplicationDate == null) return this;
+            if (patent.ApplicationDate == null)
+            {
+                return this;
+            }
+
             VerificationMethod(i => i.Year > BottomLineYear || i > DateTime.Now,
                 (DateTime)patent?.ApplicationDate,
                 nameof(patent.ApplicationDate),
@@ -65,7 +44,7 @@ namespace CollectionValidation
         {
             VerificationMethod(
                 i => !(i.Year < 1474
-                || i > DateTime.Now
+                || i.Year < DateTime.Now.Year + 1
                 || i < patent.ApplicationDate),
                 patent.PublicationDate,
                 nameof(patent.PublicationDate),
@@ -104,12 +83,42 @@ namespace CollectionValidation
         public IPatentValidation CheckByCommonValidation(Patent patent)
         {
             CommonValidation.CheckTitle(patent).CheckPagesCount(patent);
-            foreach (var item in CommonValidation.ValidationObject.ValidationExceptions)
-            {
-                ValidationObject.ValidationExceptions.Add(item);
-            }
-
+            ValidationObject.ValidationExceptions.AddRange(CommonValidation.ValidationObject.ValidationExceptions);
             return this;
+        }
+
+        private ICommonValidation CommonValidation { get; set; }
+
+        private const int BottomLineYear = 1474;
+        
+        private const string AuthorPattern = @"^((([A-Z][a-z]+)|([A-Z][a-z]+-[A-Z][a-z]+))\s(([a-z]+)\s)?(([A-Z][a-z]+)|((([A-Z][a-z]*)|([a-z]*))(-|')[A-Z][a-z]+))|(([А-Я][а-я]+)|([А-Я][а-я]+-[А-Я][а-я]+))\s(([а-я]+)\s)?(([А-Я][а-я]+)|((([А-Я][а-я]*)|([а-я]*))(-|')[А-Я][а-я]+)))$";
+        
+        private const string CountryPattern = @"^(([A-Z][a-z]+)|([А-Я][а-я]+)|([A-Z]+|[А-Я]+))$";
+        
+        private const string RegistrationNumberPattern = @"^\d{1,9}$";
+
+        private void VerificationMethod<T>(Predicate<T> predicateMethod, T checkedValue, string paramsName, string errormassage = "is not valid")
+        {
+            try
+            {
+                if (checkedValue != null)
+                {
+                    if (predicateMethod(checkedValue))
+                    {
+                        ValidationException e = new ValidationException($"{paramsName} {errormassage}", paramsName);
+                        ValidationObject.ValidationExceptions.Add(e);
+                    }
+                }
+                else
+                {
+                    ValidationException e = new ValidationException($"{paramsName} must bu not null or empty", paramsName);
+                    ValidationObject.ValidationExceptions.Add(e);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
         }
     }
 }

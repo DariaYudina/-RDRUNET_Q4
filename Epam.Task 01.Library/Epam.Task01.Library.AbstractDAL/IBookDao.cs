@@ -1,6 +1,5 @@
-﻿using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.AbstractDAL
 {
@@ -8,7 +7,7 @@ namespace Epam.Task01.Library.AbstractDAL
     {
         int AddBook(Book item);
 
-        IEnumerable<Book> GetBookItems();
+        IEnumerable<Book> GetBooks();
 
         Book GetBookById(int id);
 
@@ -16,5 +15,6 @@ namespace Epam.Task01.Library.AbstractDAL
 
         IEnumerable<Book> GetBooksByPublishingCompany(string publishingCompany);
 
+        int EditBook(Book item);
     }
 }

@@ -1,5 +1,5 @@
-﻿using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.AbstractDAL
 {
@@ -7,7 +7,10 @@ namespace Epam.Task01.Library.AbstractDAL
     {
         int AddIssue(Issue issue);
 
-        IEnumerable<Issue> GetIssueItems();
+        IEnumerable<Issue> GetIssues();
 
+        IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId, int currentId);
+
+        int EditIssue(Issue issue);
     }
 }

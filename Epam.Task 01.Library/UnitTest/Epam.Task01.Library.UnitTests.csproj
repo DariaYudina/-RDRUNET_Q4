@@ -90,10 +90,6 @@
       <Project>{3006573f-d1af-4fe6-8a27-700c128ea042}</Project>
       <Name>Epam.Task01.Library.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epam.Task01.Library.CollectionDAL\Epam.Task01.Library.DAL.csproj">
-      <Project>{ad260801-e40c-4c6a-8b6a-b32e36c8904d}</Project>
-      <Name>Epam.Task01.Library.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.Task01.Library.Entity\Epam.Task01.Library.Entities.csproj">
       <Project>{551a846e-3895-4155-9be2-793fe9237402}</Project>
       <Name>Epam.Task01.Library.Entities</Name>

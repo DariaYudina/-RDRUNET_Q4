@@ -1,13 +1,10 @@
-﻿using AbstractValidation;
+﻿using System;
+using System.Collections.Generic;
+using AbstractValidation;
 using Epam.Task_01.Library.AbstactBLL;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
-using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.AbstractDAL.INewspaper;
 using Epam.Task01.Library.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task01.Library.CollectionBLL
 {
@@ -24,32 +21,54 @@ namespace Epam.Task01.Library.CollectionBLL
 
         public bool AddNewspaper(out ValidationObject validationObject, Newspaper newspaper)
         {
-            validationObject = _newspaperValidation.ValidationObject;
-            if (newspaper == null)
+            try
             {
-                _newspaperValidation.ValidationObject.ValidationExceptions.Add(new ValidationException($"{nameof(newspaper)} must be not null and not empty", nameof(newspaper)));
+                validationObject = _newspaperValidation.ValidationObject;
+                if (newspaper == null)
+                {
+                    _newspaperValidation.ValidationObject.ValidationExceptions.Add(new ValidationException($"{nameof(newspaper)} must be not null and not empty", nameof(newspaper)));
+                    return false;
+                }
+
+                _newspaperValidation.CheckISSN(newspaper)
+                                    .CheckNewspaperCity(newspaper)
+                                    .CheckPublishingCompany(newspaper)
+                                    .CheckTitle(newspaper);
+                if (_newspaperValidation.ValidationObject.IsValid)
+                {
+                    return _newspaperDao.AddNewspaper(newspaper) > 0;
+                }
+
                 return false;
             }
-            INewspaperValidation issueValidationObject = _newspaperValidation.CheckISSN(newspaper)
-                                                                         .CheckNewspaperCity(newspaper)
-                                                                         .CheckPublishingCompany(newspaper)
-                                                                         .CheckTitle(newspaper);
-            if (_newspaperValidation.ValidationObject.IsValid)
+            catch (Exception e)
             {
-                return _newspaperDao.AddNewspaper(newspaper) > 0;
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
-
-            return false;
         }
 
-        public Newspaper GetNewspaperItemById(int id)
+        public Newspaper GetNewspaperById(int id)
         {
-            return _newspaperDao.GetNewspaperItemById(id);
+            try
+            {
+                return _newspaperDao.GetNewspaperById(id);
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
 
-        public IEnumerable<Newspaper> GetNewspaperItems()
+        public IEnumerable<Newspaper> GetNewspapers()
         {
-            return _newspaperDao.GetNewspaperItems();
+            try
+            {
+                return _newspaperDao.GetNewspapers();
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
         }
     }
 }

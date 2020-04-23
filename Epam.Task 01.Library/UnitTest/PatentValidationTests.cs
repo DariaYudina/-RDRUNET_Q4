@@ -1,833 +1,835 @@
-﻿//using AbstractValidation;
-//using CollectionValidation;
-//using Epam.Task01.Library.Entity;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace UnitTest
-//{
-//    [TestClass]
-//    public class PatentValidationTests
-//    {
-//        private IPatentValidation _patentValidation;
-//        private Patent _defaultPatentItem;
-//        private Mock<ICommonValidation> _commonValidationMock;
-
-//        [TestInitialize]
-//        public void Initialize()
-//        {
-//            _commonValidationMock = new Mock<ICommonValidation>();
-//            _patentValidation = new PatentValidation(_commonValidationMock.Object);
-
-//            Patent defaultPatentItem = new Patent
-//            (authors: new List<Author>() { new Author("", "") },
-//              country: "",
-//              registrationNumber: "",
-//              applicationDate: DateTime.Now,
-//              publicationDate: DateTime.Now,
-//              title: "",
-//              pageCount: 0,
-//              commentary: ""
-//            );
-
-//            _defaultPatentItem = defaultPatentItem;
-//        }
-
-//        [TestMethod]
-//        public void CheckApplicationDate_DataNotMoreThanCurrentDataAndMore1474Year_ReturnTrue()
-//        {
-//            // Arrange
-
-//            _defaultPatentItem.ApplicationDate = new DateTime(2000, 1, 1);
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
-
-//            // Act
-
-//            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
-
-//            //Assert
-
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
-
-//        [TestMethod]
-//        public void CheckApplicationDate_DataLessThan1474_ReturnFalse()
-//        {
-//            // Arrange
-
-//            _defaultPatentItem.ApplicationDate = new DateTime(1473, 1, 1);
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
-//            // Act
-
-//            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
-
-//            //Assert
-
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
-
-//        [TestMethod]
-//        public void CheckApplicationDate_DataMoreThanCurrentDate_ReturnFalse()
-//        {
-//            // Arrange
-
-//            _defaultPatentItem.ApplicationDate = DateTime.Now.AddDays(1);
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
-//            // Act
-
-//            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
-
-//            //Assert
-
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
-
-//        [TestMethod]
-//        public void CheckApplicationDate_DataIsNull_ReturnTrue()
-//        {
-//            // Arrange
+﻿using AbstractValidation;
+using CollectionValidation;
+using Epam.Task_01.Library.AbstactBLL.IValidators;
+using Epam.Task01.Library.Entity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UnitTest
+{
+    [TestClass]
+    public class PatentValidationTests
+    {
+        private IPatentValidation _patentValidation;
+        private Patent _defaultPatentItem;
+        private Mock<ICommonValidation> _commonValidationMock;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _commonValidationMock = new Mock<ICommonValidation>();
+            _patentValidation = new PatentValidation(_commonValidationMock.Object);
+
+            Patent defaultPatentItem = new Patent
+            (authors: new List<Author>() { new Author("", "") },
+              country: "",
+              registrationNumber: "",
+              applicationDate: DateTime.Now,
+              publicationDate: DateTime.Now,
+              title: "",
+              pageCount: 0,
+              commentary: ""
+            );
+
+            _defaultPatentItem = defaultPatentItem;
+        }
+
+        [TestMethod]
+        public void CheckApplicationDate_DataNotMoreThanCurrentDataAndMore1474Year_ReturnTrue()
+        {
+            // Arrange
+
+            _defaultPatentItem.ApplicationDate = new DateTime(2000, 1, 1);
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(true);
+
+            // Act
+
+            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+
+            //Assert
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckApplicationDate_DataLessThan1474_ReturnFalse()
+        {
+            // Arrange
+
+            _defaultPatentItem.ApplicationDate = new DateTime(1473, 1, 1);
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(false);
+            // Act
+
+            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+
+        [TestMethod]
+        public void CheckApplicationDate_DataMoreThanCurrentDate_ReturnFalse()
+        {
+            // Arrange
+
+            _defaultPatentItem.ApplicationDate = DateTime.Now.AddDays(1);
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(false);
+            // Act
+
+            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+
+            //Assert
+
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
-//            // Act
+        [TestMethod]
+        public void CheckApplicationDate_DataIsNull_ReturnTrue()
+        {
+            // Arrange
 
-//            _defaultPatentItem.ApplicationDate = null;
-//            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(true);
+            // Act
 
-//            //Assert
+            _defaultPatentItem.ApplicationDate = null;
+            var validation = _patentValidation.CheckApplicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            //Assert
 
-//        [TestMethod]
-//        public void CheckRegistrationNumber_RegistrationNumberLengtMore0AndLess10Number_ReturnTrue()
-//        {
-//            // Arrange
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            _defaultPatentItem.RegistrationNumber = "123456789";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+        [TestMethod]
+        public void CheckRegistrationNumber_RegistrationNumberLengtMore0AndLess10Number_ReturnTrue()
+        {
+            // Arrange
 
-//            // Act
+            _defaultPatentItem.RegistrationNumber = "123456789";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            var validation = _patentValidation.CheckRegistrationNumber(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            //Assert
+            var validation = _patentValidation.CheckRegistrationNumber(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            //Assert
 
-//        [TestMethod]
-//        public void CheckRegistrationNumber_RegistrationNumberMore9Number_ReturnFalse()
-//        {
-//            // Arrange
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            _defaultPatentItem.RegistrationNumber = "0123456789";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+        [TestMethod]
+        public void CheckRegistrationNumber_RegistrationNumberMore9Number_ReturnFalse()
+        {
+            // Arrange
 
-//            // Act
+            _defaultPatentItem.RegistrationNumber = "0123456789";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//            var validation = _patentValidation.CheckRegistrationNumber(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            //Assert
+            var validation = _patentValidation.CheckRegistrationNumber(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            //Assert
 
-//        [TestMethod]
-//        public void CheckRegistrationNumber_RegistrationNumberIsNull_ReturnFalse()
-//        {
-//            // Arrange
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            _defaultPatentItem.RegistrationNumber = null;
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+        [TestMethod]
+        public void CheckRegistrationNumber_RegistrationNumberIsNull_ReturnFalse()
+        {
+            // Arrange
 
-//            // Act
+            _defaultPatentItem.RegistrationNumber = null;
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//            var validation = _patentValidation.CheckRegistrationNumber(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            //Assert
+            var validation = _patentValidation.CheckRegistrationNumber(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            //Assert
 
-//        [TestMethod]
-//        public void CheckCountry_CountryStartWithUpperCaseEng_ReturnTrue()
-//        {
-//            // Arrange
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            _defaultPatentItem.Country = "Country";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+        [TestMethod]
+        public void CheckCountry_CountryStartWithUpperCaseEng_ReturnTrue()
+        {
+            // Arrange
 
-//            // Act
+            _defaultPatentItem.Country = "Country";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            //Assert
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            //Assert
 
-//        [TestMethod]
-//        public void CheckCountry_CountryhUpperCaseEng_ReturnTrue()
-//        {
-//            // Arrange
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            _defaultPatentItem.Country = "COUNTRY";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+        [TestMethod]
+        public void CheckCountry_CountryhUpperCaseEng_ReturnTrue()
+        {
+            // Arrange
 
-//            // Act
+            _defaultPatentItem.Country = "COUNTRY";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            //Assert
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            //Assert
 
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckCountry_CountryStartWithUpperCaseRus_ReturnTrue()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckCountry_CountryStartWithUpperCaseRus_ReturnTrue()
+        {
+            // Arrange
 
-//            _defaultPatentItem.Country = "Страна";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Country = "Страна";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            // Act
 
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckCountry_CountryhUpperCaserus_ReturnTrue()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckCountry_CountryhUpperCaserus_ReturnTrue()
+        {
+            // Arrange
 
-//            _defaultPatentItem.Country = "СТРАНА";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Country = "СТРАНА";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            // Act
 
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckCountry_CountryLessThan200_ReturnTrue()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckCountry_CountryLessThan200_ReturnTrue()
+        {
+            // Arrange
 
-//            _defaultPatentItem.Country = "Country";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Country = "Country";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            // Act
 
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckCountry_CountryRusAndEng_ReturnFalse()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckCountry_CountryRusAndEng_ReturnFalse()
+        {
+            // Arrange
 
-//            _defaultPatentItem.Country = "Countryстрана";
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _defaultPatentItem.Country = "Countryстрана";
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//            // Act
+            // Act
 
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckCountry_CountryMoreThan200_ReturnFalse()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckCountry_CountryMoreThan200_ReturnFalse()
+        {
+            // Arrange
 
-//            int inputlength = 201;
-//            StringBuilder stringBuilder = new StringBuilder();
-//            for (int i = 0; i < inputlength; i++)
-//            {
-//                stringBuilder.Append("*");
-//            }
-//            string Text = stringBuilder.ToString();
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            int inputlength = 201;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < inputlength; i++)
+            {
+                stringBuilder.Append("*");
+            }
+            string Text = stringBuilder.ToString();
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//            // Act
+            // Act
 
-//            _defaultPatentItem.Country = Text;
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Country = Text;
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckCountry_CountryIsNull_ReturnFalse()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckCountry_CountryIsNull_ReturnFalse()
+        {
+            // Arrange
 
-//            _defaultPatentItem.Country = null;
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _defaultPatentItem.Country = null;
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//            // Act
+            // Act
 
-//            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckCountry(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckPublicationDate_DataNotMoreThanCurrentDataAndMore1474YearAndNotNullAndNotMoreApplicationDate_ReturnTrue()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckPublicationDate_DataNotMoreThanCurrentDataAndMore1474YearAndNotNullAndNotMoreApplicationDate_ReturnTrue()
+        {
+            // Arrange
 
-//            _defaultPatentItem.ApplicationDate = new DateTime(2000, 1, 1);
-//            _defaultPatentItem.PublicationDate = _defaultPatentItem.ApplicationDate.Value.AddDays(1);
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(true);
+            _defaultPatentItem.ApplicationDate = new DateTime(2000, 1, 1);
+            _defaultPatentItem.PublicationDate = _defaultPatentItem.ApplicationDate.Value.AddDays(1);
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(true);
 
-//            // Act
+            // Act
 
-//            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckPublicationDate_PublicationDateLessThanApplicationDate_ReturnFalse()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckPublicationDate_PublicationDateLessThanApplicationDate_ReturnFalse()
+        {
+            // Arrange
 
-//            _defaultPatentItem.PublicationDate = new DateTime(1473, 1, 1);
-//            _defaultPatentItem.ApplicationDate = _defaultPatentItem.PublicationDate.AddDays(1);
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
+            _defaultPatentItem.PublicationDate = new DateTime(1473, 1, 1);
+            _defaultPatentItem.ApplicationDate = _defaultPatentItem.PublicationDate.AddDays(1);
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(false);
 
-//            // Act
+            // Act
 
-//            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckPublicationDate_DataLessThan1474_ReturnFalse()
-//        {
-//            // Arrange
-//            _defaultPatentItem.ApplicationDate = new DateTime(1470, 1, 1);
-//            _defaultPatentItem.PublicationDate = _defaultPatentItem.ApplicationDate.Value.AddDays(1);
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
-//            // Act
+        [TestMethod]
+        public void CheckPublicationDate_DataLessThan1474_ReturnFalse()
+        {
+            // Arrange
+            _defaultPatentItem.ApplicationDate = new DateTime(1470, 1, 1);
+            _defaultPatentItem.PublicationDate = _defaultPatentItem.ApplicationDate.Value.AddDays(1);
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(false);
+            // Act
 
-//            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckPublicationDate_DataMoreThanCurrentDate_ReturnFalse()
-//        {
-//            // Arrange
-//            _defaultPatentItem.ApplicationDate = DateTime.Now.AddDays(1);
-//            _defaultPatentItem.PublicationDate = _defaultPatentItem.ApplicationDate.Value.AddDays(1);
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
-//            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int?>(), It.IsAny<int?>())).Returns(false);
-//            // Act
+        [TestMethod]
+        public void CheckPublicationDate_DataMoreThanCurrentDate_ReturnFalse()
+        {
+            // Arrange
+            _defaultPatentItem.ApplicationDate = DateTime.Now.AddDays(1);
+            _defaultPatentItem.PublicationDate = _defaultPatentItem.ApplicationDate.Value.AddDays(1);
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _commonValidationMock.Setup(i => i.CheckNumericalInRange(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(false);
+            // Act
 
-//            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            var validation = _patentValidation.CheckPublicationDate(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//        [TestMethod]
-//        public void CheckAuthor_NameAndLasNameStartWithUpperCaseEng_ReturnTrue()
-//        {
-//            // Arrange
+        [TestMethod]
+        public void CheckAuthor_NameAndLasNameStartWithUpperCaseEng_ReturnTrue()
+        {
+            // Arrange
 
-//            Author author = new Author("Name", "Lastname");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            Author author = new Author("Name", "Lastname");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            // Act
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            //Assert
+            //Assert
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameStartWithUpperCaseEng_ReturnTrue()
+        {
+            // Arrange
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameStartWithUpperCaseEng_ReturnTrue()
-//        {
-//            // Arrange
+            Author author = new Author("Name-Name", "Lastname");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            Author author = new Author("Name-Name", "Lastname");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            // Act
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            //Assert
 
-//            //Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenStartWithUpperCaseEng_ReturnTrue()
+        {
+            // Arrange
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenStartWithUpperCaseEng_ReturnTrue()
-//        {
-//            // Arrange
+            Author author = new Author("Name-Name", "Lastname-Lastname");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            Author author = new Author("Name-Name", "Lastname-Lastname");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            // Act
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            //Assert
 
-//            //Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenAndFamilyPrefixStartWithUpperCaseEng_ReturnTrue()
+        {
+            // Arrange
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenAndFamilyPrefixStartWithUpperCaseEng_ReturnTrue()
-//        {
-//            // Arrange
+            Author author = new Author("Name-Name", "lastname Lastname");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            Author author = new Author("Name-Name", "lastname Lastname");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            // Act
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            //Assert
 
-//            //Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameStarWithLowerCaseWithFamilyPrefixEng_ReturnTrue()
+        {
+            // Arrange
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameStarWithLowerCaseWithFamilyPrefixEng_ReturnTrue()
-//        {
-//            // Arrange
+            Author author = new Author("Name-Name", "lastname'Lastname");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            Author author = new Author("Name-Name", "lastname'Lastname");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            // Act
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            //Assert
 
-//            //Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameStarWithUpperCaseWithFamilyPrefixEng_ReturnTrue()
+        {
+            // Arrange
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameStarWithUpperCaseWithFamilyPrefixEng_ReturnTrue()
-//        {
-//            // Arrange
+            Author author = new Author("Name-Name", "Lastname'Lastname");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            Author author = new Author("Name-Name", "Lastname'Lastname");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            // Act
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            //Assert
 
-//            //Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+        [TestMethod]
+        public void CheckAuthor_NameAndLasNameStartWithUpperCaseRus_ReturnTrue()
+        {
+            // Arrange
 
-//        [TestMethod]
-//        public void CheckAuthor_NameAndLasNameStartWithUpperCaseRus_ReturnTrue()
-//        {
-//            // Arrange
+            Author author = new Author("Тест", "Тест");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//            Author author = new Author("Тест", "Тест");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            // Act
 
-//            // Act
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            //Assert
 
-//            //Assert
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameStartWithUpperCaseRus_ReturnTrue()
+        {
+            // Arrange
 
+            Author author = new Author("Тест-Тест", "Тест");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameStartWithUpperCaseRus_ReturnTrue()
-//        {
-//            // Arrange
+            // Act
 
-//            Author author = new Author("Тест-Тест", "Тест");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenStartWithUpperCaseRus_ReturnTrue()
+        {
+            // Arrange
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Author author = new Author("Тест-Тест", "Тест-Тест");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenStartWithUpperCaseRus_ReturnTrue()
-//        {
-//            // Arrange
+            // Act
 
-//            Author author = new Author("Тест-Тест", "Тест-Тест");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenAndFamilyPrefixStartWithUpperCaseRus_ReturnTrue()
+        {
+            // Arrange
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Author author = new Author("Тест-Тест", "тест Тест");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameWithHyphenAndFamilyPrefixStartWithUpperCaseRus_ReturnTrue()
-//        {
-//            // Arrange
+            // Act
 
-//            Author author = new Author("Тест-Тест", "тест Тест");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameStarWithLowerCaseWithFamilyPrefixRus_ReturnTrue()
+        {
+            // Arrange
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Author author = new Author("Тест-Тест", "тест'Тест");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameStarWithLowerCaseWithFamilyPrefixRus_ReturnTrue()
-//        {
-//            // Arrange
+            // Act
 
-//            Author author = new Author("Тест-Тест", "тест'Тест");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckAuthor_NameWithHyphenAndLasNameStarWithUpperCaseWithFamilyPrefixRus_ReturnTrue()
+        {
+            // Arrange
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Author author = new Author("Тест-Тест", "Тест'Тест");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
 
-//        [TestMethod]
-//        public void CheckAuthor_NameWithHyphenAndLasNameStarWithUpperCaseWithFamilyPrefixRus_ReturnTrue()
-//        {
-//            // Arrange
+            // Act
 
-//            Author author = new Author("Тест-Тест", "Тест'Тест");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckAuthor_NameAndLastNameStartWithLowerCaseeEng_ReturnFalse()
+        {
+            // Arrange
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Author author = new Author("name", "name");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//        [TestMethod]
-//        public void CheckAuthor_NameAndLastNameStartWithLowerCaseeEng_ReturnFalse()
-//        {
-//            // Arrange
+            // Act
 
-//            Author author = new Author("name", "name");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckAuthor_NameAndLastNameStartHyphenLowerCaseeEng_ReturnFalse()
+        {
+            // Arrange
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            Author author = new Author("-Name-", "-Lame-");
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//        [TestMethod]
-//        public void CheckAuthor_NameAndLastNameStartHyphenLowerCaseeEng_ReturnFalse()
-//        {
-//            // Arrange
+            // Act
 
-//            Author author = new Author("-Name-", "-Lame-");
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _defaultPatentItem.Authors[0] = author;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors[0] = author;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckAuthor_AuthorisNull_ReturnFalse()
+        {
+            // Arrange
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
 
-//        [TestMethod]
-//        public void CheckAuthor_AuthorisNull_ReturnFalse()
-//        {
-//            // Arrange
+            // Act
 
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count + 1;
+            _defaultPatentItem.Authors = null;
+            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Authors = null;
-//            var validation = _patentValidation.CheckAuthors(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckByCommonValidation_ValidData_ReturnTrue()
+        {
+            // Arrange
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
+            _commonValidationMock.Setup(s => s.ValidationObject.IsValid).Returns(true);
+            _commonValidationMock.Setup(s => s.ValidationObject).Returns(_patentValidation.ValidationObject);
+            _commonValidationMock.Setup(s => s.CheckTitle(_defaultPatentItem)).Returns(_commonValidationMock.Object);
+            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultPatentItem)).Returns(_commonValidationMock.Object);
 
-//        [TestMethod]
-//        public void CheckByCommonValidation_ValidData_ReturnTrue()
-//        {
-//            // Arrange
+            // Act
 
-//            int expectedValidationResuilCount = _patentValidation.ValidationObject.ValidationExceptions.Count;
-//            _commonValidationMock.Setup(s => s.ValidationObject.IsValid).Returns(true);
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(_patentValidation.ValidationResult);
-//            _commonValidationMock.Setup(s => s.CheckTitle(_defaultPatentItem)).Returns(_commonValidationMock.Object);
-//            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultPatentItem)).Returns(_commonValidationMock.Object);
+            _defaultPatentItem.Title = "Validtitle";
+            _defaultPatentItem.PagesCount = 10;
+            var validation = _patentValidation.CheckByCommonValidation(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Title = "Validtitle";
-//            _defaultPatentItem.PagesCount = 10;
-//            var validation = _patentValidation.CheckByCommonValidation(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsTrue(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckByCommonValidation_NotValidData_ReturnFalse()
+        {
+            // Arrange
 
-//            Assert.IsTrue(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            _commonValidationMock.Setup(s => s.ValidationObject.IsValid).Returns(false);
+            ValidationObject validationObjects = new ValidationObject();
+            _commonValidationMock.Setup(s => s.ValidationObject.IsValid).Returns(false);
+           
+            int expectedValidationResuilCount = validationObjects.ValidationExceptions.Count;
+            _commonValidationMock.Setup(s => s.ValidationObject).Returns(validationObjects);
+            _commonValidationMock.Setup(s => s.CheckTitle(_defaultPatentItem)).Returns(_commonValidationMock.Object);
+            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultPatentItem)).Returns(_commonValidationMock.Object);
+            int inputlength = 301;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < inputlength; i++)
+            {
+                stringBuilder.Append("*");
+            }
+            string Text = stringBuilder.ToString();
+            // Act
 
-//        [TestMethod]
-//        public void CheckByCommonValidation_NotValidData_ReturnFalse()
-//        {
-//            // Arrange
+            _defaultPatentItem.Title = Text;
+            _defaultPatentItem.PagesCount = 300;
+            var validation = _patentValidation.CheckByCommonValidation(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            _commonValidationMock.Setup(s => s.ValidationObject.IsValid).Returns(false);
-//            List<ValidationException> validationObjects = new List<ValidationException>() { new ValidationException("", ""), new ValidationException("", "") };
-//            int expectedValidationResuilCount = validationObjects.Count;
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-//            _commonValidationMock.Setup(s => s.CheckTitle(_defaultPatentItem)).Returns(_commonValidationMock.Object);
-//            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultPatentItem)).Returns(_commonValidationMock.Object);
-//            int inputlength = 301;
-//            StringBuilder stringBuilder = new StringBuilder();
-//            for (int i = 0; i < inputlength; i++)
-//            {
-//                stringBuilder.Append("*");
-//            }
-//            string Text = stringBuilder.ToString();
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Title = Text;
-//            _defaultPatentItem.PagesCount = 300;
-//            var validation = _patentValidation.CheckByCommonValidation(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
 
-//            //Assert
+        [TestMethod]
+        public void CheckByCommonValidation_TitleIsNull_ReturnFalse()
+        {
+            // Arrange
 
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
+            _commonValidationMock.Setup(s => s.ValidationObject.IsValid).Returns(false);
+            ValidationObject validationObjects = new ValidationObject();
+            validationObjects.ValidationExceptions.Add(new ValidationException("", ""));
+            validationObjects.ValidationExceptions.Add(new ValidationException("", ""));
+            int expectedValidationResuilCount = validationObjects.ValidationExceptions.Count;
+            _commonValidationMock.Setup(s => s.ValidationObject).Returns(validationObjects);
+            _commonValidationMock.Setup(s => s.CheckTitle(_defaultPatentItem)).Returns(_commonValidationMock.Object);
+            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultPatentItem)).Returns(_commonValidationMock.Object);
 
-//        [TestMethod]
-//        public void CheckByCommonValidation_TitleIsNull_ReturnFalse()
-//        {
-//            // Arrange
+            // Act
 
-//            _commonValidationMock.Setup(s => s.ValidationObject.ValidationObject.IsValid).Returns(false);
-//            List<ValidationException> validationObjects = new List<ValidationException>() { new ValidationException("", ""), new ValidationException("", "") };
-//            int expectedValidationResuilCount = validationObjects.Count;
-//            _commonValidationMock.Setup(s => s.ValidationResult).Returns(validationObjects);
-//            _commonValidationMock.Setup(s => s.CheckTitle(_defaultPatentItem)).Returns(_commonValidationMock.Object);
-//            _commonValidationMock.Setup(s => s.CheckPagesCount(_defaultPatentItem)).Returns(_commonValidationMock.Object);
+            _defaultPatentItem.Title = null;
+            _defaultPatentItem.PagesCount = 300;
+            var validation = _patentValidation.CheckByCommonValidation(_defaultPatentItem);
+            bool result = validation.ValidationObject.IsValid;
+            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
 
-//            // Act
+            //Assert
 
-//            _defaultPatentItem.Title = null;
-//            _defaultPatentItem.PagesCount = 300;
-//            var validation = _patentValidation.CheckByCommonValidation(_defaultPatentItem);
-//            bool result = validation.ValidationObject.IsValid;
-//            int actualValidationResuilCount = validation.ValidationObject.ValidationExceptions.Count;
-
-//            //Assert
-
-//            Assert.IsFalse(result);
-//            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
-//        }
-//    }
-//}
+            Assert.IsFalse(result);
+            Assert.AreEqual(expectedValidationResuilCount, actualValidationResuilCount);
+        }
+    }
+}

@@ -1,7 +1,8 @@
-﻿using Epam.Task01.Library.AbstractDAL;
-using Epam.Task01.Library.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Epam.Task01.Library.AbstractDAL;
+using Epam.Task01.Library.DBDAL;
+using Epam.Task01.Library.Entity;
 
 namespace Epam.Task01.Library.CollectionDAL
 {
@@ -14,8 +15,8 @@ namespace Epam.Task01.Library.CollectionDAL
 
         public bool CheckPatentUniqueness(Patent patent)
         {
-            var patents = MemoryStorage.GetLibraryItemByType<Patent>();
-            foreach (var item in patents)
+            IEnumerable<Patent> patents = MemoryStorage.GetLibraryItemByType<Patent>();
+            foreach (Patent item in patents)
             {
                 if (item.RegistrationNumber == patent.RegistrationNumber && item.Country == patent.Country)
                 {
@@ -26,15 +27,15 @@ namespace Epam.Task01.Library.CollectionDAL
             return true;
         }
 
-        public IEnumerable<Patent> GetPatentItems()
+        public IEnumerable<Patent> GetPatents()
         {
             return MemoryStorage.GetLibraryItemByType<Patent>();
         }
 
         public IEnumerable<Patent> GetPatentsByAuthorId(int id)
         {
-            return MemoryStorage.GetAllAbstractLibraryItems().OfType<Patent>().Where(p => p.Authors.Any(item => item.Id == id));
+            return MemoryStorage.GetAllAbstractLibraryItems().OfType<Patent>()
+                .Where(p => p.Authors.Any(item => item.Id == id));
         }
-
     }
 }
