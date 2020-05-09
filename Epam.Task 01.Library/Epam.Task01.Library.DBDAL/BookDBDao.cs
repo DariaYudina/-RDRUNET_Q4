@@ -127,6 +127,7 @@ namespace Epam.Task01.Library.DBDAL
                 throw new AppLayerException(e.Message) { AppLayer = "Dal" };
             }
         }
+
         public int EditBook(Book item)
         {
             try
@@ -457,6 +458,45 @@ namespace Epam.Task01.Library.DBDAL
                         Commentary = reader["Commentary"] is DBNull ? null : (string)reader["Commentary"]
                     };
                 }
+            }
+        }
+
+        public int SoftDeleteBook(int idBook)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "SoftDeleteBook";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = idBook,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter cntdeleterow = new SqlParameter
+                    {
+                        ParameterName = "@CntDeleteRow",
+                        Value = 0,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(cntdeleterow);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)cntdeleterow.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
             }
         }
     }

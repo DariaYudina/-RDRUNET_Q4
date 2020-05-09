@@ -52,6 +52,10 @@ namespace Epam.Task01.Library.CollectionBLL
 
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -90,6 +94,10 @@ namespace Epam.Task01.Library.CollectionBLL
 
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -102,6 +110,10 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _patentDao.GetPatents();
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -113,6 +125,26 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _patentDao.GetPatentsByAuthorId(author.Id);
+            }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public bool SoftDeletePatent(int id)
+        {
+            try
+            {
+                return _patentDao.SoftDeletePatent(id) > 0;
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {

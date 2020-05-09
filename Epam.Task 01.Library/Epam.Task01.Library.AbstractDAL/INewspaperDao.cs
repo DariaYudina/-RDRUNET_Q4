@@ -7,8 +7,12 @@ namespace Epam.Task01.Library.AbstractDAL.INewspaper
     {
         int AddNewspaper(Newspaper newspaper);
 
+        int EditNewspaper(Newspaper newspaper);
+
         IEnumerable<Newspaper> GetNewspapers();
 
         Newspaper GetNewspaperById(int id);
+
+        int SoftDeleteNewspaper(int id);
     }
 }

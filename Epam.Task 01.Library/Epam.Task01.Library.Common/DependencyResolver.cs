@@ -7,7 +7,7 @@ using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.AbstractDAL.INewspaper;
 using Epam.Task01.Library.CollectionBLL;
 using Epam.Task01.Library.CollectionBLL.Validators;
-using Epam.Task01.Library.CollectionDAL;
+//using Epam.Task01.Library.CollectionDAL;
 using Epam.Task01.Library.DBDAL;
 
 namespace Epam.Task01.Library.Common

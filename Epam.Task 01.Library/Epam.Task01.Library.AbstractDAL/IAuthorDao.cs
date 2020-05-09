@@ -11,7 +11,11 @@ namespace Epam.Task01.Library.AbstractDAL
     {
         int AddAuthor(Author author);
 
+        int EditAuthor(Author author);
+
         IEnumerable<Author> GetAuthors();
+
+        IEnumerable<Author> GetAuthorsByString(string search);
 
         Author GetAuthorById(int id);
     }

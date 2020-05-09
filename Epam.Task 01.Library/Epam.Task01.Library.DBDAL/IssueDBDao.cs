@@ -316,5 +316,44 @@ namespace Epam.Task01.Library.DBDAL
                 }
             }
         }
+
+        public int SoftDeleteIssue(int idNewspaper)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "SoftDeleteIssue";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = idNewspaper,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter cntdeleterow = new SqlParameter
+                    {
+                        ParameterName = "@CntDeleteRow",
+                        Value = 0,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(cntdeleterow);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)cntdeleterow.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
+        }
     }
 }

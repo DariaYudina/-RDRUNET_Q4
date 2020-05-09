@@ -57,5 +57,15 @@ namespace Epam.Task01.Library.CollectionDAL
                 return res;
             }
         }
+
+        public int EditBook(Book item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int SoftDeleteBook(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -39,6 +39,38 @@ namespace Epam.Task01.Library.CollectionBLL
 
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public bool EditAuthor(out ValidationObject validationObject, Author author)
+        {
+            try
+            {
+                validationObject = _authorValidation.ValidationObject;
+                if (author == null)
+                {
+                    validationObject.ValidationExceptions.Add(new ValidationException($"{nameof(author)} must be not null and not empty", nameof(author)));
+                    return false;
+                }
+                _authorValidation.CheckAuthor(author);
+                if (_authorValidation.ValidationObject.IsValid)
+                {
+                    return _authorDao.EditAuthor(author) > 0;
+                }
+
+                return false;
+            }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -51,7 +83,11 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _authorDao.GetAuthorById(id);
             }
-            catch (Exception e) when (!(e is AppLayerException))
+            catch (AppLayerException e)
+            {
+                throw;
+            }
+            catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
@@ -62,6 +98,34 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _authorDao.GetAuthors();
+            }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public IEnumerable<Author> GetAuthorsByString(string search)
+        {
+            try
+            {
+                if (search.Length > 0 && search.Length < 251)
+                {
+                    return _authorDao.GetAuthorsByString(search);
+                }
+                else
+                {
+                    return null;
+                }
+                
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {

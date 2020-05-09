@@ -12,7 +12,11 @@ namespace Epam.Task_01.Library.AbstactBLL
     {
         IEnumerable<Author> GetAuthors();
 
+        IEnumerable<Author> GetAuthorsByString(string search);
+
         bool AddAuthor(out ValidationObject validationObject, Author author);
+
+        bool EditAuthor(out ValidationObject validationObject, Author author);
 
         Author GetAuthorById(int id);
     }

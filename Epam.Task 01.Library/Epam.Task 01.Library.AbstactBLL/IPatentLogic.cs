@@ -13,5 +13,7 @@ namespace Epam.Task_01.Library.AbstactBLL
         IEnumerable<Patent> GetPatents();
 
         IEnumerable<Patent> GetPatentsByAuthor(Author author);
+
+        bool SoftDeletePatent(int id);
     }
 }

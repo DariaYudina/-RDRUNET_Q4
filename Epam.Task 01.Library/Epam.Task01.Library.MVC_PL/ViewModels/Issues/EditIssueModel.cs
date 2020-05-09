@@ -10,8 +10,6 @@ namespace Epam.Task01.Library.MVC_PL.ViewModels.Issues
 {
     public class EditIssueModel
     {
-
-
         [Remote(
             "IsUniqueIssueEdit",
             "Issue",

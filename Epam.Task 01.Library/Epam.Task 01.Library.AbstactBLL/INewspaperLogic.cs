@@ -10,6 +10,10 @@ namespace Epam.Task_01.Library.AbstactBLL
 
         bool AddNewspaper(out ValidationObject validationObject, Newspaper newspaper);
 
+        bool EditNewspaper(out ValidationObject validationObject, Newspaper newspaper);
+
         Newspaper GetNewspaperById(int id);
+
+        bool SoftDeleteNewspaper(int id);
     }
 }

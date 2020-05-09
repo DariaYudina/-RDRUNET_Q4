@@ -41,6 +41,42 @@ namespace Epam.Task01.Library.CollectionBLL
 
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public bool EditNewspaper(out ValidationObject validationObject, Newspaper newspaper)
+        {
+            try
+            {
+                validationObject = _newspaperValidation.ValidationObject;
+                if (newspaper == null)
+                {
+                    _newspaperValidation.ValidationObject.ValidationExceptions.Add(new ValidationException($"{nameof(newspaper)} must be not null and not empty", nameof(newspaper)));
+                    return false;
+                }
+
+                _newspaperValidation.CheckISSN(newspaper)
+                                    .CheckNewspaperCity(newspaper)
+                                    .CheckPublishingCompany(newspaper)
+                                    .CheckTitle(newspaper);
+                if (_newspaperValidation.ValidationObject.IsValid)
+                {
+                    return _newspaperDao.EditNewspaper(newspaper) > 0;
+                }
+
+                return false;
+            }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -53,6 +89,10 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _newspaperDao.GetNewspaperById(id);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -64,6 +104,26 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _newspaperDao.GetNewspapers();
+            }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public bool SoftDeleteNewspaper(int id)
+        {
+            try
+            {
+                return _newspaperDao.SoftDeleteNewspaper(id) > 0;
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {

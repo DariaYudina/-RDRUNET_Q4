@@ -80,6 +80,81 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
+        public int EditNewspaper(Newspaper newspaper)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "UpdateNewspaper";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = newspaper.Id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter title = new SqlParameter
+                    {
+                        ParameterName = "@Title",
+                        Value = newspaper.Title,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter city = new SqlParameter
+                    {
+                        ParameterName = "@City",
+                        Value = newspaper.City,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter publishingCompany = new SqlParameter
+                    {
+                        ParameterName = "@PublishingCompany",
+                        Value = newspaper.PublishingCompany,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter issn = new SqlParameter
+                    {
+                        ParameterName = "@ISSN",    
+                        Value = newspaper.Issn,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter cntupdaterow = new SqlParameter
+                    {
+                        ParameterName = "@CntUpdateRow",
+                        Value = 0,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(title);
+                    command.Parameters.Add(city);
+                    command.Parameters.Add(publishingCompany);
+                    command.Parameters.Add(issn);
+                    command.Parameters.Add(cntupdaterow);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)cntupdaterow.Value;
+                }
+            }
+            catch (System.Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
+        }
+
         public Newspaper GetNewspaperById(int id)
         {
             try
@@ -154,6 +229,45 @@ namespace Epam.Task01.Library.DBDAL
                         Issn = (string)reader["ISSN"],
                     };
                 }
+            }
+        }
+
+        public int SoftDeleteNewspaper(int idNewspaper)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "SoftDeleteNewspaper";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = idNewspaper,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter cntdeleterow = new SqlParameter
+                    {
+                        ParameterName = "@CntDeleteRow",
+                        Value = 0,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(cntdeleterow);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)cntdeleterow.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
             }
         }
     }

@@ -72,6 +72,63 @@ namespace Epam.Task01.Library.DBDAL
             }
         }
 
+        public int EditAuthor(Author author)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = "UpdateAuthor";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter id = new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = author.Id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    SqlParameter firstname = new SqlParameter
+                    {
+                        ParameterName = "@FirstName",
+                        Value = author.FirstName,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter lastname = new SqlParameter
+                    {
+                        ParameterName = "@LastName",
+                        Value = author.LastName,
+                        SqlDbType = System.Data.SqlDbType.NVarChar,
+                        Direction = System.Data.ParameterDirection.Input
+                    };
+
+                    SqlParameter cntupdaterow = new SqlParameter
+                    {
+                        ParameterName = "@CntUpdateRow",
+                        Value = 0,
+                        SqlDbType = System.Data.SqlDbType.Int,
+                        Direction = System.Data.ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(id);
+                    command.Parameters.Add(firstname);
+                    command.Parameters.Add(lastname);
+                    command.Parameters.Add(cntupdaterow);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (int)cntupdaterow.Value;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+            }
+        }
+
         public Author GetAuthorById(int id)
         {
             try
@@ -122,6 +179,48 @@ namespace Epam.Task01.Library.DBDAL
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = "GetAuthors";
                 command.CommandType = System.Data.CommandType.StoredProcedure;
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    try
+                    {
+                        var Id = (int)(reader["Id"]);
+                        var FirstName = (string)reader["FirstName"];
+                        var LastName = (string)reader["LastName"];
+                    }
+                    catch (Exception e)
+                    {
+                        throw new AppLayerException(e.Message) { AppLayer = "Dal" };
+                    }
+                    yield return new Author
+                    {
+                        Id = (int)(reader["Id"]),
+                        FirstName = (string)reader["FirstName"],
+                        LastName = (string)reader["LastName"]
+                    };
+                }
+            }
+        }
+
+        public IEnumerable<Author> GetAuthorsByString(string search)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "GetAuthorsByString";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter searchstr = new SqlParameter
+                {
+                    ParameterName = "@Search",
+                    Value = search,
+                    SqlDbType = SqlDbType.NVarChar,
+                    Direction = ParameterDirection.Input
+                };
+
+                command.Parameters.Add(searchstr);
+
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())

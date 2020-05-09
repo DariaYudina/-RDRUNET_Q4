@@ -16,5 +16,7 @@ namespace Epam.Task01.Library.AbstractDAL
         IEnumerable<Book> GetBooksByPublishingCompany(string publishingCompany);
 
         int EditBook(Book item);
+
+        int SoftDeleteBook(int id);
     }
 }

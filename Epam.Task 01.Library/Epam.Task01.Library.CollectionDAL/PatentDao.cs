@@ -27,6 +27,11 @@ namespace Epam.Task01.Library.CollectionDAL
             return true;
         }
 
+        public int EditPatent(Patent item)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Patent> GetPatents()
         {
             return MemoryStorage.GetLibraryItemByType<Patent>();
@@ -36,6 +41,11 @@ namespace Epam.Task01.Library.CollectionDAL
         {
             return MemoryStorage.GetAllAbstractLibraryItems().OfType<Patent>()
                 .Where(p => p.Authors.Any(item => item.Id == id));
+        }
+
+        public int SoftDeletePatent(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

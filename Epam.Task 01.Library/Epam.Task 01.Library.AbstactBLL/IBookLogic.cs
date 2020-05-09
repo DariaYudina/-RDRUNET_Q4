@@ -18,5 +18,7 @@ namespace Epam.Task_01.Library.AbstactBLL
         IEnumerable<Book> GetBooksByAuthor(Author author);
 
         bool EditBook(out ValidationObject validationObject, Book item);
+
+        bool SoftDeleteBook(int id);
     }
 }

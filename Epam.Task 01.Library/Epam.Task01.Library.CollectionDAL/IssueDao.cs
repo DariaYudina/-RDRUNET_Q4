@@ -18,6 +18,11 @@ namespace Epam.Task01.Library.CollectionDAL
             return -1;
         }
 
+        public int EditIssue(Issue issue)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Issue> GetIssues()
         {
             return MemoryStorage.GetLibraryItemByType<Issue>();
@@ -29,6 +34,11 @@ namespace Epam.Task01.Library.CollectionDAL
         }
 
         public IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId, int currentId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int SoftDeleteIssue(int id)
         {
             throw new System.NotImplementedException();
         }

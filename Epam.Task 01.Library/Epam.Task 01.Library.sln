@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.Common"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.NinjectConfig", "Epam.Task01.Library.NinjectConfig\Epam.Task01.Library.NinjectConfig.csproj", "{1E636AC5-F5DB-49E4-A16F-A57F85325450}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Task01.Library.WebAPI_PL", "Epam.Task01.Library.WebAPI_PL\Epam.Task01.Library.WebAPI_PL.csproj", "{93AB3B2F-BD51-482F-B58C-B5E410EAB6AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{1E636AC5-F5DB-49E4-A16F-A57F85325450}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E636AC5-F5DB-49E4-A16F-A57F85325450}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E636AC5-F5DB-49E4-A16F-A57F85325450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93AB3B2F-BD51-482F-B58C-B5E410EAB6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93AB3B2F-BD51-482F-B58C-B5E410EAB6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93AB3B2F-BD51-482F-B58C-B5E410EAB6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93AB3B2F-BD51-482F-B58C-B5E410EAB6AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

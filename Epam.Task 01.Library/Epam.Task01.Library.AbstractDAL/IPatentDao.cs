@@ -12,5 +12,7 @@ namespace Epam.Task01.Library.AbstractDAL
         IEnumerable<Patent> GetPatents();
 
         IEnumerable<Patent> GetPatentsByAuthorId(int id);
+
+        int SoftDeletePatent(int id);
     }
 }

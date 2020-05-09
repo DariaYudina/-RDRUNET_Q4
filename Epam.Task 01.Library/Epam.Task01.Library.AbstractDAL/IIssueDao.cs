@@ -12,5 +12,7 @@ namespace Epam.Task01.Library.AbstractDAL
         IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId, int currentId);
 
         int EditIssue(Issue issue);
+
+        int SoftDeleteIssue(int id);
     }
 }

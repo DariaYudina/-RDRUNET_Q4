@@ -22,9 +22,12 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _commonDao.GetLibraryItems();
             }
-            catch (Exception e) when (!(e is AppLayerException))
+            catch (AppLayerException e)
             {
-
+                throw;
+            }
+            catch (Exception e)
+            {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
         }
@@ -35,9 +38,12 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _commonDao.GetLibraryItemsByTitle(title);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
         }
@@ -47,6 +53,10 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _commonDao.DeleteLibraryItemById(id);
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -60,9 +70,12 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _commonDao.GetBookAndPatentByAuthorId(author.Id);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
         }
@@ -72,6 +85,10 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _commonDao.SortByYear();
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -85,9 +102,12 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _commonDao.SortByYearDesc();
             }
-            catch (Exception e )
+            catch (AppLayerException e)
             {
-
+                throw;
+            }
+            catch (Exception e)
+            {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
         }
@@ -98,9 +118,12 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _commonDao.GetLibraryItemsByYearOfPublishing().GroupBy(i => i.YearOfPublishing);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
         }
@@ -111,9 +134,12 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _commonDao.GetLibraryItemById(id);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
         }

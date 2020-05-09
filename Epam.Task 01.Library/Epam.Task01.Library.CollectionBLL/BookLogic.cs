@@ -45,9 +45,12 @@ namespace Epam.Task01.Library.CollectionBLL
 
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
             }
         }
@@ -77,6 +80,10 @@ namespace Epam.Task01.Library.CollectionBLL
 
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -89,6 +96,10 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _bookDao.GetBookById(id);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -99,7 +110,11 @@ namespace Epam.Task01.Library.CollectionBLL
         {
             try
             {
-                return _bookDao.GetBooks();
+                return _bookDao.GetBooks().ToList();
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -113,6 +128,10 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _bookDao.GetBooksByAuthor(author);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -124,6 +143,26 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _bookDao.GetBooksByPublishingCompany(publishingCompany).GroupBy(item => item.PublishingCompany).ToList();
+            }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw new AppLayerException(e.Message) { AppLayer = "Logic" };
+            }
+        }
+
+        public bool SoftDeleteBook(int id)
+        {
+            try
+            {
+                return _bookDao.SoftDeleteBook(id) > 0;
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {

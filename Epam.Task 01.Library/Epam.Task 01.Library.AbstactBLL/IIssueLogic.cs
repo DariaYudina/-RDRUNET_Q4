@@ -12,5 +12,7 @@ namespace Epam.Task_01.Library.AbstactBLL
 
         IEnumerable<Issue> GetIssuesByNewspaperId(int newspaperId, int currentId);
         bool EditIssue(out ValidationObject validationObject, Issue issue);
+
+        bool SoftDeleteIssue(int id);
     }
 }

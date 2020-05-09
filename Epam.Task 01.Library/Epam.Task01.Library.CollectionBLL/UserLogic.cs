@@ -45,6 +45,10 @@ namespace Epam.Task01.Library.CollectionBLL
 
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -56,6 +60,10 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _userDao.GetRoles();
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -69,6 +77,10 @@ namespace Epam.Task01.Library.CollectionBLL
             {
                 return _userDao.GetUserById(id);
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -80,6 +92,10 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _userDao.GetUsers();
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -96,6 +112,10 @@ namespace Epam.Task01.Library.CollectionBLL
                 Byte[] hashedBytes = algorithm.ComputeHash(inputBytes);
 
                 return BitConverter.ToString(hashedBytes);
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {
@@ -115,6 +135,10 @@ namespace Epam.Task01.Library.CollectionBLL
                 }
                 return false;
             }
+            catch (AppLayerException e)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 throw new AppLayerException(e.Message) { AppLayer = "Logic" };
@@ -126,6 +150,10 @@ namespace Epam.Task01.Library.CollectionBLL
             try
             {
                 return _userDao.ChangeUserRoles(userId, rolesId);
+            }
+            catch (AppLayerException e)
+            {
+                throw;
             }
             catch (Exception e)
             {
