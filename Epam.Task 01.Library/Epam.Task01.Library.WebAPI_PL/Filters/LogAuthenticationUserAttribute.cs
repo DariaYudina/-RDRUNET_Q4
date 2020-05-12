@@ -1,17 +1,8 @@
-﻿using Epam.Task01.Library.AbstractDAL;
+﻿using System;
+using System.Web.Http.Filters;
+using Epam.Task01.Library.AbstractDAL;
 using Epam.Task01.Library.Entity;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Principal;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http.Filters;
-using System.Web.Http.Results;
 
 namespace Epam.Task01.Library.WebAPI_PL.Filters
 {

@@ -1,15 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
+using AutoMapper;
 using Epam.Task_01.Library.AbstactBLL;
 using Epam.Task_01.Library.AbstactBLL.IValidators;
 using Epam.Task01.Library.Entity;
 using Epam.Task01.Library.WebAPI_PL.Filters;
 using Epam.Task01.Library.WebAPI_PL.Models.ViewModels.Patents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 
 namespace Epam.Task01.Library.WebAPI_PL.Controllers
 {

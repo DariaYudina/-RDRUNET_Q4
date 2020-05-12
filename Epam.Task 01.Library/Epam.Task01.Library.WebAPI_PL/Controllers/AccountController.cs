@@ -1,10 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Security.Principal;
+using System.Web.Http;
+using System.Web.Security;
 using Epam.Task_01.Library.AbstactBLL;
 using Epam.Task01.Library.WebAPI_PL.Filters;
 using Epam.Task01.Library.WebAPI_PL.Models.ViewModels.User;
-using System.Security.Principal;
-using System.Web.Http;
-using System.Web.Security;
 
 namespace Epam.Task01.Library.WebAPI_PL.Controllers
 {
